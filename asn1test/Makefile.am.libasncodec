@@ -1,0 +1,814 @@
+ASN_MODULE_SRCS=	\
+	./output/S1ap-Criticality.c	\
+	./output/S1ap-Presence.c	\
+	./output/S1ap-PrivateIE-ID.c	\
+	./output/S1ap-ProcedureCode.c	\
+	./output/S1ap-ProtocolExtensionID.c	\
+	./output/S1ap-ProtocolIE-ID.c	\
+	./output/S1ap-TriggeringMessage.c	\
+	./output/S1AP-PDU.c	\
+	./output/S1ap-InitiatingMessage.c	\
+	./output/S1ap-SuccessfulOutcome.c	\
+	./output/S1ap-UnsuccessfulOutcome.c	\
+	./output/S1ap-HandoverRequired.c	\
+	./output/S1ap-HandoverCommand.c	\
+	./output/S1ap-HandoverPreparationFailure.c	\
+	./output/S1ap-HandoverRequest.c	\
+	./output/S1ap-HandoverRequestAcknowledge.c	\
+	./output/S1ap-HandoverFailure.c	\
+	./output/S1ap-HandoverNotify.c	\
+	./output/S1ap-PathSwitchRequest.c	\
+	./output/S1ap-PathSwitchRequestAcknowledge.c	\
+	./output/S1ap-PathSwitchRequestFailure.c	\
+	./output/S1ap-E-RABSetupRequest.c	\
+	./output/S1ap-E-RABSetupResponse.c	\
+	./output/S1ap-E-RABModifyRequest.c	\
+	./output/S1ap-E-RABModifyResponse.c	\
+	./output/S1ap-E-RABReleaseIndication.c	\
+	./output/S1ap-E-RABReleaseCommand.c	\
+	./output/S1ap-E-RABReleaseResponse.c	\
+	./output/S1ap-InitialContextSetupRequest.c	\
+	./output/S1ap-InitialContextSetupResponse.c	\
+	./output/S1ap-InitialContextSetupFailure.c	\
+	./output/S1ap-UEContextReleaseRequest.c	\
+	./output/S1ap-Paging.c	\
+	./output/S1ap-DownlinkNASTransport.c	\
+	./output/S1ap-InitialUEMessage.c	\
+	./output/S1ap-UplinkNASTransport.c	\
+	./output/S1ap-NASNonDeliveryIndication.c	\
+	./output/S1ap-HandoverCancel.c	\
+	./output/S1ap-HandoverCancelAcknowledge.c	\
+	./output/S1ap-Reset.c	\
+	./output/S1ap-ResetAcknowledge.c	\
+	./output/S1ap-S1SetupResponse.c	\
+	./output/S1ap-S1SetupRequest.c	\
+	./output/S1ap-S1SetupFailure.c	\
+	./output/S1ap-ErrorIndication.c	\
+	./output/S1ap-ENBConfigurationUpdate.c	\
+	./output/S1ap-ENBConfigurationUpdateAcknowledge.c	\
+	./output/S1ap-ENBConfigurationUpdateFailure.c	\
+	./output/S1ap-MMEConfigurationUpdate.c	\
+	./output/S1ap-MMEConfigurationUpdateAcknowledge.c	\
+	./output/S1ap-MMEConfigurationUpdateFailure.c	\
+	./output/S1ap-DownlinkS1cdma2000tunneling.c	\
+	./output/S1ap-UplinkS1cdma2000tunneling.c	\
+	./output/S1ap-UEContextModificationRequest.c	\
+	./output/S1ap-UEContextModificationResponse.c	\
+	./output/S1ap-UEContextModificationFailure.c	\
+	./output/S1ap-UECapabilityInfoIndication.c	\
+	./output/S1ap-UEContextReleaseCommand.c	\
+	./output/S1ap-UEContextReleaseComplete.c	\
+	./output/S1ap-ENBStatusTransfer.c	\
+	./output/S1ap-MMEStatusTransfer.c	\
+	./output/S1ap-DeactivateTrace.c	\
+	./output/S1ap-TraceStart.c	\
+	./output/S1ap-TraceFailureIndication.c	\
+	./output/S1ap-CellTrafficTrace.c	\
+	./output/S1ap-LocationReportingControl.c	\
+	./output/S1ap-LocationReportingFailureIndication.c	\
+	./output/S1ap-LocationReport.c	\
+	./output/S1ap-OverloadStart.c	\
+	./output/S1ap-OverloadStop.c	\
+	./output/S1ap-WriteReplaceWarningRequest.c	\
+	./output/S1ap-WriteReplaceWarningResponse.c	\
+	./output/S1ap-ENBDirectInformationTransfer.c	\
+	./output/S1ap-MMEDirectInformationTransfer.c	\
+	./output/S1ap-ENBConfigurationTransfer.c	\
+	./output/S1ap-MMEConfigurationTransfer.c	\
+	./output/S1ap-PrivateMessage.c	\
+	./output/S1ap-KillRequest.c	\
+	./output/S1ap-KillResponse.c	\
+	./output/S1ap-DownlinkUEAssociatedLPPaTransport.c	\
+	./output/S1ap-UplinkUEAssociatedLPPaTransport.c	\
+	./output/S1ap-DownlinkNonUEAssociatedLPPaTransport.c	\
+	./output/S1ap-UplinkNonUEAssociatedLPPaTransport.c	\
+	./output/S1ap-IE.c	\
+	./output/S1ap-IE-Extensions.c	\
+	./output/S1ap-AreaScopeOfMDT.c	\
+	./output/S1ap-AllocationAndRetentionPriority.c	\
+	./output/S1ap-Bearers-SubjectToStatusTransfer-List.c	\
+	./output/S1ap-Bearers-SubjectToStatusTransfer-Item.c	\
+	./output/S1ap-BitRate.c	\
+	./output/S1ap-BPLMNs.c	\
+	./output/S1ap-BroadcastCancelledAreaList.c	\
+	./output/S1ap-BroadcastCompletedAreaList.c	\
+	./output/S1ap-CancelledCellinEAI.c	\
+	./output/S1ap-CancelledCellinEAI-Item.c	\
+	./output/S1ap-CancelledCellinTAI.c	\
+	./output/S1ap-CancelledCellinTAI-Item.c	\
+	./output/S1ap-Cause.c	\
+	./output/S1ap-CauseMisc.c	\
+	./output/S1ap-CauseProtocol.c	\
+	./output/S1ap-CauseRadioNetwork.c	\
+	./output/S1ap-CauseTransport.c	\
+	./output/S1ap-CauseNas.c	\
+	./output/S1ap-CellAccessMode.c	\
+	./output/S1ap-CellIdentity.c	\
+	./output/S1ap-CellID-Broadcast.c	\
+	./output/S1ap-CellID-Broadcast-Item.c	\
+	./output/S1ap-CellID-Cancelled.c	\
+	./output/S1ap-CellID-Cancelled-Item.c	\
+	./output/S1ap-CellBasedMDT.c	\
+	./output/S1ap-CellIdListforMDT.c	\
+	./output/S1ap-Cdma2000PDU.c	\
+	./output/S1ap-Cdma2000RATType.c	\
+	./output/S1ap-Cdma2000SectorID.c	\
+	./output/S1ap-Cdma2000HOStatus.c	\
+	./output/S1ap-Cdma2000HORequiredIndication.c	\
+	./output/S1ap-Cdma2000OneXSRVCCInfo.c	\
+	./output/S1ap-Cdma2000OneXMEID.c	\
+	./output/S1ap-Cdma2000OneXMSI.c	\
+	./output/S1ap-Cdma2000OneXPilot.c	\
+	./output/S1ap-Cdma2000OneXRAND.c	\
+	./output/S1ap-Cell-Size.c	\
+	./output/S1ap-CellType.c	\
+	./output/S1ap-CGI.c	\
+	./output/S1ap-CI.c	\
+	./output/S1ap-CNDomain.c	\
+	./output/S1ap-ConcurrentWarningMessageIndicator.c	\
+	./output/S1ap-Correlation-ID.c	\
+	./output/S1ap-CSFallbackIndicator.c	\
+	./output/S1ap-CSG-Id.c	\
+	./output/S1ap-CSG-IdList.c	\
+	./output/S1ap-CSG-IdList-Item.c	\
+	./output/S1ap-CSGMembershipStatus.c	\
+	./output/S1ap-COUNTvalue.c	\
+	./output/S1ap-CriticalityDiagnostics.c	\
+	./output/S1ap-CriticalityDiagnostics-IE-List.c	\
+	./output/S1ap-CriticalityDiagnostics-IE-Item.c	\
+	./output/S1ap-DataCodingScheme.c	\
+	./output/S1ap-DL-Forwarding.c	\
+	./output/S1ap-Direct-Forwarding-Path-Availability.c	\
+	./output/S1ap-Data-Forwarding-Not-Possible.c	\
+	./output/S1ap-ECGIList.c	\
+	./output/S1ap-EmergencyAreaIDList.c	\
+	./output/S1ap-EmergencyAreaID.c	\
+	./output/S1ap-EmergencyAreaID-Broadcast.c	\
+	./output/S1ap-EmergencyAreaID-Broadcast-Item.c	\
+	./output/S1ap-EmergencyAreaID-Cancelled.c	\
+	./output/S1ap-EmergencyAreaID-Cancelled-Item.c	\
+	./output/S1ap-CompletedCellinEAI.c	\
+	./output/S1ap-CompletedCellinEAI-Item.c	\
+	./output/S1ap-ENB-ID.c	\
+	./output/S1ap-GERAN-Cell-ID.c	\
+	./output/S1ap-Global-ENB-ID.c	\
+	./output/S1ap-GUMMEIList.c	\
+	./output/S1ap-ENB-StatusTransfer-TransparentContainer.c	\
+	./output/S1ap-ENB-UE-S1AP-ID.c	\
+	./output/S1ap-ENBname.c	\
+	./output/S1ap-ENBX2TLAs.c	\
+	./output/S1ap-EncryptionAlgorithms.c	\
+	./output/S1ap-EPLMNs.c	\
+	./output/S1ap-EventType.c	\
+	./output/S1ap-E-RAB-ID.c	\
+	./output/S1ap-E-RABDataForwardingItem.c	\
+	./output/S1ap-E-RABToBeSetupItemHOReq.c	\
+	./output/S1ap-E-RABAdmittedItem.c	\
+	./output/S1ap-E-RABToBeSwitchedDLItem.c	\
+	./output/S1ap-E-RABToBeSwitchedULItem.c	\
+	./output/S1ap-E-RABToBeSetupItemBearerSUReq.c	\
+	./output/S1ap-E-RABSetupItemBearerSURes.c	\
+	./output/S1ap-E-RABToBeModifiedItemBearerModReq.c	\
+	./output/S1ap-E-RABReleaseItemBearerRelComp.c	\
+	./output/S1ap-E-RABToBeSetupItemCtxtSUReq.c	\
+	./output/S1ap-E-RABSetupItemCtxtSURes.c	\
+	./output/S1ap-E-RABToBeModifiedListBearerModReq.c	\
+	./output/S1ap-E-RABReleaseListBearerRelComp.c	\
+	./output/S1ap-E-RABInformationList.c	\
+	./output/S1ap-E-RABToBeSetupListCtxtSUReq.c	\
+	./output/S1ap-E-RABSetupListCtxtSURes.c	\
+	./output/S1ap-E-RABDataForwardingList.c	\
+	./output/S1ap-E-RABSetupListBearerSURes.c	\
+	./output/S1ap-E-RABFailedToSetupListHOReqAck.c	\
+	./output/S1ap-E-RABToBeSetupListBearerSUReq.c	\
+	./output/S1ap-E-RABAdmittedList.c	\
+	./output/S1ap-E-RABToBeSwitchedDLList.c	\
+	./output/S1ap-E-RABToBeSwitchedULList.c	\
+	./output/S1ap-E-RABModifyListBearerModRes.c	\
+	./output/S1ap-E-RABToBeSetupListHOReq.c	\
+	./output/S1ap-TAIList.c	\
+	./output/S1ap-UE-associatedLogicalS1-ConnectionListRes.c	\
+	./output/S1ap-UE-associatedLogicalS1-ConnectionListResAck.c	\
+	./output/S1ap-E-RABModifyItemBearerModRes.c	\
+	./output/S1ap-E-RABFailedToSetupItemHOReqAck.c	\
+	./output/S1ap-E-RABInformationListItem.c	\
+	./output/S1ap-E-RABList.c	\
+	./output/S1ap-E-RABItem.c	\
+	./output/S1ap-E-RABLevelQoSParameters.c	\
+	./output/S1ap-EUTRAN-CGI.c	\
+	./output/S1ap-EUTRANRoundTripDelayEstimationInfo.c	\
+	./output/S1ap-ExtendedRNC-ID.c	\
+	./output/S1ap-ExtendedRepetitionPeriod.c	\
+	./output/S1ap-ForbiddenInterRATs.c	\
+	./output/S1ap-ForbiddenTAs.c	\
+	./output/S1ap-ForbiddenTAs-Item.c	\
+	./output/S1ap-ForbiddenTACs.c	\
+	./output/S1ap-ForbiddenLAs.c	\
+	./output/S1ap-ForbiddenLAs-Item.c	\
+	./output/S1ap-ForbiddenLACs.c	\
+	./output/S1ap-GBR-QosInformation.c	\
+	./output/S1ap-GTP-TEID.c	\
+	./output/S1ap-GUMMEI.c	\
+	./output/S1ap-GWContextReleaseIndication.c	\
+	./output/S1ap-HandoverRestrictionList.c	\
+	./output/S1ap-HandoverType.c	\
+	./output/S1ap-HFN.c	\
+	./output/S1ap-ImmediateMDT.c	\
+	./output/S1ap-IMSI.c	\
+	./output/S1ap-IntegrityProtectionAlgorithms.c	\
+	./output/S1ap-InterfacesToTrace.c	\
+	./output/S1ap-Inter-SystemInformationTransferType.c	\
+	./output/S1ap-LAC.c	\
+	./output/S1ap-LAI.c	\
+	./output/S1ap-LastVisitedCell-Item.c	\
+	./output/S1ap-LastVisitedEUTRANCellInformation.c	\
+	./output/S1ap-LastVisitedUTRANCellInformation.c	\
+	./output/S1ap-LastVisitedGERANCellInformation.c	\
+	./output/S1ap-L3-Information.c	\
+	./output/S1ap-LPPa-PDU.c	\
+	./output/S1ap-LoggedMDT.c	\
+	./output/S1ap-LoggingInterval.c	\
+	./output/S1ap-LoggingDuration.c	\
+	./output/S1ap-MDT-Activation.c	\
+	./output/S1ap-MDT-Configuration.c	\
+	./output/S1ap-ManagementBasedMDTAllowed.c	\
+	./output/S1ap-PrivacyIndicator.c	\
+	./output/S1ap-MDTMode.c	\
+	./output/S1ap-MeasurementsToActivate.c	\
+	./output/S1ap-MeasurementThresholdA2.c	\
+	./output/S1ap-MessageIdentifier.c	\
+	./output/S1ap-MMEname.c	\
+	./output/S1ap-MMERelaySupportIndicator.c	\
+	./output/S1ap-MME-Group-ID.c	\
+	./output/S1ap-MME-Code.c	\
+	./output/S1ap-MME-UE-S1AP-ID.c	\
+	./output/S1ap-M-TMSI.c	\
+	./output/S1ap-MSClassmark2.c	\
+	./output/S1ap-MSClassmark3.c	\
+	./output/S1ap-NAS-PDU.c	\
+	./output/S1ap-NASSecurityParametersfromE-UTRAN.c	\
+	./output/S1ap-NASSecurityParameterstoE-UTRAN.c	\
+	./output/S1ap-NumberofBroadcastRequest.c	\
+	./output/S1ap-NumberOfBroadcasts.c	\
+	./output/S1ap-OldBSS-ToNewBSS-Information.c	\
+	./output/S1ap-OverloadAction.c	\
+	./output/S1ap-OverloadResponse.c	\
+	./output/S1ap-PagingDRX.c	\
+	./output/S1ap-PagingPriority.c	\
+	./output/S1ap-PDCP-SN.c	\
+	./output/S1ap-PeriodicReportingMDT.c	\
+	./output/S1ap-PLMNidentity.c	\
+	./output/S1ap-Pre-emptionCapability.c	\
+	./output/S1ap-Pre-emptionVulnerability.c	\
+	./output/S1ap-PriorityLevel.c	\
+	./output/S1ap-PS-ServiceNotAvailable.c	\
+	./output/S1ap-QCI.c	\
+	./output/S1ap-ResetType.c	\
+	./output/S1ap-ResetAll.c	\
+	./output/S1ap-ReceiveStatusofULPDCPSDUs.c	\
+	./output/S1ap-RelativeMMECapacity.c	\
+	./output/S1ap-RelayNode-Indicator.c	\
+	./output/S1ap-RAC.c	\
+	./output/S1ap-ReportAmountMDT.c	\
+	./output/S1ap-ReportIntervalMDT.c	\
+	./output/S1ap-ReportingTriggerMDT.c	\
+	./output/S1ap-RequestType.c	\
+	./output/S1ap-RIMTransfer.c	\
+	./output/S1ap-RIMInformation.c	\
+	./output/S1ap-RIMRoutingAddress.c	\
+	./output/S1ap-ReportArea.c	\
+	./output/S1ap-RepetitionPeriod.c	\
+	./output/S1ap-RNC-ID.c	\
+	./output/S1ap-RRC-Container.c	\
+	./output/S1ap-RRC-Establishment-Cause.c	\
+	./output/S1ap-Routing-ID.c	\
+	./output/S1ap-SecurityKey.c	\
+	./output/S1ap-SecurityContext.c	\
+	./output/S1ap-SerialNumber.c	\
+	./output/S1ap-SONInformation.c	\
+	./output/S1ap-SONInformationRequest.c	\
+	./output/S1ap-SONInformationReply.c	\
+	./output/S1ap-SONConfigurationTransfer.c	\
+	./output/S1ap-Source-ToTarget-TransparentContainer.c	\
+	./output/S1ap-SourceBSS-ToTargetBSS-TransparentContainer.c	\
+	./output/S1ap-SourceeNB-ID.c	\
+	./output/S1ap-SRVCCOperationPossible.c	\
+	./output/S1ap-SRVCCHOIndication.c	\
+	./output/S1ap-SourceeNB-ToTargeteNB-TransparentContainer.c	\
+	./output/S1ap-SourceRNC-ToTargetRNC-TransparentContainer.c	\
+	./output/S1ap-ServedGUMMEIs.c	\
+	./output/S1ap-ServedGUMMEIsItem.c	\
+	./output/S1ap-ServedGroupIDs.c	\
+	./output/S1ap-ServedMMECs.c	\
+	./output/S1ap-ServedPLMNs.c	\
+	./output/S1ap-SubscriberProfileIDforRFP.c	\
+	./output/S1ap-SupportedTAs.c	\
+	./output/S1ap-SupportedTAs-Item.c	\
+	./output/S1ap-StratumLevel.c	\
+	./output/S1ap-SynchronizationStatus.c	\
+	./output/S1ap-TimeSynchronizationInfo.c	\
+	./output/S1ap-S-TMSI.c	\
+	./output/S1ap-TAC.c	\
+	./output/S1ap-TAIListforWarning.c	\
+	./output/S1ap-TAI.c	\
+	./output/S1ap-TAIItem.c	\
+	./output/S1ap-TAI-Broadcast.c	\
+	./output/S1ap-TAI-Broadcast-Item.c	\
+	./output/S1ap-TAI-Cancelled.c	\
+	./output/S1ap-TAI-Cancelled-Item.c	\
+	./output/S1ap-TABasedMDT.c	\
+	./output/S1ap-TAListforMDT.c	\
+	./output/S1ap-CompletedCellinTAI.c	\
+	./output/S1ap-CompletedCellinTAI-Item.c	\
+	./output/S1ap-TBCD-STRING.c	\
+	./output/S1ap-TargetID.c	\
+	./output/S1ap-TargeteNB-ID.c	\
+	./output/S1ap-TargetRNC-ID.c	\
+	./output/S1ap-TargeteNB-ToSourceeNB-TransparentContainer.c	\
+	./output/S1ap-Target-ToSource-TransparentContainer.c	\
+	./output/S1ap-TargetRNC-ToSourceRNC-TransparentContainer.c	\
+	./output/S1ap-TargetBSS-ToSourceBSS-TransparentContainer.c	\
+	./output/S1ap-ThresholdEventA2.c	\
+	./output/S1ap-Threshold-RSRP.c	\
+	./output/S1ap-Threshold-RSRQ.c	\
+	./output/S1ap-TimeToWait.c	\
+	./output/S1ap-Time-UE-StayedInCell.c	\
+	./output/S1ap-TransportLayerAddress.c	\
+	./output/S1ap-TraceActivation.c	\
+	./output/S1ap-TraceDepth.c	\
+	./output/S1ap-E-UTRAN-Trace-ID.c	\
+	./output/S1ap-TrafficLoadReductionIndication.c	\
+	./output/S1ap-TypeOfError.c	\
+	./output/S1ap-UEAggregateMaximumBitrate.c	\
+	./output/S1ap-UE-S1AP-IDs.c	\
+	./output/S1ap-UE-S1AP-ID-pair.c	\
+	./output/S1ap-UE-associatedLogicalS1-ConnectionItem.c	\
+	./output/S1ap-UEIdentityIndexValue.c	\
+	./output/S1ap-UE-HistoryInformation.c	\
+	./output/S1ap-UEPagingID.c	\
+	./output/S1ap-UERadioCapability.c	\
+	./output/S1ap-UESecurityCapabilities.c	\
+	./output/S1ap-WarningAreaList.c	\
+	./output/S1ap-WarningType.c	\
+	./output/S1ap-WarningSecurityInfo.c	\
+	./output/S1ap-WarningMessageContents.c	\
+	./output/S1ap-X2TNLConfigurationInfo.c	\
+	./output/S1ap-ENBX2ExtTLAs.c	\
+	./output/S1ap-ENBX2ExtTLA.c	\
+	./output/S1ap-ENBX2GTPTLAs.c
+
+ASN_MODULE_HDRS=	\
+	./output/S1ap-Criticality.h	\
+	./output/S1ap-Presence.h	\
+	./output/S1ap-PrivateIE-ID.h	\
+	./output/S1ap-ProcedureCode.h	\
+	./output/S1ap-ProtocolExtensionID.h	\
+	./output/S1ap-ProtocolIE-ID.h	\
+	./output/S1ap-TriggeringMessage.h	\
+	./output/S1AP-PDU.h	\
+	./output/S1ap-InitiatingMessage.h	\
+	./output/S1ap-SuccessfulOutcome.h	\
+	./output/S1ap-UnsuccessfulOutcome.h	\
+	./output/S1ap-HandoverRequired.h	\
+	./output/S1ap-HandoverCommand.h	\
+	./output/S1ap-HandoverPreparationFailure.h	\
+	./output/S1ap-HandoverRequest.h	\
+	./output/S1ap-HandoverRequestAcknowledge.h	\
+	./output/S1ap-HandoverFailure.h	\
+	./output/S1ap-HandoverNotify.h	\
+	./output/S1ap-PathSwitchRequest.h	\
+	./output/S1ap-PathSwitchRequestAcknowledge.h	\
+	./output/S1ap-PathSwitchRequestFailure.h	\
+	./output/S1ap-E-RABSetupRequest.h	\
+	./output/S1ap-E-RABSetupResponse.h	\
+	./output/S1ap-E-RABModifyRequest.h	\
+	./output/S1ap-E-RABModifyResponse.h	\
+	./output/S1ap-E-RABReleaseIndication.h	\
+	./output/S1ap-E-RABReleaseCommand.h	\
+	./output/S1ap-E-RABReleaseResponse.h	\
+	./output/S1ap-InitialContextSetupRequest.h	\
+	./output/S1ap-InitialContextSetupResponse.h	\
+	./output/S1ap-InitialContextSetupFailure.h	\
+	./output/S1ap-UEContextReleaseRequest.h	\
+	./output/S1ap-Paging.h	\
+	./output/S1ap-DownlinkNASTransport.h	\
+	./output/S1ap-InitialUEMessage.h	\
+	./output/S1ap-UplinkNASTransport.h	\
+	./output/S1ap-NASNonDeliveryIndication.h	\
+	./output/S1ap-HandoverCancel.h	\
+	./output/S1ap-HandoverCancelAcknowledge.h	\
+	./output/S1ap-Reset.h	\
+	./output/S1ap-ResetAcknowledge.h	\
+	./output/S1ap-S1SetupResponse.h	\
+	./output/S1ap-S1SetupRequest.h	\
+	./output/S1ap-S1SetupFailure.h	\
+	./output/S1ap-ErrorIndication.h	\
+	./output/S1ap-ENBConfigurationUpdate.h	\
+	./output/S1ap-ENBConfigurationUpdateAcknowledge.h	\
+	./output/S1ap-ENBConfigurationUpdateFailure.h	\
+	./output/S1ap-MMEConfigurationUpdate.h	\
+	./output/S1ap-MMEConfigurationUpdateAcknowledge.h	\
+	./output/S1ap-MMEConfigurationUpdateFailure.h	\
+	./output/S1ap-DownlinkS1cdma2000tunneling.h	\
+	./output/S1ap-UplinkS1cdma2000tunneling.h	\
+	./output/S1ap-UEContextModificationRequest.h	\
+	./output/S1ap-UEContextModificationResponse.h	\
+	./output/S1ap-UEContextModificationFailure.h	\
+	./output/S1ap-UECapabilityInfoIndication.h	\
+	./output/S1ap-UEContextReleaseCommand.h	\
+	./output/S1ap-UEContextReleaseComplete.h	\
+	./output/S1ap-ENBStatusTransfer.h	\
+	./output/S1ap-MMEStatusTransfer.h	\
+	./output/S1ap-DeactivateTrace.h	\
+	./output/S1ap-TraceStart.h	\
+	./output/S1ap-TraceFailureIndication.h	\
+	./output/S1ap-CellTrafficTrace.h	\
+	./output/S1ap-LocationReportingControl.h	\
+	./output/S1ap-LocationReportingFailureIndication.h	\
+	./output/S1ap-LocationReport.h	\
+	./output/S1ap-OverloadStart.h	\
+	./output/S1ap-OverloadStop.h	\
+	./output/S1ap-WriteReplaceWarningRequest.h	\
+	./output/S1ap-WriteReplaceWarningResponse.h	\
+	./output/S1ap-ENBDirectInformationTransfer.h	\
+	./output/S1ap-MMEDirectInformationTransfer.h	\
+	./output/S1ap-ENBConfigurationTransfer.h	\
+	./output/S1ap-MMEConfigurationTransfer.h	\
+	./output/S1ap-PrivateMessage.h	\
+	./output/S1ap-KillRequest.h	\
+	./output/S1ap-KillResponse.h	\
+	./output/S1ap-DownlinkUEAssociatedLPPaTransport.h	\
+	./output/S1ap-UplinkUEAssociatedLPPaTransport.h	\
+	./output/S1ap-DownlinkNonUEAssociatedLPPaTransport.h	\
+	./output/S1ap-UplinkNonUEAssociatedLPPaTransport.h	\
+	./output/S1ap-IE.h	\
+	./output/S1ap-IE-Extensions.h	\
+	./output/S1ap-AreaScopeOfMDT.h	\
+	./output/S1ap-AllocationAndRetentionPriority.h	\
+	./output/S1ap-Bearers-SubjectToStatusTransfer-List.h	\
+	./output/S1ap-Bearers-SubjectToStatusTransfer-Item.h	\
+	./output/S1ap-BitRate.h	\
+	./output/S1ap-BPLMNs.h	\
+	./output/S1ap-BroadcastCancelledAreaList.h	\
+	./output/S1ap-BroadcastCompletedAreaList.h	\
+	./output/S1ap-CancelledCellinEAI.h	\
+	./output/S1ap-CancelledCellinEAI-Item.h	\
+	./output/S1ap-CancelledCellinTAI.h	\
+	./output/S1ap-CancelledCellinTAI-Item.h	\
+	./output/S1ap-Cause.h	\
+	./output/S1ap-CauseMisc.h	\
+	./output/S1ap-CauseProtocol.h	\
+	./output/S1ap-CauseRadioNetwork.h	\
+	./output/S1ap-CauseTransport.h	\
+	./output/S1ap-CauseNas.h	\
+	./output/S1ap-CellAccessMode.h	\
+	./output/S1ap-CellIdentity.h	\
+	./output/S1ap-CellID-Broadcast.h	\
+	./output/S1ap-CellID-Broadcast-Item.h	\
+	./output/S1ap-CellID-Cancelled.h	\
+	./output/S1ap-CellID-Cancelled-Item.h	\
+	./output/S1ap-CellBasedMDT.h	\
+	./output/S1ap-CellIdListforMDT.h	\
+	./output/S1ap-Cdma2000PDU.h	\
+	./output/S1ap-Cdma2000RATType.h	\
+	./output/S1ap-Cdma2000SectorID.h	\
+	./output/S1ap-Cdma2000HOStatus.h	\
+	./output/S1ap-Cdma2000HORequiredIndication.h	\
+	./output/S1ap-Cdma2000OneXSRVCCInfo.h	\
+	./output/S1ap-Cdma2000OneXMEID.h	\
+	./output/S1ap-Cdma2000OneXMSI.h	\
+	./output/S1ap-Cdma2000OneXPilot.h	\
+	./output/S1ap-Cdma2000OneXRAND.h	\
+	./output/S1ap-Cell-Size.h	\
+	./output/S1ap-CellType.h	\
+	./output/S1ap-CGI.h	\
+	./output/S1ap-CI.h	\
+	./output/S1ap-CNDomain.h	\
+	./output/S1ap-ConcurrentWarningMessageIndicator.h	\
+	./output/S1ap-Correlation-ID.h	\
+	./output/S1ap-CSFallbackIndicator.h	\
+	./output/S1ap-CSG-Id.h	\
+	./output/S1ap-CSG-IdList.h	\
+	./output/S1ap-CSG-IdList-Item.h	\
+	./output/S1ap-CSGMembershipStatus.h	\
+	./output/S1ap-COUNTvalue.h	\
+	./output/S1ap-CriticalityDiagnostics.h	\
+	./output/S1ap-CriticalityDiagnostics-IE-List.h	\
+	./output/S1ap-CriticalityDiagnostics-IE-Item.h	\
+	./output/S1ap-DataCodingScheme.h	\
+	./output/S1ap-DL-Forwarding.h	\
+	./output/S1ap-Direct-Forwarding-Path-Availability.h	\
+	./output/S1ap-Data-Forwarding-Not-Possible.h	\
+	./output/S1ap-ECGIList.h	\
+	./output/S1ap-EmergencyAreaIDList.h	\
+	./output/S1ap-EmergencyAreaID.h	\
+	./output/S1ap-EmergencyAreaID-Broadcast.h	\
+	./output/S1ap-EmergencyAreaID-Broadcast-Item.h	\
+	./output/S1ap-EmergencyAreaID-Cancelled.h	\
+	./output/S1ap-EmergencyAreaID-Cancelled-Item.h	\
+	./output/S1ap-CompletedCellinEAI.h	\
+	./output/S1ap-CompletedCellinEAI-Item.h	\
+	./output/S1ap-ENB-ID.h	\
+	./output/S1ap-GERAN-Cell-ID.h	\
+	./output/S1ap-Global-ENB-ID.h	\
+	./output/S1ap-GUMMEIList.h	\
+	./output/S1ap-ENB-StatusTransfer-TransparentContainer.h	\
+	./output/S1ap-ENB-UE-S1AP-ID.h	\
+	./output/S1ap-ENBname.h	\
+	./output/S1ap-ENBX2TLAs.h	\
+	./output/S1ap-EncryptionAlgorithms.h	\
+	./output/S1ap-EPLMNs.h	\
+	./output/S1ap-EventType.h	\
+	./output/S1ap-E-RAB-ID.h	\
+	./output/S1ap-E-RABDataForwardingItem.h	\
+	./output/S1ap-E-RABToBeSetupItemHOReq.h	\
+	./output/S1ap-E-RABAdmittedItem.h	\
+	./output/S1ap-E-RABToBeSwitchedDLItem.h	\
+	./output/S1ap-E-RABToBeSwitchedULItem.h	\
+	./output/S1ap-E-RABToBeSetupItemBearerSUReq.h	\
+	./output/S1ap-E-RABSetupItemBearerSURes.h	\
+	./output/S1ap-E-RABToBeModifiedItemBearerModReq.h	\
+	./output/S1ap-E-RABReleaseItemBearerRelComp.h	\
+	./output/S1ap-E-RABToBeSetupItemCtxtSUReq.h	\
+	./output/S1ap-E-RABSetupItemCtxtSURes.h	\
+	./output/S1ap-E-RABToBeModifiedListBearerModReq.h	\
+	./output/S1ap-E-RABReleaseListBearerRelComp.h	\
+	./output/S1ap-E-RABInformationList.h	\
+	./output/S1ap-E-RABToBeSetupListCtxtSUReq.h	\
+	./output/S1ap-E-RABSetupListCtxtSURes.h	\
+	./output/S1ap-E-RABDataForwardingList.h	\
+	./output/S1ap-E-RABSetupListBearerSURes.h	\
+	./output/S1ap-E-RABFailedToSetupListHOReqAck.h	\
+	./output/S1ap-E-RABToBeSetupListBearerSUReq.h	\
+	./output/S1ap-E-RABAdmittedList.h	\
+	./output/S1ap-E-RABToBeSwitchedDLList.h	\
+	./output/S1ap-E-RABToBeSwitchedULList.h	\
+	./output/S1ap-E-RABModifyListBearerModRes.h	\
+	./output/S1ap-E-RABToBeSetupListHOReq.h	\
+	./output/S1ap-TAIList.h	\
+	./output/S1ap-UE-associatedLogicalS1-ConnectionListRes.h	\
+	./output/S1ap-UE-associatedLogicalS1-ConnectionListResAck.h	\
+	./output/S1ap-E-RABModifyItemBearerModRes.h	\
+	./output/S1ap-E-RABFailedToSetupItemHOReqAck.h	\
+	./output/S1ap-E-RABInformationListItem.h	\
+	./output/S1ap-E-RABList.h	\
+	./output/S1ap-E-RABItem.h	\
+	./output/S1ap-E-RABLevelQoSParameters.h	\
+	./output/S1ap-EUTRAN-CGI.h	\
+	./output/S1ap-EUTRANRoundTripDelayEstimationInfo.h	\
+	./output/S1ap-ExtendedRNC-ID.h	\
+	./output/S1ap-ExtendedRepetitionPeriod.h	\
+	./output/S1ap-ForbiddenInterRATs.h	\
+	./output/S1ap-ForbiddenTAs.h	\
+	./output/S1ap-ForbiddenTAs-Item.h	\
+	./output/S1ap-ForbiddenTACs.h	\
+	./output/S1ap-ForbiddenLAs.h	\
+	./output/S1ap-ForbiddenLAs-Item.h	\
+	./output/S1ap-ForbiddenLACs.h	\
+	./output/S1ap-GBR-QosInformation.h	\
+	./output/S1ap-GTP-TEID.h	\
+	./output/S1ap-GUMMEI.h	\
+	./output/S1ap-GWContextReleaseIndication.h	\
+	./output/S1ap-HandoverRestrictionList.h	\
+	./output/S1ap-HandoverType.h	\
+	./output/S1ap-HFN.h	\
+	./output/S1ap-ImmediateMDT.h	\
+	./output/S1ap-IMSI.h	\
+	./output/S1ap-IntegrityProtectionAlgorithms.h	\
+	./output/S1ap-InterfacesToTrace.h	\
+	./output/S1ap-Inter-SystemInformationTransferType.h	\
+	./output/S1ap-LAC.h	\
+	./output/S1ap-LAI.h	\
+	./output/S1ap-LastVisitedCell-Item.h	\
+	./output/S1ap-LastVisitedEUTRANCellInformation.h	\
+	./output/S1ap-LastVisitedUTRANCellInformation.h	\
+	./output/S1ap-LastVisitedGERANCellInformation.h	\
+	./output/S1ap-L3-Information.h	\
+	./output/S1ap-LPPa-PDU.h	\
+	./output/S1ap-LoggedMDT.h	\
+	./output/S1ap-LoggingInterval.h	\
+	./output/S1ap-LoggingDuration.h	\
+	./output/S1ap-MDT-Activation.h	\
+	./output/S1ap-MDT-Configuration.h	\
+	./output/S1ap-ManagementBasedMDTAllowed.h	\
+	./output/S1ap-PrivacyIndicator.h	\
+	./output/S1ap-MDTMode.h	\
+	./output/S1ap-MeasurementsToActivate.h	\
+	./output/S1ap-MeasurementThresholdA2.h	\
+	./output/S1ap-MessageIdentifier.h	\
+	./output/S1ap-MMEname.h	\
+	./output/S1ap-MMERelaySupportIndicator.h	\
+	./output/S1ap-MME-Group-ID.h	\
+	./output/S1ap-MME-Code.h	\
+	./output/S1ap-MME-UE-S1AP-ID.h	\
+	./output/S1ap-M-TMSI.h	\
+	./output/S1ap-MSClassmark2.h	\
+	./output/S1ap-MSClassmark3.h	\
+	./output/S1ap-NAS-PDU.h	\
+	./output/S1ap-NASSecurityParametersfromE-UTRAN.h	\
+	./output/S1ap-NASSecurityParameterstoE-UTRAN.h	\
+	./output/S1ap-NumberofBroadcastRequest.h	\
+	./output/S1ap-NumberOfBroadcasts.h	\
+	./output/S1ap-OldBSS-ToNewBSS-Information.h	\
+	./output/S1ap-OverloadAction.h	\
+	./output/S1ap-OverloadResponse.h	\
+	./output/S1ap-PagingDRX.h	\
+	./output/S1ap-PagingPriority.h	\
+	./output/S1ap-PDCP-SN.h	\
+	./output/S1ap-PeriodicReportingMDT.h	\
+	./output/S1ap-PLMNidentity.h	\
+	./output/S1ap-Pre-emptionCapability.h	\
+	./output/S1ap-Pre-emptionVulnerability.h	\
+	./output/S1ap-PriorityLevel.h	\
+	./output/S1ap-PS-ServiceNotAvailable.h	\
+	./output/S1ap-QCI.h	\
+	./output/S1ap-ResetType.h	\
+	./output/S1ap-ResetAll.h	\
+	./output/S1ap-ReceiveStatusofULPDCPSDUs.h	\
+	./output/S1ap-RelativeMMECapacity.h	\
+	./output/S1ap-RelayNode-Indicator.h	\
+	./output/S1ap-RAC.h	\
+	./output/S1ap-ReportAmountMDT.h	\
+	./output/S1ap-ReportIntervalMDT.h	\
+	./output/S1ap-ReportingTriggerMDT.h	\
+	./output/S1ap-RequestType.h	\
+	./output/S1ap-RIMTransfer.h	\
+	./output/S1ap-RIMInformation.h	\
+	./output/S1ap-RIMRoutingAddress.h	\
+	./output/S1ap-ReportArea.h	\
+	./output/S1ap-RepetitionPeriod.h	\
+	./output/S1ap-RNC-ID.h	\
+	./output/S1ap-RRC-Container.h	\
+	./output/S1ap-RRC-Establishment-Cause.h	\
+	./output/S1ap-Routing-ID.h	\
+	./output/S1ap-SecurityKey.h	\
+	./output/S1ap-SecurityContext.h	\
+	./output/S1ap-SerialNumber.h	\
+	./output/S1ap-SONInformation.h	\
+	./output/S1ap-SONInformationRequest.h	\
+	./output/S1ap-SONInformationReply.h	\
+	./output/S1ap-SONConfigurationTransfer.h	\
+	./output/S1ap-Source-ToTarget-TransparentContainer.h	\
+	./output/S1ap-SourceBSS-ToTargetBSS-TransparentContainer.h	\
+	./output/S1ap-SourceeNB-ID.h	\
+	./output/S1ap-SRVCCOperationPossible.h	\
+	./output/S1ap-SRVCCHOIndication.h	\
+	./output/S1ap-SourceeNB-ToTargeteNB-TransparentContainer.h	\
+	./output/S1ap-SourceRNC-ToTargetRNC-TransparentContainer.h	\
+	./output/S1ap-ServedGUMMEIs.h	\
+	./output/S1ap-ServedGUMMEIsItem.h	\
+	./output/S1ap-ServedGroupIDs.h	\
+	./output/S1ap-ServedMMECs.h	\
+	./output/S1ap-ServedPLMNs.h	\
+	./output/S1ap-SubscriberProfileIDforRFP.h	\
+	./output/S1ap-SupportedTAs.h	\
+	./output/S1ap-SupportedTAs-Item.h	\
+	./output/S1ap-StratumLevel.h	\
+	./output/S1ap-SynchronizationStatus.h	\
+	./output/S1ap-TimeSynchronizationInfo.h	\
+	./output/S1ap-S-TMSI.h	\
+	./output/S1ap-TAC.h	\
+	./output/S1ap-TAIListforWarning.h	\
+	./output/S1ap-TAI.h	\
+	./output/S1ap-TAIItem.h	\
+	./output/S1ap-TAI-Broadcast.h	\
+	./output/S1ap-TAI-Broadcast-Item.h	\
+	./output/S1ap-TAI-Cancelled.h	\
+	./output/S1ap-TAI-Cancelled-Item.h	\
+	./output/S1ap-TABasedMDT.h	\
+	./output/S1ap-TAListforMDT.h	\
+	./output/S1ap-CompletedCellinTAI.h	\
+	./output/S1ap-CompletedCellinTAI-Item.h	\
+	./output/S1ap-TBCD-STRING.h	\
+	./output/S1ap-TargetID.h	\
+	./output/S1ap-TargeteNB-ID.h	\
+	./output/S1ap-TargetRNC-ID.h	\
+	./output/S1ap-TargeteNB-ToSourceeNB-TransparentContainer.h	\
+	./output/S1ap-Target-ToSource-TransparentContainer.h	\
+	./output/S1ap-TargetRNC-ToSourceRNC-TransparentContainer.h	\
+	./output/S1ap-TargetBSS-ToSourceBSS-TransparentContainer.h	\
+	./output/S1ap-ThresholdEventA2.h	\
+	./output/S1ap-Threshold-RSRP.h	\
+	./output/S1ap-Threshold-RSRQ.h	\
+	./output/S1ap-TimeToWait.h	\
+	./output/S1ap-Time-UE-StayedInCell.h	\
+	./output/S1ap-TransportLayerAddress.h	\
+	./output/S1ap-TraceActivation.h	\
+	./output/S1ap-TraceDepth.h	\
+	./output/S1ap-E-UTRAN-Trace-ID.h	\
+	./output/S1ap-TrafficLoadReductionIndication.h	\
+	./output/S1ap-TypeOfError.h	\
+	./output/S1ap-UEAggregateMaximumBitrate.h	\
+	./output/S1ap-UE-S1AP-IDs.h	\
+	./output/S1ap-UE-S1AP-ID-pair.h	\
+	./output/S1ap-UE-associatedLogicalS1-ConnectionItem.h	\
+	./output/S1ap-UEIdentityIndexValue.h	\
+	./output/S1ap-UE-HistoryInformation.h	\
+	./output/S1ap-UEPagingID.h	\
+	./output/S1ap-UERadioCapability.h	\
+	./output/S1ap-UESecurityCapabilities.h	\
+	./output/S1ap-WarningAreaList.h	\
+	./output/S1ap-WarningType.h	\
+	./output/S1ap-WarningSecurityInfo.h	\
+	./output/S1ap-WarningMessageContents.h	\
+	./output/S1ap-X2TNLConfigurationInfo.h	\
+	./output/S1ap-ENBX2ExtTLAs.h	\
+	./output/S1ap-ENBX2ExtTLA.h	\
+	./output/S1ap-ENBX2GTPTLAs.h
+
+ASN_MODULE_HDRS+=./output/ANY.h
+ASN_MODULE_SRCS+=./output/ANY.c
+ASN_MODULE_HDRS+=./output/OCTET_STRING.h
+ASN_MODULE_HDRS+=./output/OPEN_TYPE.h
+ASN_MODULE_SRCS+=./output/OPEN_TYPE.c
+ASN_MODULE_HDRS+=./output/constr_CHOICE.h
+ASN_MODULE_HDRS+=./output/BOOLEAN.h
+ASN_MODULE_SRCS+=./output/BOOLEAN.c
+ASN_MODULE_HDRS+=./output/INTEGER.h
+ASN_MODULE_SRCS+=./output/INTEGER.c
+ASN_MODULE_HDRS+=./output/NULL.h
+ASN_MODULE_SRCS+=./output/NULL.c
+ASN_MODULE_HDRS+=./output/NativeEnumerated.h
+ASN_MODULE_SRCS+=./output/NativeEnumerated.c
+ASN_MODULE_HDRS+=./output/NativeInteger.h
+ASN_MODULE_SRCS+=./output/NativeInteger.c
+ASN_MODULE_HDRS+=./output/OBJECT_IDENTIFIER.h
+ASN_MODULE_SRCS+=./output/OBJECT_IDENTIFIER.c
+ASN_MODULE_HDRS+=./output/PrintableString.h
+ASN_MODULE_SRCS+=./output/PrintableString.c
+ASN_MODULE_HDRS+=./output/asn_SEQUENCE_OF.h
+ASN_MODULE_SRCS+=./output/asn_SEQUENCE_OF.c
+ASN_MODULE_HDRS+=./output/asn_SET_OF.h
+ASN_MODULE_SRCS+=./output/asn_SET_OF.c
+ASN_MODULE_SRCS+=./output/constr_CHOICE.c
+ASN_MODULE_HDRS+=./output/constr_SEQUENCE.h
+ASN_MODULE_SRCS+=./output/constr_SEQUENCE.c
+ASN_MODULE_HDRS+=./output/constr_SEQUENCE_OF.h
+ASN_MODULE_SRCS+=./output/constr_SEQUENCE_OF.c
+ASN_MODULE_HDRS+=./output/constr_SET_OF.h
+ASN_MODULE_SRCS+=./output/constr_SET_OF.c
+ASN_MODULE_HDRS+=./output/asn_application.h
+ASN_MODULE_SRCS+=./output/asn_application.c
+ASN_MODULE_HDRS+=./output/asn_ioc.h
+ASN_MODULE_HDRS+=./output/asn_system.h
+ASN_MODULE_HDRS+=./output/asn_codecs.h
+ASN_MODULE_HDRS+=./output/asn_internal.h
+ASN_MODULE_SRCS+=./output/asn_internal.c
+ASN_MODULE_HDRS+=./output/asn_random_fill.h
+ASN_MODULE_SRCS+=./output/asn_random_fill.c
+ASN_MODULE_HDRS+=./output/asn_bit_data.h
+ASN_MODULE_SRCS+=./output/asn_bit_data.c
+ASN_MODULE_SRCS+=./output/OCTET_STRING.c
+ASN_MODULE_HDRS+=./output/BIT_STRING.h
+ASN_MODULE_SRCS+=./output/BIT_STRING.c
+ASN_MODULE_SRCS+=./output/asn_codecs_prim.c
+ASN_MODULE_HDRS+=./output/asn_codecs_prim.h
+ASN_MODULE_HDRS+=./output/ber_tlv_length.h
+ASN_MODULE_SRCS+=./output/ber_tlv_length.c
+ASN_MODULE_HDRS+=./output/ber_tlv_tag.h
+ASN_MODULE_SRCS+=./output/ber_tlv_tag.c
+ASN_MODULE_HDRS+=./output/ber_decoder.h
+ASN_MODULE_SRCS+=./output/ber_decoder.c
+ASN_MODULE_HDRS+=./output/der_encoder.h
+ASN_MODULE_SRCS+=./output/der_encoder.c
+ASN_MODULE_HDRS+=./output/constr_TYPE.h
+ASN_MODULE_SRCS+=./output/constr_TYPE.c
+ASN_MODULE_HDRS+=./output/constraints.h
+ASN_MODULE_SRCS+=./output/constraints.c
+ASN_MODULE_HDRS+=./output/xer_support.h
+ASN_MODULE_SRCS+=./output/xer_support.c
+ASN_MODULE_HDRS+=./output/xer_decoder.h
+ASN_MODULE_SRCS+=./output/xer_decoder.c
+ASN_MODULE_HDRS+=./output/xer_encoder.h
+ASN_MODULE_SRCS+=./output/xer_encoder.c
+ASN_MODULE_HDRS+=./output/per_support.h
+ASN_MODULE_SRCS+=./output/per_support.c
+ASN_MODULE_HDRS+=./output/per_decoder.h
+ASN_MODULE_SRCS+=./output/per_decoder.c
+ASN_MODULE_HDRS+=./output/per_encoder.h
+ASN_MODULE_SRCS+=./output/per_encoder.c
+ASN_MODULE_HDRS+=./output/per_opentype.h
+ASN_MODULE_SRCS+=./output/per_opentype.c
+ASN_MODULE_HDRS+=./output/oer_decoder.h
+ASN_MODULE_HDRS+=./output/oer_encoder.h
+ASN_MODULE_HDRS+=./output/oer_support.h
+ASN_MODULE_SRCS+=./output/oer_decoder.c
+ASN_MODULE_SRCS+=./output/oer_encoder.c
+ASN_MODULE_SRCS+=./output/oer_support.c
+ASN_MODULE_SRCS+=./output/OPEN_TYPE_oer.c
+ASN_MODULE_SRCS+=./output/INTEGER_oer.c
+ASN_MODULE_SRCS+=./output/BIT_STRING_oer.c
+ASN_MODULE_SRCS+=./output/OCTET_STRING_oer.c
+ASN_MODULE_SRCS+=./output/NativeInteger_oer.c
+ASN_MODULE_SRCS+=./output/NativeEnumerated_oer.c
+ASN_MODULE_SRCS+=./output/constr_CHOICE_oer.c
+ASN_MODULE_SRCS+=./output/constr_SEQUENCE_oer.c
+ASN_MODULE_SRCS+=./output/constr_SET_OF_oer.c
+
+ASN_MODULE_CFLAGS=
+
+lib_LTLIBRARIES+=libasncodec.la
+libasncodec_la_SOURCES=$(ASN_MODULE_SRCS) $(ASN_MODULE_HDRS)
+libasncodec_la_CPPFLAGS=-I$(top_srcdir)/./output/
+libasncodec_la_CFLAGS=$(ASN_MODULE_CFLAGS)
+libasncodec_la_LDFLAGS=-lm
