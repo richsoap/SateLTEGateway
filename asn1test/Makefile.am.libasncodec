@@ -6,83 +6,6 @@ ASN_MODULE_SRCS=	\
 	./output/S1ap-ProtocolExtensionID.c	\
 	./output/S1ap-ProtocolIE-ID.c	\
 	./output/S1ap-TriggeringMessage.c	\
-	./output/S1AP-PDU.c	\
-	./output/S1ap-InitiatingMessage.c	\
-	./output/S1ap-SuccessfulOutcome.c	\
-	./output/S1ap-UnsuccessfulOutcome.c	\
-	./output/S1ap-HandoverRequired.c	\
-	./output/S1ap-HandoverCommand.c	\
-	./output/S1ap-HandoverPreparationFailure.c	\
-	./output/S1ap-HandoverRequest.c	\
-	./output/S1ap-HandoverRequestAcknowledge.c	\
-	./output/S1ap-HandoverFailure.c	\
-	./output/S1ap-HandoverNotify.c	\
-	./output/S1ap-PathSwitchRequest.c	\
-	./output/S1ap-PathSwitchRequestAcknowledge.c	\
-	./output/S1ap-PathSwitchRequestFailure.c	\
-	./output/S1ap-E-RABSetupRequest.c	\
-	./output/S1ap-E-RABSetupResponse.c	\
-	./output/S1ap-E-RABModifyRequest.c	\
-	./output/S1ap-E-RABModifyResponse.c	\
-	./output/S1ap-E-RABReleaseIndication.c	\
-	./output/S1ap-E-RABReleaseCommand.c	\
-	./output/S1ap-E-RABReleaseResponse.c	\
-	./output/S1ap-InitialContextSetupRequest.c	\
-	./output/S1ap-InitialContextSetupResponse.c	\
-	./output/S1ap-InitialContextSetupFailure.c	\
-	./output/S1ap-UEContextReleaseRequest.c	\
-	./output/S1ap-Paging.c	\
-	./output/S1ap-DownlinkNASTransport.c	\
-	./output/S1ap-InitialUEMessage.c	\
-	./output/S1ap-UplinkNASTransport.c	\
-	./output/S1ap-NASNonDeliveryIndication.c	\
-	./output/S1ap-HandoverCancel.c	\
-	./output/S1ap-HandoverCancelAcknowledge.c	\
-	./output/S1ap-Reset.c	\
-	./output/S1ap-ResetAcknowledge.c	\
-	./output/S1ap-S1SetupResponse.c	\
-	./output/S1ap-S1SetupRequest.c	\
-	./output/S1ap-S1SetupFailure.c	\
-	./output/S1ap-ErrorIndication.c	\
-	./output/S1ap-ENBConfigurationUpdate.c	\
-	./output/S1ap-ENBConfigurationUpdateAcknowledge.c	\
-	./output/S1ap-ENBConfigurationUpdateFailure.c	\
-	./output/S1ap-MMEConfigurationUpdate.c	\
-	./output/S1ap-MMEConfigurationUpdateAcknowledge.c	\
-	./output/S1ap-MMEConfigurationUpdateFailure.c	\
-	./output/S1ap-DownlinkS1cdma2000tunneling.c	\
-	./output/S1ap-UplinkS1cdma2000tunneling.c	\
-	./output/S1ap-UEContextModificationRequest.c	\
-	./output/S1ap-UEContextModificationResponse.c	\
-	./output/S1ap-UEContextModificationFailure.c	\
-	./output/S1ap-UECapabilityInfoIndication.c	\
-	./output/S1ap-UEContextReleaseCommand.c	\
-	./output/S1ap-UEContextReleaseComplete.c	\
-	./output/S1ap-ENBStatusTransfer.c	\
-	./output/S1ap-MMEStatusTransfer.c	\
-	./output/S1ap-DeactivateTrace.c	\
-	./output/S1ap-TraceStart.c	\
-	./output/S1ap-TraceFailureIndication.c	\
-	./output/S1ap-CellTrafficTrace.c	\
-	./output/S1ap-LocationReportingControl.c	\
-	./output/S1ap-LocationReportingFailureIndication.c	\
-	./output/S1ap-LocationReport.c	\
-	./output/S1ap-OverloadStart.c	\
-	./output/S1ap-OverloadStop.c	\
-	./output/S1ap-WriteReplaceWarningRequest.c	\
-	./output/S1ap-WriteReplaceWarningResponse.c	\
-	./output/S1ap-ENBDirectInformationTransfer.c	\
-	./output/S1ap-MMEDirectInformationTransfer.c	\
-	./output/S1ap-ENBConfigurationTransfer.c	\
-	./output/S1ap-MMEConfigurationTransfer.c	\
-	./output/S1ap-PrivateMessage.c	\
-	./output/S1ap-KillRequest.c	\
-	./output/S1ap-KillResponse.c	\
-	./output/S1ap-DownlinkUEAssociatedLPPaTransport.c	\
-	./output/S1ap-UplinkUEAssociatedLPPaTransport.c	\
-	./output/S1ap-DownlinkNonUEAssociatedLPPaTransport.c	\
-	./output/S1ap-UplinkNonUEAssociatedLPPaTransport.c	\
-	./output/S1ap-IE.c	\
 	./output/S1ap-IE-Extensions.c	\
 	./output/S1ap-AreaScopeOfMDT.c	\
 	./output/S1ap-AllocationAndRetentionPriority.c	\
@@ -355,7 +278,84 @@ ASN_MODULE_SRCS=	\
 	./output/S1ap-X2TNLConfigurationInfo.c	\
 	./output/S1ap-ENBX2ExtTLAs.c	\
 	./output/S1ap-ENBX2ExtTLA.c	\
-	./output/S1ap-ENBX2GTPTLAs.c
+	./output/S1ap-ENBX2GTPTLAs.c	\
+	./output/S1AP-PDU.c	\
+	./output/S1ap-InitiatingMessage.c	\
+	./output/S1ap-SuccessfulOutcome.c	\
+	./output/S1ap-UnsuccessfulOutcome.c	\
+	./output/S1ap-HandoverRequired.c	\
+	./output/S1ap-HandoverCommand.c	\
+	./output/S1ap-HandoverPreparationFailure.c	\
+	./output/S1ap-HandoverRequest.c	\
+	./output/S1ap-HandoverRequestAcknowledge.c	\
+	./output/S1ap-HandoverFailure.c	\
+	./output/S1ap-HandoverNotify.c	\
+	./output/S1ap-PathSwitchRequest.c	\
+	./output/S1ap-PathSwitchRequestAcknowledge.c	\
+	./output/S1ap-PathSwitchRequestFailure.c	\
+	./output/S1ap-E-RABSetupRequest.c	\
+	./output/S1ap-E-RABSetupResponse.c	\
+	./output/S1ap-E-RABModifyRequest.c	\
+	./output/S1ap-E-RABModifyResponse.c	\
+	./output/S1ap-E-RABReleaseIndication.c	\
+	./output/S1ap-E-RABReleaseCommand.c	\
+	./output/S1ap-E-RABReleaseResponse.c	\
+	./output/S1ap-InitialContextSetupRequest.c	\
+	./output/S1ap-InitialContextSetupResponse.c	\
+	./output/S1ap-InitialContextSetupFailure.c	\
+	./output/S1ap-UEContextReleaseRequest.c	\
+	./output/S1ap-Paging.c	\
+	./output/S1ap-DownlinkNASTransport.c	\
+	./output/S1ap-InitialUEMessage.c	\
+	./output/S1ap-UplinkNASTransport.c	\
+	./output/S1ap-NASNonDeliveryIndication.c	\
+	./output/S1ap-HandoverCancel.c	\
+	./output/S1ap-HandoverCancelAcknowledge.c	\
+	./output/S1ap-Reset.c	\
+	./output/S1ap-ResetAcknowledge.c	\
+	./output/S1ap-S1SetupResponse.c	\
+	./output/S1ap-S1SetupRequest.c	\
+	./output/S1ap-S1SetupFailure.c	\
+	./output/S1ap-ErrorIndication.c	\
+	./output/S1ap-ENBConfigurationUpdate.c	\
+	./output/S1ap-ENBConfigurationUpdateAcknowledge.c	\
+	./output/S1ap-ENBConfigurationUpdateFailure.c	\
+	./output/S1ap-MMEConfigurationUpdate.c	\
+	./output/S1ap-MMEConfigurationUpdateAcknowledge.c	\
+	./output/S1ap-MMEConfigurationUpdateFailure.c	\
+	./output/S1ap-DownlinkS1cdma2000tunneling.c	\
+	./output/S1ap-UplinkS1cdma2000tunneling.c	\
+	./output/S1ap-UEContextModificationRequest.c	\
+	./output/S1ap-UEContextModificationResponse.c	\
+	./output/S1ap-UEContextModificationFailure.c	\
+	./output/S1ap-UECapabilityInfoIndication.c	\
+	./output/S1ap-UEContextReleaseCommand.c	\
+	./output/S1ap-UEContextReleaseComplete.c	\
+	./output/S1ap-ENBStatusTransfer.c	\
+	./output/S1ap-MMEStatusTransfer.c	\
+	./output/S1ap-DeactivateTrace.c	\
+	./output/S1ap-TraceStart.c	\
+	./output/S1ap-TraceFailureIndication.c	\
+	./output/S1ap-CellTrafficTrace.c	\
+	./output/S1ap-LocationReportingControl.c	\
+	./output/S1ap-LocationReportingFailureIndication.c	\
+	./output/S1ap-LocationReport.c	\
+	./output/S1ap-OverloadStart.c	\
+	./output/S1ap-OverloadStop.c	\
+	./output/S1ap-WriteReplaceWarningRequest.c	\
+	./output/S1ap-WriteReplaceWarningResponse.c	\
+	./output/S1ap-ENBDirectInformationTransfer.c	\
+	./output/S1ap-MMEDirectInformationTransfer.c	\
+	./output/S1ap-ENBConfigurationTransfer.c	\
+	./output/S1ap-MMEConfigurationTransfer.c	\
+	./output/S1ap-PrivateMessage.c	\
+	./output/S1ap-KillRequest.c	\
+	./output/S1ap-KillResponse.c	\
+	./output/S1ap-DownlinkUEAssociatedLPPaTransport.c	\
+	./output/S1ap-UplinkUEAssociatedLPPaTransport.c	\
+	./output/S1ap-DownlinkNonUEAssociatedLPPaTransport.c	\
+	./output/S1ap-UplinkNonUEAssociatedLPPaTransport.c	\
+	./output/S1ap-IE.c
 
 ASN_MODULE_HDRS=	\
 	./output/S1ap-Criticality.h	\
@@ -365,83 +365,6 @@ ASN_MODULE_HDRS=	\
 	./output/S1ap-ProtocolExtensionID.h	\
 	./output/S1ap-ProtocolIE-ID.h	\
 	./output/S1ap-TriggeringMessage.h	\
-	./output/S1AP-PDU.h	\
-	./output/S1ap-InitiatingMessage.h	\
-	./output/S1ap-SuccessfulOutcome.h	\
-	./output/S1ap-UnsuccessfulOutcome.h	\
-	./output/S1ap-HandoverRequired.h	\
-	./output/S1ap-HandoverCommand.h	\
-	./output/S1ap-HandoverPreparationFailure.h	\
-	./output/S1ap-HandoverRequest.h	\
-	./output/S1ap-HandoverRequestAcknowledge.h	\
-	./output/S1ap-HandoverFailure.h	\
-	./output/S1ap-HandoverNotify.h	\
-	./output/S1ap-PathSwitchRequest.h	\
-	./output/S1ap-PathSwitchRequestAcknowledge.h	\
-	./output/S1ap-PathSwitchRequestFailure.h	\
-	./output/S1ap-E-RABSetupRequest.h	\
-	./output/S1ap-E-RABSetupResponse.h	\
-	./output/S1ap-E-RABModifyRequest.h	\
-	./output/S1ap-E-RABModifyResponse.h	\
-	./output/S1ap-E-RABReleaseIndication.h	\
-	./output/S1ap-E-RABReleaseCommand.h	\
-	./output/S1ap-E-RABReleaseResponse.h	\
-	./output/S1ap-InitialContextSetupRequest.h	\
-	./output/S1ap-InitialContextSetupResponse.h	\
-	./output/S1ap-InitialContextSetupFailure.h	\
-	./output/S1ap-UEContextReleaseRequest.h	\
-	./output/S1ap-Paging.h	\
-	./output/S1ap-DownlinkNASTransport.h	\
-	./output/S1ap-InitialUEMessage.h	\
-	./output/S1ap-UplinkNASTransport.h	\
-	./output/S1ap-NASNonDeliveryIndication.h	\
-	./output/S1ap-HandoverCancel.h	\
-	./output/S1ap-HandoverCancelAcknowledge.h	\
-	./output/S1ap-Reset.h	\
-	./output/S1ap-ResetAcknowledge.h	\
-	./output/S1ap-S1SetupResponse.h	\
-	./output/S1ap-S1SetupRequest.h	\
-	./output/S1ap-S1SetupFailure.h	\
-	./output/S1ap-ErrorIndication.h	\
-	./output/S1ap-ENBConfigurationUpdate.h	\
-	./output/S1ap-ENBConfigurationUpdateAcknowledge.h	\
-	./output/S1ap-ENBConfigurationUpdateFailure.h	\
-	./output/S1ap-MMEConfigurationUpdate.h	\
-	./output/S1ap-MMEConfigurationUpdateAcknowledge.h	\
-	./output/S1ap-MMEConfigurationUpdateFailure.h	\
-	./output/S1ap-DownlinkS1cdma2000tunneling.h	\
-	./output/S1ap-UplinkS1cdma2000tunneling.h	\
-	./output/S1ap-UEContextModificationRequest.h	\
-	./output/S1ap-UEContextModificationResponse.h	\
-	./output/S1ap-UEContextModificationFailure.h	\
-	./output/S1ap-UECapabilityInfoIndication.h	\
-	./output/S1ap-UEContextReleaseCommand.h	\
-	./output/S1ap-UEContextReleaseComplete.h	\
-	./output/S1ap-ENBStatusTransfer.h	\
-	./output/S1ap-MMEStatusTransfer.h	\
-	./output/S1ap-DeactivateTrace.h	\
-	./output/S1ap-TraceStart.h	\
-	./output/S1ap-TraceFailureIndication.h	\
-	./output/S1ap-CellTrafficTrace.h	\
-	./output/S1ap-LocationReportingControl.h	\
-	./output/S1ap-LocationReportingFailureIndication.h	\
-	./output/S1ap-LocationReport.h	\
-	./output/S1ap-OverloadStart.h	\
-	./output/S1ap-OverloadStop.h	\
-	./output/S1ap-WriteReplaceWarningRequest.h	\
-	./output/S1ap-WriteReplaceWarningResponse.h	\
-	./output/S1ap-ENBDirectInformationTransfer.h	\
-	./output/S1ap-MMEDirectInformationTransfer.h	\
-	./output/S1ap-ENBConfigurationTransfer.h	\
-	./output/S1ap-MMEConfigurationTransfer.h	\
-	./output/S1ap-PrivateMessage.h	\
-	./output/S1ap-KillRequest.h	\
-	./output/S1ap-KillResponse.h	\
-	./output/S1ap-DownlinkUEAssociatedLPPaTransport.h	\
-	./output/S1ap-UplinkUEAssociatedLPPaTransport.h	\
-	./output/S1ap-DownlinkNonUEAssociatedLPPaTransport.h	\
-	./output/S1ap-UplinkNonUEAssociatedLPPaTransport.h	\
-	./output/S1ap-IE.h	\
 	./output/S1ap-IE-Extensions.h	\
 	./output/S1ap-AreaScopeOfMDT.h	\
 	./output/S1ap-AllocationAndRetentionPriority.h	\
@@ -714,7 +637,84 @@ ASN_MODULE_HDRS=	\
 	./output/S1ap-X2TNLConfigurationInfo.h	\
 	./output/S1ap-ENBX2ExtTLAs.h	\
 	./output/S1ap-ENBX2ExtTLA.h	\
-	./output/S1ap-ENBX2GTPTLAs.h
+	./output/S1ap-ENBX2GTPTLAs.h	\
+	./output/S1AP-PDU.h	\
+	./output/S1ap-InitiatingMessage.h	\
+	./output/S1ap-SuccessfulOutcome.h	\
+	./output/S1ap-UnsuccessfulOutcome.h	\
+	./output/S1ap-HandoverRequired.h	\
+	./output/S1ap-HandoverCommand.h	\
+	./output/S1ap-HandoverPreparationFailure.h	\
+	./output/S1ap-HandoverRequest.h	\
+	./output/S1ap-HandoverRequestAcknowledge.h	\
+	./output/S1ap-HandoverFailure.h	\
+	./output/S1ap-HandoverNotify.h	\
+	./output/S1ap-PathSwitchRequest.h	\
+	./output/S1ap-PathSwitchRequestAcknowledge.h	\
+	./output/S1ap-PathSwitchRequestFailure.h	\
+	./output/S1ap-E-RABSetupRequest.h	\
+	./output/S1ap-E-RABSetupResponse.h	\
+	./output/S1ap-E-RABModifyRequest.h	\
+	./output/S1ap-E-RABModifyResponse.h	\
+	./output/S1ap-E-RABReleaseIndication.h	\
+	./output/S1ap-E-RABReleaseCommand.h	\
+	./output/S1ap-E-RABReleaseResponse.h	\
+	./output/S1ap-InitialContextSetupRequest.h	\
+	./output/S1ap-InitialContextSetupResponse.h	\
+	./output/S1ap-InitialContextSetupFailure.h	\
+	./output/S1ap-UEContextReleaseRequest.h	\
+	./output/S1ap-Paging.h	\
+	./output/S1ap-DownlinkNASTransport.h	\
+	./output/S1ap-InitialUEMessage.h	\
+	./output/S1ap-UplinkNASTransport.h	\
+	./output/S1ap-NASNonDeliveryIndication.h	\
+	./output/S1ap-HandoverCancel.h	\
+	./output/S1ap-HandoverCancelAcknowledge.h	\
+	./output/S1ap-Reset.h	\
+	./output/S1ap-ResetAcknowledge.h	\
+	./output/S1ap-S1SetupResponse.h	\
+	./output/S1ap-S1SetupRequest.h	\
+	./output/S1ap-S1SetupFailure.h	\
+	./output/S1ap-ErrorIndication.h	\
+	./output/S1ap-ENBConfigurationUpdate.h	\
+	./output/S1ap-ENBConfigurationUpdateAcknowledge.h	\
+	./output/S1ap-ENBConfigurationUpdateFailure.h	\
+	./output/S1ap-MMEConfigurationUpdate.h	\
+	./output/S1ap-MMEConfigurationUpdateAcknowledge.h	\
+	./output/S1ap-MMEConfigurationUpdateFailure.h	\
+	./output/S1ap-DownlinkS1cdma2000tunneling.h	\
+	./output/S1ap-UplinkS1cdma2000tunneling.h	\
+	./output/S1ap-UEContextModificationRequest.h	\
+	./output/S1ap-UEContextModificationResponse.h	\
+	./output/S1ap-UEContextModificationFailure.h	\
+	./output/S1ap-UECapabilityInfoIndication.h	\
+	./output/S1ap-UEContextReleaseCommand.h	\
+	./output/S1ap-UEContextReleaseComplete.h	\
+	./output/S1ap-ENBStatusTransfer.h	\
+	./output/S1ap-MMEStatusTransfer.h	\
+	./output/S1ap-DeactivateTrace.h	\
+	./output/S1ap-TraceStart.h	\
+	./output/S1ap-TraceFailureIndication.h	\
+	./output/S1ap-CellTrafficTrace.h	\
+	./output/S1ap-LocationReportingControl.h	\
+	./output/S1ap-LocationReportingFailureIndication.h	\
+	./output/S1ap-LocationReport.h	\
+	./output/S1ap-OverloadStart.h	\
+	./output/S1ap-OverloadStop.h	\
+	./output/S1ap-WriteReplaceWarningRequest.h	\
+	./output/S1ap-WriteReplaceWarningResponse.h	\
+	./output/S1ap-ENBDirectInformationTransfer.h	\
+	./output/S1ap-MMEDirectInformationTransfer.h	\
+	./output/S1ap-ENBConfigurationTransfer.h	\
+	./output/S1ap-MMEConfigurationTransfer.h	\
+	./output/S1ap-PrivateMessage.h	\
+	./output/S1ap-KillRequest.h	\
+	./output/S1ap-KillResponse.h	\
+	./output/S1ap-DownlinkUEAssociatedLPPaTransport.h	\
+	./output/S1ap-UplinkUEAssociatedLPPaTransport.h	\
+	./output/S1ap-DownlinkNonUEAssociatedLPPaTransport.h	\
+	./output/S1ap-UplinkNonUEAssociatedLPPaTransport.h	\
+	./output/S1ap-IE.h
 
 ASN_MODULE_HDRS+=./output/ANY.h
 ASN_MODULE_SRCS+=./output/ANY.c
@@ -789,23 +789,8 @@ ASN_MODULE_HDRS+=./output/per_encoder.h
 ASN_MODULE_SRCS+=./output/per_encoder.c
 ASN_MODULE_HDRS+=./output/per_opentype.h
 ASN_MODULE_SRCS+=./output/per_opentype.c
-ASN_MODULE_HDRS+=./output/oer_decoder.h
-ASN_MODULE_HDRS+=./output/oer_encoder.h
-ASN_MODULE_HDRS+=./output/oer_support.h
-ASN_MODULE_SRCS+=./output/oer_decoder.c
-ASN_MODULE_SRCS+=./output/oer_encoder.c
-ASN_MODULE_SRCS+=./output/oer_support.c
-ASN_MODULE_SRCS+=./output/OPEN_TYPE_oer.c
-ASN_MODULE_SRCS+=./output/INTEGER_oer.c
-ASN_MODULE_SRCS+=./output/BIT_STRING_oer.c
-ASN_MODULE_SRCS+=./output/OCTET_STRING_oer.c
-ASN_MODULE_SRCS+=./output/NativeInteger_oer.c
-ASN_MODULE_SRCS+=./output/NativeEnumerated_oer.c
-ASN_MODULE_SRCS+=./output/constr_CHOICE_oer.c
-ASN_MODULE_SRCS+=./output/constr_SEQUENCE_oer.c
-ASN_MODULE_SRCS+=./output/constr_SET_OF_oer.c
 
-ASN_MODULE_CFLAGS=
+ASN_MODULE_CFLAGS=-DASN_DISABLE_OER_SUPPORT 
 
 lib_LTLIBRARIES+=libasncodec.la
 libasncodec_la_SOURCES=$(ASN_MODULE_SRCS) $(ASN_MODULE_HDRS)

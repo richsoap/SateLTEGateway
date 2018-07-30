@@ -45,6 +45,7 @@ per_type_encoder_f ANY_encode_uper;
 /* Convert another ASN.1 type into the ANY. This implies DER encoding. */
 int ANY_fromType(ANY_t *, asn_TYPE_descriptor_t *td, void *struct_ptr);
 ANY_t *ANY_new_fromType(asn_TYPE_descriptor_t *td, void *struct_ptr);
+int ANY_fromType_per(ANY_t *, asn_TYPE_descriptor_t *td, void *struct_ptr);
 
 /* Convert the contents of the ANY type into the specified type. */
 int ANY_to_type(ANY_t *, asn_TYPE_descriptor_t *td, void **struct_ptr);

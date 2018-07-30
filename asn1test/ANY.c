@@ -110,6 +110,38 @@ ANY_fromType(ANY_t *st, asn_TYPE_descriptor_t *td, void *sptr) {
 	return 0;
 }
 
+int
+ANY_fromType_per(ANY_t *st, asn_TYPE_descriptor_t *td, void *sptr) {
+	struct _callback_arg arg;
+	asn_enc_rval_t erval;
+
+	if(!st || !td) {
+		errno = EINVAL;
+		return -1;
+	}
+
+	if(!sptr) {
+		if(st->buf) FREEMEM(st->buf);
+		st->size = 0;
+		return 0;
+	}
+
+	arg.offset = arg.size = 0;
+	arg.buffer = 0;
+
+	erval = uper_encode(td, 0, sptr, ANY__consume_bytes, &arg);
+	if(erval.encoded == -1) {
+		if(arg.buffer) FREEMEM(arg.buffer);
+		return -1;
+	}
+	//assert((size_t)erval.encoded == arg.offset);
+
+	if(st->buf) FREEMEM(st->buf);
+	st->buf = arg.buffer;
+	st->size = arg.offset;
+
+	return 0;
+}
 ANY_t *
 ANY_new_fromType(asn_TYPE_descriptor_t *td, void *sptr) {
 	ANY_t tmp;

@@ -1,4 +1,2 @@
-asnpath=/usr/share/asn1c/
-
 all:
-	cc -o main -I$(asnpath) -L./ main.c
+	cc -o exe -I. -D ASN_DISABLE_OER_SUPPORT *.c
