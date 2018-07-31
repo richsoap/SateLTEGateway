@@ -5,6 +5,7 @@
 #include <asn_internal.h>
 #include <BIT_STRING.h>
 #include <asn_internal.h>
+#include <ALIGN.h>
 
 /*
  * BIT STRING basic type description.
@@ -521,6 +522,7 @@ BIT_STRING_encode_uper(const asn_TYPE_descriptor_t *td,
     buf = st->buf;
     do {
         int need_eom = 0;
+		asn_put_water(po);
         ssize_t maySave = uper_put_length(po, size_in_bits, &need_eom);
         if(maySave < 0) ASN__ENCODE_FAILED;
 

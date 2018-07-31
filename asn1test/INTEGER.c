@@ -7,6 +7,7 @@
 #include <INTEGER.h>
 #include <asn_codecs_prim.h>	/* Encoder and decoder of a primitive type */
 #include <errno.h>
+#include <ALIGN.h>
 
 /*
  * INTEGER basic type description.
@@ -785,6 +786,7 @@ INTEGER_encode_uper(const asn_TYPE_descriptor_t *td,
 
 	for(buf = st->buf, end = st->buf + st->size; buf < end;) {
         int need_eom = 0;
+		asn_put_water(po);
         ssize_t mayEncode = uper_put_length(po, end - buf, &need_eom);
         if(mayEncode < 0)
 			ASN__ENCODE_FAILED;

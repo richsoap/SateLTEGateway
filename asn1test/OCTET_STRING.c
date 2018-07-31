@@ -7,6 +7,7 @@
 #include <OCTET_STRING.h>
 #include <BIT_STRING.h>	/* for .bits_unused member */
 #include <errno.h>
+#include <ALIGN.h>
 
 /*
  * OCTET STRING basic type description.
@@ -1602,7 +1603,10 @@ OCTET_STRING_encode_uper(const asn_TYPE_descriptor_t *td,
 		if(per_put_few_bits(po, inext, 1))
 			ASN__ENCODE_FAILED;
 	}
-
+	//////////////////////////
+	// add water here
+	asn_put_water(po);
+	//////////////////////////
     if(csiz->effective_bits >= 0 && !inext) {
         ASN_DEBUG("Encoding %" ASN_PRI_SIZE " bytes (%ld), length in %d bits", st->size,
                   size_in_units - csiz->lower_bound, csiz->effective_bits);
