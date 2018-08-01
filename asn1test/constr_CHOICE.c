@@ -5,6 +5,7 @@
 #include <asn_internal.h>
 #include <constr_CHOICE.h>
 #include <per_opentype.h>
+#include <ALIGN.h>
 
 /*
  * Number of bytes left for this structure.
@@ -990,10 +991,15 @@ CHOICE_encode_uper(const asn_TYPE_descriptor_t *td,
         memb_ptr = (const char *)sptr + elm->memb_offset;
     }
 
+
+	//////////////////////
+	//
+
     if(ct && ct->range_bits >= 0) {
         if(per_put_few_bits(po, present_enc, ct->range_bits))
             ASN__ENCODE_FAILED;
 
+		//asn_put_water(po);
         return elm->type->op->uper_encoder(
             elm->type, elm->encoding_constraints.per_constraints, memb_ptr, po);
     } else {

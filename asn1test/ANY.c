@@ -5,6 +5,7 @@
 #include <asn_internal.h>
 #include <ANY.h>
 #include <errno.h>
+#include <ALIGN.h>
 
 asn_OCTET_STRING_specifics_t asn_SPC_ANY_specs = {
 	sizeof(ANY_t),
@@ -137,9 +138,9 @@ ANY_fromType_per(ANY_t *st, asn_TYPE_descriptor_t *td, void *sptr) {
 	//assert((size_t)erval.encoded == arg.offset);
 
 	if(st->buf) FREEMEM(st->buf);
-	st->buf = arg.buffer;
-	st->size = arg.offset;
-
+	st->buf = calloc(arg.offset, sizeof(uint8_t));
+	st->size = asn_squeeze_water(arg.buffer, arg.offset, st->buf);
+	free(arg.buffer);
 	return 0;
 }
 ANY_t *
@@ -289,6 +290,7 @@ ANY_encode_uper(const asn_TYPE_descriptor_t *td,
     size = st->size;
     do {
         int need_eom = 0;
+		asn_put_water(po);
         ssize_t may_save = uper_put_length(po, size, &need_eom);
         if(may_save < 0) ASN__ENCODE_FAILED;
 

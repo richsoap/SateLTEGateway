@@ -1601,6 +1601,7 @@ OCTET_STRING_encode_uper(const asn_TYPE_descriptor_t *td,
     if(ct_extensible) {
 		/* Declare whether length is [not] within extension root */
 		if(per_put_few_bits(po, inext, 1))
+		//if(per_put_few_bits(po, inext, 8))
 			ASN__ENCODE_FAILED;
 	}
 	//////////////////////////

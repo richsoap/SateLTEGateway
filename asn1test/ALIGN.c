@@ -1,7 +1,6 @@
 #include "ALIGN.h"
 #include <asn_internal.h>
 #include <asn_bit_data.h>
-#include <list>
 void asn_put_water(asn_bit_outp_t *po) {
 	int i;
 	uint8_t asn_water[] = {0x3F,0xFF,0xFF,0xFF,0xFF,0xFC};
@@ -33,48 +32,56 @@ int get_water_head(uint8_t* location) {
 		tail = location[4];
 		tail_length = 0;
 	}
-	for(index = 0;index < 8;index ++) {
-		if(tail & 0x80 == 0x80) {
-			tail_length ++;
+	printf("tail is :%x\n",tail);
+	for(index = 0;index < 8 && tail & 0x80;index ++) 
 			tail = tail << 1;
-		}
-		else {
-			break;
-		}
-	}
+	tail_length += index;
 	tail_length += 2;
 	return 16 - tail_length;
 }
-typedef struct phase {
-	int start; // start location
-	int start_offset; // where to start
-	int end; // location of the last Byte of this phase
-	int end_offset; // how many bits in the last Byte
-	phase_t * next;
-}phase_t;
-
-int asn_merge_phases(uint8_t* buffer, phase_t * list) {
+int asn_merge_phases(const uint8_t* buffer, phase_t * list, uint8_t* tarbuffer) {
 	phase_t* freenode;
-	int count, tar, src;
-	uint8_t cachei, head_off, tail_off;
-	count = tar = src = 0;
+	int tar, src;
+	uint8_t cache, head_mask, tail_mask;
+	tar = src = 0;
+	freenode = list;
 	while(list) {
-		cache = 0;
-		head_off = BIT_ZERO(list->start_offset);
-		tail_off = BIT_FF(list->end_offset);
+		head_mask = BIT_ZERO(list->start_offset);
+		tail_mask = BIT_FF(list->end_offset);
+		cache = buffer[list->start] & head_mask;
+		for(src = list->start + 1; src < list->end; src ++) {
+			tarbuffer[tar ++] = cache << list->start_offset | ((buffer[src] & (~head_mask)) >> (8-list->start_offset));
+			cache = buffer[src] & head_mask;
+		}
+		if(list->end_offset > list->start_offset) {
+			tarbuffer[tar ++] = cache << list->start_offset | ((buffer[src] & (~head_mask)) >> (8-list->start_offset));
+			tarbuffer[tar ++] = (buffer[src] & tail_mask & head_mask) >> (8-list->start_offset);
+		}
+		else {
+			tarbuffer[tar ++] = cache << list->start_offset | ((buffer[src] & tail_mask) >> (8-list->start_offset));
+		}
+		list = list->next;
 	}
+	while(freenode) {
+		list = freenode->next;
+		printf("%d:%d-%d:%d\n",freenode->start,freenode->start_offset,freenode->end,freenode->end_offset);
+		free(freenode);
+		freenode = list;
+	}
+	return tar;
 }
 
-int asn_squeeze_water(void* buffer, int length) {
+int asn_squeeze_water(const void* buffer, int length, void* tarbuffer) {
 	uint8_t* tmp;
 	int i,head_length;
-	phase_t* phase_list,phase_node;
+	phase_t* phase_list;
+	phase_t* phase_node;
 
 	phase_list = calloc(1,sizeof(phase_t));
 	phase_node = phase_list;
 	tmp = (uint8_t*) buffer;
-	tmp->end = length - 1;
-	tmp->end_offset = 8;
+	phase_list->end = length - 1;
+	phase_list->end_offset = 8;
 	if(length < 6)
 		return length;
 	for(i =  0;i < length - 6;i ++) {
@@ -89,7 +96,10 @@ int asn_squeeze_water(void* buffer, int length) {
 			i = phase_node->start;
 		}
 	}
-	if(phase_list != phase_node)
+	phase_node->end = length - 1;
+	phase_node->end_offset = 8;
+	/*if(phase_list != phase_node)
 		phase_node->start = -1;
-	return asn_merge_phases(tmp, phase_list);
+	*/ // need to cut the tail of uper
+	return asn_merge_phases(tmp, phase_list, tarbuffer);
 }

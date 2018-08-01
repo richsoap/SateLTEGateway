@@ -5,15 +5,23 @@
 #include "S1ap-IE.h"
 #include "S1ap-Global-ENB-ID.h"
 #include "S1ap-ENBname.h"
+#include <ALIGN.h>
 #define BUFFER_LENGTH 8
 static int write_out(const void *buffer, size_t size, void *app_key) {
 	FILE*out_fp = app_key;
-	//printf("size is %d\n", (int)size);
+	printf("size is %d\n", (int)size);
 	size_t wrote = fwrite(buffer, 1, size, out_fp);
-	uint8_t* tmp = (uint8_t*)buffer;
+	uint8_t* tmp = (uint8_t*) buffer;
+	uint8_t* tarbuffer = calloc(size, sizeof(uint8_t));
+	wrote = asn_squeeze_water(buffer, size, tarbuffer);
+	printf("\nsrc--");
 	for(int i = 0;i < size;i ++)
 		printf("%02x:", tmp[i]);
-	return wrote == size? 0 : 1;
+	printf("\ntar--");
+	for(int i = 0;i < wrote;i ++)
+		printf("%02x:", tarbuffer[i]);
+	//return wrote == size? 0 : 1;
+	return 0;
 }
 static int octet_out(const void *buffer, size_t size, void *app_key) {
 	int result;
@@ -34,10 +42,10 @@ S1ap_IE_t* getItem0() {
 	S1ap_Global_ENB_ID_t* global_enb_id;
 	global_enb_id = calloc(1,sizeof(S1ap_Global_ENB_ID_t));
 	assert(global_enb_id);
-	uint8_t macroid[] = {0x1a,0x2d,0x00,0x00};
+	uint8_t macroid[] = {0x1a,0x2d,0x00};
 	global_enb_id->eNB_ID.present = S1ap_ENB_ID_PR_macroENB_ID;
 	global_enb_id->eNB_ID.choice.macroENB_ID.buf = macroid;
-	global_enb_id->eNB_ID.choice.macroENB_ID.size = 4;
+	global_enb_id->eNB_ID.choice.macroENB_ID.size = 3;
 	global_enb_id->eNB_ID.choice.macroENB_ID.bits_unused = 4;
 	uint8_t plmn[] = {0x00,0xf1,0x10};
 	OCTET_STRING_fromBuf(&(global_enb_id->pLMNidentity), plmn, 3);

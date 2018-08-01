@@ -486,6 +486,7 @@ BIT_STRING_encode_uper(const asn_TYPE_descriptor_t *td,
 			ASN__ENCODE_FAILED;
 	}
 
+	asn_put_water(po);
     if(csiz->effective_bits >= 0 && !inext) {
         int add_trailer = (ssize_t)size_in_bits < csiz->lower_bound;
         ASN_DEBUG(
@@ -522,7 +523,6 @@ BIT_STRING_encode_uper(const asn_TYPE_descriptor_t *td,
     buf = st->buf;
     do {
         int need_eom = 0;
-		asn_put_water(po);
         ssize_t maySave = uper_put_length(po, size_in_bits, &need_eom);
         if(maySave < 0) ASN__ENCODE_FAILED;
 
