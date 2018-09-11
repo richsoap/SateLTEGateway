@@ -139,6 +139,10 @@ ANY_fromType_per(ANY_t *st, asn_TYPE_descriptor_t *td, void *sptr) {
 
 	if(st->buf) FREEMEM(st->buf);
 	st->buf = calloc(arg.offset, sizeof(uint8_t));
+	printf("ANY_fromType:before squeeze:\n");
+	for(int i = 0;i < arg.offset;i ++)
+		printf("%02x:",arg.buffer[i]);
+	printf("\n");
 	st->size = asn_squeeze_water(arg.buffer, arg.offset, st->buf);
 	free(arg.buffer);
 	return 0;

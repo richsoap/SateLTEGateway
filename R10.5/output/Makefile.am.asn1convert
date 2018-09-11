@@ -10,5 +10,5 @@ asn1convert_SOURCES = \
 regen: regenerate-from-asn1-source
 
 regenerate-from-asn1-source:
-	asn1c -D ./output -pdu=all S1AP-Constants.asn S1AP-CommonDataTypes.asn S1AP-PDU.asn S1AP-IEs.asn
+	asn1c -D ./output -pdu=auto S1AP-Constants.asn S1AP-CommonDataTypes.asn S1AP-PDU.asn S1AP-IEs.asn
 

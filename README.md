@@ -9,3 +9,7 @@ call this before compiling
 ```
 rm *oer*
 ```
+add this to gcc command
+```
+-D ASN_DISABLE_OER_SUPPORT
+```

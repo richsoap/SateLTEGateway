@@ -1289,7 +1289,8 @@ OCTET_STRING_per_put_characters(asn_per_outp_t *po, const uint8_t *buf,
 	if((unsigned long)ub <= ((unsigned long)2 << (unit_bits - 1))) {
 		/* Encode as is */
 		lb = 0;
-	} else if(pc && pc->value2code) {
+	}
+	else if(pc && pc->value2code) {
 		for(; buf < end; buf += bpc) {
 			int code;
 			uint32_t value;
@@ -1601,29 +1602,40 @@ OCTET_STRING_encode_uper(const asn_TYPE_descriptor_t *td,
     if(ct_extensible) {
 		/* Declare whether length is [not] within extension root */
 		if(per_put_few_bits(po, inext, 1))
-		//if(per_put_few_bits(po, inext, 8))
 			ASN__ENCODE_FAILED;
 	}
-	//////////////////////////
-	// add water here
-	asn_put_water(po);
-	//////////////////////////
+	
     if(csiz->effective_bits >= 0 && !inext) {
         ASN_DEBUG("Encoding %" ASN_PRI_SIZE " bytes (%ld), length in %d bits", st->size,
                   size_in_units - csiz->lower_bound, csiz->effective_bits);
+		printf("!next:put water before bound\n");
+		if(csiz->upper_bound - csiz->lower_bound >= 256)
+			asn_put_water(po);
         ret = per_put_few_bits(po, size_in_units - csiz->lower_bound,
                                csiz->effective_bits);
         if(ret) ASN__ENCODE_FAILED;
-        ret = OCTET_STRING_per_put_characters(po, st->buf, size_in_units, bpc,
+
+		if(size_in_units > 2)
+			asn_put_water(po);
+		printf("!next:put water before char\n");
+        /*ret = OCTET_STRING_per_put_characters(po, st->buf, size_in_units, bpc,
                                               unit_bits, cval->lower_bound,
-                                              cval->upper_bound, pc);
-        if(ret) ASN__ENCODE_FAILED;
+		cval->upper_bound, pc);*/
+		for(int i = 0;i < size_in_units && !ret;i ++) {
+			printf("%02X:",st->buf[i]);
+			//ret = asn_put_few_bits(po, ((uint8_t*)st->buf)[i], unit_bits);
+		}
+		ret = asn_put_many_bits(po, st->buf, 8 * st->size);
+		printf("\n");
+		if(ret) ASN__ENCODE_FAILED;
         ASN__ENCODED_OK(er);
     }
 
     ASN_DEBUG("Encoding %" ASN_PRI_SIZE " bytes", st->size);
 
     buf = st->buf;
+	if(size_in_units > 2)
+		asn_put_water(po);
     ASN_DEBUG("Encoding %" ASN_PRI_SIZE " in units", size_in_units);
     do {
         int need_eom = 0;

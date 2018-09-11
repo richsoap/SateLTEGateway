@@ -4,8 +4,7 @@
 void asn_put_water(asn_bit_outp_t *po) {
 	int i;
 	uint8_t asn_water[] = {0x3F,0xFF,0xFF,0xFF,0xFF,0xFC};
-	for(i = 0;i < 6;i ++)
-		asn_put_few_bits(po, asn_water[i], 8);
+	asn_put_many_bits(po, asn_water, 48);
 }
 
 //difine of water
@@ -49,16 +48,17 @@ int asn_merge_phases(const uint8_t* buffer, phase_t * list, uint8_t* tarbuffer) 
 		head_mask = BIT_ZERO(list->start_offset);
 		tail_mask = BIT_FF(list->end_offset);
 		cache = buffer[list->start] & head_mask;
-		for(src = list->start + 1; src < list->end; src ++) {
-			tarbuffer[tar ++] = cache << list->start_offset | ((buffer[src] & (~head_mask)) >> (8-list->start_offset));
-			cache = buffer[src] & head_mask;
-		}
-		if(list->end_offset > list->start_offset) {
-			tarbuffer[tar ++] = cache << list->start_offset | ((buffer[src] & (~head_mask)) >> (8-list->start_offset));
-			tarbuffer[tar ++] = (buffer[src] & tail_mask & head_mask) >> (8-list->start_offset);
+		if(list->start == list->end) {
+			tarbuffer[tar ++] = (buffer[list->start] & head_mask & tail_mask) << list->start_offset;
 		}
 		else {
-			tarbuffer[tar ++] = cache << list->start_offset | ((buffer[src] & tail_mask) >> (8-list->start_offset));
+			for(src = list->start + 1; src <= list->end; src ++) {
+				tarbuffer[tar ++] = cache << list->start_offset | ((buffer[src] & (~head_mask)) >> (8-list->start_offset));
+				cache = buffer[src] & head_mask;
+			}
+			if(list->end_offset > list->start_offset) {
+				tarbuffer[tar ++] = (cache & tail_mask) << (list->start_offset);
+			}
 		}
 		list = list->next;
 	}
