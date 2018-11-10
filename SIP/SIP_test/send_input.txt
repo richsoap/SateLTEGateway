@@ -1,0 +1,254 @@
+21:38:37.464         os_core_unix.c !pjlib 2.8 for POSIX initialized
+21:38:37.464         sip_endpoint.c  .Creating endpoint instance...
+21:38:37.464                  pjlib  .select() I/O Queue created (0x12c9520)
+21:38:37.464         sip_endpoint.c  .Module "mod-msg-print" registered
+21:38:37.464        sip_transport.c  .Transport manager created.
+21:38:37.464           pjsua_core.c  .PJSUA state changed: NULL --> CREATED
+21:38:37.464         sip_endpoint.c  .Module "mod-pjsua-log" registered
+21:38:37.464         sip_endpoint.c  .Module "mod-tsx-layer" registered
+21:38:37.464         sip_endpoint.c  .Module "mod-stateful-util" registered
+21:38:37.464         sip_endpoint.c  .Module "mod-ua" registered
+21:38:37.464         sip_endpoint.c  .Module "mod-100rel" registered
+21:38:37.464         sip_endpoint.c  .Module "mod-pjsua" registered
+21:38:37.464         sip_endpoint.c  .Module "mod-invite" registered
+21:38:37.465                  pjlib  ..select() I/O Queue created (0x12d63d8)
+21:38:37.467         sip_endpoint.c  .Module "mod-evsub" registered
+21:38:37.467         sip_endpoint.c  .Module "mod-presence" registered
+21:38:37.467         sip_endpoint.c  .Module "mod-mwi" registered
+21:38:37.467         sip_endpoint.c  .Module "mod-refer" registered
+21:38:37.467         sip_endpoint.c  .Module "mod-pjsua-pres" registered
+21:38:37.467         sip_endpoint.c  .Module "mod-pjsua-im" registered
+21:38:37.467         sip_endpoint.c  .Module "mod-pjsua-options" registered
+21:38:37.467           pjsua_core.c  .1 SIP worker threads created
+21:38:37.467           pjsua_core.c  .pjsua version 2.8 for Linux-4.15.0.38/x86_64/glibc-2.23 initialized
+21:38:37.467           pjsua_core.c  .PJSUA state changed: CREATED --> INIT
+21:38:37.467           pjsua_core.c  SIP UDP socket reachable at 10.128.171.151:5050
+21:38:37.467           udp0x12eb6d0  SIP UDP transport started, published address is 10.128.171.151:5050
+21:38:37.467           pjsua_core.c  PJSUA state changed: INIT --> STARTING
+21:38:37.467         sip_endpoint.c  .Module "mod-unsolicited-mwi" registered
+21:38:37.467           pjsua_core.c  .PJSUA state changed: STARTING --> RUNNING
+*** PJSUA2 STARTED ***
+21:38:37.467            pjsua_acc.c  Adding account: id=sip:101@10.128.171.151
+21:38:37.467            pjsua_acc.c  .Account sip:101@10.128.171.151 added with id 0
+21:38:37.467            pjsua_acc.c  .Acc 0: setting registration..
+21:38:37.467           pjsua_core.c  ...TX 489 bytes Request msg REGISTER/cseq=62748 (tdta0x12f0d58) to UDP 10.128.171.151:5060:
+REGISTER sip:10.128.171.151 SIP/2.0
+Via: SIP/2.0/UDP 10.128.171.151:5050;rport;branch=z9hG4bKPj-cs1yFZ8Gd3FnPW4jH.ah-3aoC4Lw-Cz
+Max-Forwards: 70
+From: <sip:101@10.128.171.151>;tag=hRFWuQenv-BZwlwywtACZQPDkAUtU7pb
+To: <sip:101@10.128.171.151>
+Call-ID: aNBDzYgxemWs-.ByeXp18J4vyzOPLGlG
+CSeq: 62748 REGISTER
+Contact: <sip:101@10.128.171.151:5050;ob>
+Expires: 300
+Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS
+Content-Length:  0
+
+
+--end msg--
+21:38:37.467            pjsua_acc.c  ..Acc 0: Registration sent
+*** after creating ***
+21:38:37.467            pjsua_aud.c  Setting null sound device..
+21:38:37.467            pjsua_aud.c  .Opening null sound device..
+21:38:37.467              media.cpp  Invalid audio device (PJMEDIA_EAUD_INVDEV) (status=420004) [../src/pjsua2/media.cpp:1081]
+Extra sound device failed
+21:38:37.477           pjsua_core.c !.RX 523 bytes Response msg 401/REGISTER/cseq=62748 (rdata0x12ed158) from UDP 10.128.171.151:5060:
+SIP/2.0 401 Unauthorized
+Via: SIP/2.0/UDP 10.128.171.151:5050;received=10.128.171.151;rport=5050;branch=z9hG4bKPj-cs1yFZ8Gd3FnPW4jH.ah-3aoC4Lw-Cz
+From: <sip:101@10.128.171.151>;tag=hRFWuQenv-BZwlwywtACZQPDkAUtU7pb
+To: <sip:101@10.128.171.151>;tag=4e882457b3c3f2ecb88bde968832654f.9c43
+Call-ID: aNBDzYgxemWs-.ByeXp18J4vyzOPLGlG
+CSeq: 62748 REGISTER
+WWW-Authenticate: Digest realm="10.128.171.151", nonce="5bdda4fb000000164c8fe605a895ac5e639e056f65e2f85c"
+Server: OpenSIPS (2.4.2 (x86_64/linux))
+Content-Length: 0
+
+
+--end msg--
+21:38:37.477           pjsua_core.c  ....TX 680 bytes Request msg REGISTER/cseq=62749 (tdta0x12f0d58) to UDP 10.128.171.151:5060:
+REGISTER sip:10.128.171.151 SIP/2.0
+Via: SIP/2.0/UDP 10.128.171.151:5050;rport;branch=z9hG4bKPjYR-TJnRrMXRvd46.hyKL1OUBIPfdfwwi
+Max-Forwards: 70
+From: <sip:101@10.128.171.151>;tag=hRFWuQenv-BZwlwywtACZQPDkAUtU7pb
+To: <sip:101@10.128.171.151>
+Call-ID: aNBDzYgxemWs-.ByeXp18J4vyzOPLGlG
+CSeq: 62749 REGISTER
+Contact: <sip:101@10.128.171.151:5050;ob>
+Expires: 300
+Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS
+Authorization: Digest username="101", realm="10.128.171.151", nonce="5bdda4fb000000164c8fe605a895ac5e639e056f65e2f85c", uri="sip:10.128.171.151", response="9cb4060948e9acbe69be30d49da93742"
+Content-Length:  0
+
+
+--end msg--
+21:38:37.478           pjsua_core.c  .RX 461 bytes Response msg 200/REGISTER/cseq=62749 (rdata0x7fa1d8001928) from UDP 10.128.171.151:5060:
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP 10.128.171.151:5050;received=10.128.171.151;rport=5050;branch=z9hG4bKPjYR-TJnRrMXRvd46.hyKL1OUBIPfdfwwi
+From: <sip:101@10.128.171.151>;tag=hRFWuQenv-BZwlwywtACZQPDkAUtU7pb
+To: <sip:101@10.128.171.151>;tag=4e882457b3c3f2ecb88bde968832654f.891c
+Call-ID: aNBDzYgxemWs-.ByeXp18J4vyzOPLGlG
+CSeq: 62749 REGISTER
+Contact: <sip:101@10.128.171.151:5050;ob>;expires=300
+Server: OpenSIPS (2.4.2 (x86_64/linux))
+Content-Length: 0
+
+
+--end msg--
+21:38:37.478            pjsua_acc.c  ....SIP outbound status for acc 0 is not active
+21:38:37.478            pjsua_acc.c  ....sip:101@10.128.171.151: registration success, status=200 (OK), will re-register in 300 seconds
+21:38:37.478            pjsua_acc.c  ....Keep-alive timer started for acc 0, destination:10.128.171.151:5060:15, interval:19s
+*** Register: code=200
+*** before making call ***
+21:38:39.468           pjsua_call.c !Making call with acc #0 to sip:102@10.128.171.151
+21:38:39.468          pjsua_media.c  .Call 0: initializing media..
+21:38:39.468          pjsua_media.c  ..RTP socket reachable at 10.128.171.151:4000
+21:38:39.468          pjsua_media.c  ..RTCP socket reachable at 10.128.171.151:4001
+21:38:39.468          pjsua_media.c  ..Media index 0 selected for audio call 0
+21:38:39.468           pjsua_core.c  ....TX 1109 bytes Request msg INVITE/cseq=10975 (tdta0x12fcf38) to UDP 10.128.171.151:5060:
+INVITE sip:102@10.128.171.151 SIP/2.0
+Via: SIP/2.0/UDP 10.128.171.151:5050;rport;branch=z9hG4bKPjOnefG27w64ekfxT0DVick6MnWr7o1hXw
+Max-Forwards: 70
+From: sip:101@10.128.171.151;tag=WoKJGs5qEXBfkVn-BRFOcoA5YieQTo3I
+To: sip:102@10.128.171.151
+Contact: <sip:101@10.128.171.151:5050;ob>
+Call-ID: fFuBucwPyfOFpApO6hLNE-9lCy73m.Cg
+CSeq: 10975 INVITE
+Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS
+Supported: replaces, 100rel, timer, norefersub
+Session-Expires: 1800
+Min-SE: 90
+Content-Type: application/sdp
+Content-Length:   521
+
+v=0
+o=- 3750241119 3750241119 IN IP4 10.128.171.151
+s=pjmedia
+b=AS:84
+t=0 0
+a=X-nat:0
+m=audio 4000 RTP/AVP 98 97 99 104 3 0 8 9 96
+c=IN IP4 10.128.171.151
+b=TIAS:64000
+a=rtcp:4001 IN IP4 10.128.171.151
+a=sendrecv
+a=rtpmap:98 speex/16000
+a=rtpmap:97 speex/8000
+a=rtpmap:99 speex/32000
+a=rtpmap:104 iLBC/8000
+a=fmtp:104 mode=30
+a=rtpmap:3 GSM/8000
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:9 G722/8000
+a=rtpmap:96 telephone-event/8000
+a=fmtp:96 0-16
+a=ssrc:2083162579 cname:1f46957b09ca7abb
+
+--end msg--
+*** Call: sip:102@10.128.171.151 [CALLING]
+*** after making call ***
+21:38:39.468           pjsua_core.c !.RX 536 bytes Response msg 407/INVITE/cseq=10975 (rdata0x7fa1d8001928) from UDP 10.128.171.151:5060:
+SIP/2.0 407 Proxy Authentication Required
+Via: SIP/2.0/UDP 10.128.171.151:5050;received=10.128.171.151;rport=5050;branch=z9hG4bKPjOnefG27w64ekfxT0DVick6MnWr7o1hXw
+From: sip:101@10.128.171.151;tag=WoKJGs5qEXBfkVn-BRFOcoA5YieQTo3I
+To: sip:102@10.128.171.151;tag=4e882457b3c3f2ecb88bde968832654f.4365
+Call-ID: fFuBucwPyfOFpApO6hLNE-9lCy73m.Cg
+CSeq: 10975 INVITE
+Proxy-Authenticate: Digest realm="10.128.171.151", nonce="5bdda4fd00000017fbcfdc3e12b50654242af9afac410346"
+Server: OpenSIPS (2.4.2 (x86_64/linux))
+Content-Length: 0
+
+
+--end msg--
+21:38:39.468           pjsua_core.c  ..TX 366 bytes Request msg ACK/cseq=10975 (tdta0x7fa1d80038f8) to UDP 10.128.171.151:5060:
+ACK sip:102@10.128.171.151 SIP/2.0
+Via: SIP/2.0/UDP 10.128.171.151:5050;rport;branch=z9hG4bKPjOnefG27w64ekfxT0DVick6MnWr7o1hXw
+Max-Forwards: 70
+From: sip:101@10.128.171.151;tag=WoKJGs5qEXBfkVn-BRFOcoA5YieQTo3I
+To: sip:102@10.128.171.151;tag=4e882457b3c3f2ecb88bde968832654f.4365
+Call-ID: fFuBucwPyfOFpApO6hLNE-9lCy73m.Cg
+CSeq: 10975 ACK
+Content-Length:  0
+
+
+--end msg--
+21:38:39.468      tsx0x7fa1d8006c68  .......Temporary failure in sending Request msg INVITE/cseq=10976 (tdta0x12fcf38), will try next server: Unsupported transport (PJSIP_EUNSUPTRANSPORT)
+21:38:39.468           pjsua_core.c  .......TX 1310 bytes Request msg INVITE/cseq=10976 (tdta0x12fcf38) to UDP 10.128.171.151:5060:
+INVITE sip:102@10.128.171.151 SIP/2.0
+Via: SIP/2.0/UDP 10.128.171.151:5050;rport;branch=z9hG4bKPjvvJYxrdzN20q7T5fU2gjlZav.GNTatj6
+Max-Forwards: 70
+From: sip:101@10.128.171.151;tag=WoKJGs5qEXBfkVn-BRFOcoA5YieQTo3I
+To: sip:102@10.128.171.151
+Contact: <sip:101@10.128.171.151:5050;ob>
+Call-ID: fFuBucwPyfOFpApO6hLNE-9lCy73m.Cg
+CSeq: 10976 INVITE
+Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS
+Supported: replaces, 100rel, timer, norefersub
+Session-Expires: 1800
+Min-SE: 90
+Proxy-Authorization: Digest username="101", realm="10.128.171.151", nonce="5bdda4fd00000017fbcfdc3e12b50654242af9afac410346", uri="sip:102@10.128.171.151", response="ba558a30883b64d94cfbc93008209c2a"
+Content-Type: application/sdp
+Content-Length:   521
+
+v=0
+o=- 3750241119 3750241119 IN IP4 10.128.171.151
+s=pjmedia
+b=AS:84
+t=0 0
+a=X-nat:0
+m=audio 4000 RTP/AVP 98 97 99 104 3 0 8 9 96
+c=IN IP4 10.128.171.151
+b=TIAS:64000
+a=rtcp:4001 IN IP4 10.128.171.151
+a=sendrecv
+a=rtpmap:98 speex/16000
+a=rtpmap:97 speex/8000
+a=rtpmap:99 speex/32000
+a=rtpmap:104 iLBC/8000
+a=fmtp:104 mode=30
+a=rtpmap:3 GSM/8000
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:9 G722/8000
+a=rtpmap:96 telephone-event/8000
+a=fmtp:96 0-16
+a=ssrc:2083162579 cname:1f46957b09ca7abb
+
+--end msg--
+21:38:39.469           pjsua_core.c  .RX 368 bytes Response msg 100/INVITE/cseq=10976 (rdata0x7fa1d8001928) from UDP 10.128.171.151:5060:
+SIP/2.0 100 Giving a try
+Via: SIP/2.0/UDP 10.128.171.151:5050;received=10.128.171.151;rport=5050;branch=z9hG4bKPjvvJYxrdzN20q7T5fU2gjlZav.GNTatj6
+From: sip:101@10.128.171.151;tag=WoKJGs5qEXBfkVn-BRFOcoA5YieQTo3I
+To: sip:102@10.128.171.151
+Call-ID: fFuBucwPyfOFpApO6hLNE-9lCy73m.Cg
+CSeq: 10976 INVITE
+Server: OpenSIPS (2.4.2 (x86_64/linux))
+Content-Length: 0
+
+
+--end msg--
+21:38:39.469           pjsua_core.c  .RX 407 bytes Response msg 404/INVITE/cseq=10976 (rdata0x7fa1d8001928) from UDP 10.128.171.151:5060:
+SIP/2.0 404 Not Found
+Via: SIP/2.0/UDP 10.128.171.151:5050;received=10.128.171.151;rport=5050;branch=z9hG4bKPjvvJYxrdzN20q7T5fU2gjlZav.GNTatj6
+From: sip:101@10.128.171.151;tag=WoKJGs5qEXBfkVn-BRFOcoA5YieQTo3I
+To: sip:102@10.128.171.151;tag=69b5f95e717a370c953a18f0b90358e4-9881
+Call-ID: fFuBucwPyfOFpApO6hLNE-9lCy73m.Cg
+CSeq: 10976 INVITE
+Server: OpenSIPS (2.4.2 (x86_64/linux))
+Content-Length: 0
+
+
+--end msg--
+21:38:39.469           pjsua_core.c  ..TX 366 bytes Request msg ACK/cseq=10976 (tdta0x7fa1d8007898) to UDP 10.128.171.151:5060:
+ACK sip:102@10.128.171.151 SIP/2.0
+Via: SIP/2.0/UDP 10.128.171.151:5050;rport;branch=z9hG4bKPjvvJYxrdzN20q7T5fU2gjlZav.GNTatj6
+Max-Forwards: 70
+From: sip:101@10.128.171.151;tag=WoKJGs5qEXBfkVn-BRFOcoA5YieQTo3I
+To: sip:102@10.128.171.151;tag=69b5f95e717a370c953a18f0b90358e4-9881
+Call-ID: fFuBucwPyfOFpApO6hLNE-9lCy73m.Cg
+CSeq: 10976 ACK
+Content-Length:  0
+
+
+--end msg--
+*** Call: sip:102@10.128.171.151 [DISCONNCTD]
