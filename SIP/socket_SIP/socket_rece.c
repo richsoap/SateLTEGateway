@@ -14,7 +14,7 @@ struct socket_rece_port {
     pjmedia_port port;
     pj_uint16_t bytes_per_sample;
     int sock_fd;
-    address_in back->addr;
+    address_in back_addr;
 };
 
 
