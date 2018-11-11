@@ -5,7 +5,7 @@
 #include <pj/string.h>
 #include <pj/assert.h>
 #include "socket_port.h"
-
+#include "socket_thread.h"
 #define THIS_FILE "socket_rec.cpp"
 
 #define SIGNATURE PJMEDIA_SIG_PORT_WAV_PLAYER
@@ -13,26 +13,11 @@
 struct socket_rece_port {
     pjmedia_port port;
     pj_uint16_t bytes_per_sample;
-    int sock_fd;
-    address_in back_addr;
 };
 
 
 static pj_status_t socket_put_frame(pjmedia_port *this_port, pjmedia_frame* frame);
 static pj_status_t socket_receive_on_destroy(pjmedia_port *this_port);
-
-PJ_DEF(pj_status_t) pjmedia_socket_receive_port_callback_socket(socket_rece_port* port,
-                                                    const char* ip,
-                                                    pj_uint16_t port) {
-    port->sock_fd = socket(AF_INET, SOCK_DGRAM, 0);
-    if(port->sock_fd < 0) {
-        return PJ_SUCCESS;// TODO: change return to a valid value
-    }
-    memset(&port->back_addr, 0, sizeof(address_in));
-    port->back_addr.sin_family = AF_INFT;
-    inet_pton(AF_INET, ip, &port->back_addr.sin_addr);
-    port->back_addr.sin_port = htons(port);
-}
 
 PJ_DEF(pj_status_t) pjmedia_socket_receive_port_create(pj_pool_t *pool,
                                                     pj_uint32_t ptime,
@@ -63,7 +48,7 @@ PJ_DEF(pj_status_t) pjmedia_socket_receive_port_create(pj_pool_t *pool,
 }
 
 static pj_status_t socket_put_frame(pjmedia_port *this_port, pjmedia_frame *frame) {
-    //TODO: return send_socket(this_port, frame);
+    //TODO record_frame(this_port, frame);
     return PJ_SUCCESS;
 }
 

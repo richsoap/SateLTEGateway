@@ -1,7 +1,13 @@
 #include <pjsua-lib/pjsua.h>
 #include <pjsua-lib/pjsua_internal.h>
+#include <pjsua2/media.hpp>
+#include <pjsua2/types.hpp>
+#include "util.hpp"
+#include "socket_port.h"
 #include "socketmedia.h"
-#define "SOCKETMEIDA.CPP"
+#define THIS_FILE "SOCKETMEIDA.CPP"
+
+using namespace pj;
 
 PJ_DEF(pj_status_t) pjsua_socket_player_create(const pj_str_t *name,
                                             pj_uint32_t ptime,
@@ -45,7 +51,7 @@ PJ_DEF(pj_status_t) pjsua_socket_player_create(const pj_str_t *name,
         pjsua_perror(THIS_FILE, "Unable to create socket player", status);
         goto on_error;
     }
-    status = pjmeida_conf_add_port(pjsua_var.mconf, pool, port, filename, &slot);
+    status = pjmedia_conf_add_port(pjsua_var.mconf, pool, port, name, &slot);
     if(status != PJ_SUCCESS) {
         pjmedia_port_destroy(port);
         pjsua_perror(THIS_FILE, "Unable to add socket player to conference bridge", status);
@@ -69,7 +75,7 @@ PJ_DEF(pj_status_t) pjsua_socket_player_create(const pj_str_t *name,
     return PJ_SUCCESS;
 
 on_error:
-    PJSUA_UNCLOCK();
+    PJSUA_UNLOCK();
     if(pool)
         pj_pool_release(pool);
     pj_log_pop_indent();
@@ -80,13 +86,13 @@ PJ_DEF(pj_status_t) pjsua_socket_recorder_create(const pj_str_t *name,
                                                 pj_uint32_t ptime,
                                                 pj_uint32_t sample_rate,
                                                 pj_uint32_t bits_per_sample,
-                                                pjmeida_port **p_port) {
+                                                pjmedia_port **p_port) {
     unsigned slot, socket_id;
     pj_pool_t *pool;
-    pjmeida_port *port;
+    pjmedia_port *port;
     pj_status_t status = PJ_SUCCESS;
 
-    PJ_LOG(4, (THIS, "Creating recorder %.*s...",(int)name->slen, name->ptr)));
+    PJ_LOG(4, (THIS_FILE, "Creating recorder %.*s...",(int)name->slen, name->ptr));
     pj_log_push_indent();
 
     if(pjsua_var.rec_cnt >= PJ_ARRAY_SIZE(pjsua_var.recorder)) {
@@ -104,7 +110,7 @@ PJ_DEF(pj_status_t) pjsua_socket_recorder_create(const pj_str_t *name,
         goto on_error;
     }
 
-    pool = pjsua_pool_create(name->pter, 1000, 1000);
+    pool = pjsua_pool_create(name->ptr, 1000, 1000);
     if(!pool) {
         status = PJ_ENOMEM;
         goto on_error;
@@ -113,25 +119,23 @@ PJ_DEF(pj_status_t) pjsua_socket_recorder_create(const pj_str_t *name,
     status = pjmedia_socket_receive_port_create(pool,
                                                 ptime,
                                                 sample_rate,
-                                                bits_per_samper,
+                                                bits_per_sample,
                                                 &port);
     if(status != PJ_SUCCESS) {
-        pjsua_perror(THIS, "Unable to create socket receive port", status);
+        pjsua_perror(THIS_FILE, "Unable to create socket receive port", status);
         goto on_error;
     }
 
     status = pjmedia_conf_add_port(pjsua_var.mconf, pool, port, name, &slot);
     if(status != PJ_SUCCESS) {
         pjmedia_port_destroy(port);
-        goto on_return;
+        goto on_error;
     }
 
     pjsua_var.recorder[socket_id].port = port;
     pjsua_var.recorder[socket_id].slot = slot;
     pjsua_var.recorder[socket_id].pool = pool;
 
-    if(p_id) 
-        *p_id = socket_id;
     pjsua_var.rec_cnt ++;
 
     PJSUA_UNLOCK();
@@ -172,21 +176,21 @@ void SocketMedia::createPlayer(const string &playerName,
     pj_status_t status;
 
     pj_str_t pj_name = str2Pj(playerName);
-    PJSUA2_CHECK_EXPR( pjsua_player_create(&pj_name,
+    PJSUA2_CHECK_EXPR( pjsua_socket_player_create(&pj_name,
                                             ptime,
                                             sample_rate,
                                             bits_per_sample,
-                                            &playerId));
-    status = pjsua_player_get_port(mediaId, &port);
+                                            &mediaId));
+    status = pjsua_player_get_port(mediaId, &playPort);
     if(status != PJ_SUCCESS) {
-        pjsua_player_destroy(playerId);
+        pjsua_player_destroy(mediaId);
         PJSUA2_RAISE_ERROR2(status, "SocketMedia::createPlayer()");
     }
     id = pjsua_player_get_conf_port(mediaId);
     registerMediaPort(NULL);
 }
 
-void SocketMedia::createRecordSocket(const string &recorderName,
+void SocketMedia::createRecorder(const string &recorderName,
                                     pj_uint32_t ptime,
                                     pj_uint32_t sample_rate,
                                     pj_uint32_t bits_per_sample) throw(Error) {
@@ -195,7 +199,7 @@ void SocketMedia::createRecordSocket(const string &recorderName,
 
     pj_str_t pj_name = str2Pj(recorderName);
 
-    PJSUA2_CHECK_EXPR(pjsua_recorder_create(&pj_name,
+    PJSUA2_CHECK_EXPR(pjsua_socket_recorder_create(&pj_name,
                                         ptime,
                                         sample_rate,
                                         bits_per_sample,
