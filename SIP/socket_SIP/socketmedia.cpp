@@ -36,6 +36,7 @@ PJ_DEF(pj_status_t) pjsua_socket_player_create(const pj_str_t *name,
     }
 
     pool = pjsua_pool_create(name->ptr, 1000, 1000);
+    PJ_LOG(4, (THIS_FILE, "Param %d %d %d %x", ptime, sample_rate, bits_per_sample, pool));
     if(!pool) {
         status = PJ_ENOMEM;
         goto on_error;
@@ -86,7 +87,7 @@ PJ_DEF(pj_status_t) pjsua_socket_recorder_create(const pj_str_t *name,
                                                 pj_uint32_t ptime,
                                                 pj_uint32_t sample_rate,
                                                 pj_uint32_t bits_per_sample,
-                                                pjmedia_port **p_port) {
+                                                pjsua_recorder_id* p_id) {
     unsigned slot, socket_id;
     pj_pool_t *pool;
     pjmedia_port *port;
@@ -103,6 +104,7 @@ PJ_DEF(pj_status_t) pjsua_socket_recorder_create(const pj_str_t *name,
     PJSUA_LOCK();
 
     for(socket_id = 0; socket_id < PJ_ARRAY_SIZE(pjsua_var.recorder) && pjsua_var.recorder[socket_id].port != NULL; socket_id ++);
+    PJ_LOG(4, (THIS_FILE, "Recorder Array Size: %d", PJ_ARRAY_SIZE(pjsua_var.recorder)));
 
     if(socket_id == PJ_ARRAY_SIZE(pjsua_var.recorder)) {
         pj_assert(0);
@@ -139,9 +141,10 @@ PJ_DEF(pj_status_t) pjsua_socket_recorder_create(const pj_str_t *name,
     pjsua_var.rec_cnt ++;
 
     PJSUA_UNLOCK();
+    if(p_id)
+        *p_id = socket_id;
     PJ_LOG(4, (THIS_FILE, "Recorder created, id=%d, slot=%d", socket_id, slot));
     pj_log_pop_indent();
-    *p_port = port;
     return PJ_SUCCESS;
 
 on_error:
@@ -203,7 +206,8 @@ void SocketMedia::createRecorder(const string &recorderName,
                                         ptime,
                                         sample_rate,
                                         bits_per_sample,
-                                        &recordPort));
+                                        &mediaId));
+    pjsua_recorder_get_port(mediaId, &recordPort);
     id = pjsua_recorder_get_conf_port(mediaId);
     registerMediaPort(NULL);
 

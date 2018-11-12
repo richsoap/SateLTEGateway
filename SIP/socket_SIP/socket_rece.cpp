@@ -25,20 +25,20 @@ PJ_DEF(pj_status_t) pjmedia_socket_receive_port_create(pj_pool_t *pool,
                                                     pj_uint32_t sample_rate,
                                                     pj_uint32_t bits_per_sample,
                                                     pjmedia_port **port) {
-    struct socket_rece_port *sock_port;
+    socket_rece_port *sock_port = NULL;
     pj_str_t name;
     pj_uint32_t samples_per_frame;
     PJ_ASSERT_RETURN(pool && port, PJ_EINVAL);
 
-    sock_port = PJ_POOL_ZALLOC_T(pool, struct socket_rece_port);
-    PJ_ASSERT_RETURN(sock_port == NULL, PJ_ENOMEM);
+    sock_port = PJ_POOL_ZALLOC_T(pool, socket_rece_port);
     name = pj_str("Receive Socket");
-    samples_per_frame = ptime * sample_rate / 1000;
+    samples_per_frame = ptime * sample_rate * bits_per_sample / 1000 / 8;
     pjmedia_port_info_init(&sock_port->port.info, &name, SIGNATURE,
                             sample_rate,
                             1,
                             bits_per_sample,
                             samples_per_frame);
+    PJ_LOG(4, (THIS_FILE, "Handful checkpoint"));
     sock_port->port.put_frame = &socket_put_frame;
     sock_port->port.on_destroy = &socket_receive_on_destroy;
 

@@ -17,7 +17,7 @@ PJ_DECL(pj_status_t) pjsua_socket_recorder_create(const pj_str_t *name,
                                             pj_uint32_t ptime,
                                             pj_uint32_t sample_rate,
                                             pj_uint32_t bits_per_sample,
-                                            pjmedia_port **p_port);
+                                            pjsua_recorder_id *p_id);
 
 namespace pj {
 
@@ -34,6 +34,8 @@ class SocketMedia: public AudioMedia {
                             pj_uint32_t ptime,
                             pj_uint32_t sample_rate,
                             pj_uint32_t bits_per_sample) throw(Error);
+        pjmedia_port *getPlayPort() {return playPort;}
+        pjmedia_port *getRecordPort() {return recordPort;}
     private:
         int mediaId;
         pjmedia_port *playPort;

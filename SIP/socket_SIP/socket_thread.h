@@ -16,6 +16,7 @@ class socket_thread {
         static sockaddr_in* thread_play_addr;
         static pj_pool_t* thread_pool;
         static pj_thread_t *thread_play;
+
         static void thread_pool_init();
         static void* thread_play_thread(void* input);
         static int create_play_thread(const char* listen_ip, int listen_port);
