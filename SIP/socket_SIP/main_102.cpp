@@ -17,6 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 #include <pjsua2.hpp>
+#include <pjsua-lib/pjsua.h>
+#include <pjsua-lib/pjsua_internal.h>
 #include <iostream>
 #include <pj/file_access.h>
 #include <stdint.h>
@@ -145,6 +147,7 @@ static void mainProg1(Endpoint &ep) throw(Error) // Make Call
     // Start library
     ep.libStart();
     std::cout << "*** PJSUA2 STARTED ***" << std::endl;
+    pjsua_var.no_snd = true;
 
     // Add account
     AccountConfig acc_cfg;
