@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/Sender.dir/sender.cpp.o  -o Sender -rdynamic -ljrtp 

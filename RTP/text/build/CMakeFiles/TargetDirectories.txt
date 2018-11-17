@@ -1,0 +1,3 @@
+/home/richsoap/Workspaces/SateLTEGateway/RTP/text/build/CMakeFiles/rebuild_cache.dir
+/home/richsoap/Workspaces/SateLTEGateway/RTP/text/build/CMakeFiles/edit_cache.dir
+/home/richsoap/Workspaces/SateLTEGateway/RTP/text/build/CMakeFiles/main.dir

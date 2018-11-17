@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 2.8)
+project(rtp_test)
+add_executable(Sender sender.cpp)
+add_executable(Receiver receiver.cpp)
+set(RTP_HDR "/usr/local/include/jrtplib3")
+set(RTP_LIB "/usr/local/lib64")
+include_directories("${RTP_HDR}")
+link_directories("${RTP_LIB}")
+find_library(jrtp rt /usr/local/lib64)
+target_link_libraries(Sender jrtp)
+target_link_libraries(Receiver jrtp)
+

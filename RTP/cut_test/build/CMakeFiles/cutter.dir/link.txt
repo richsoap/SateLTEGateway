@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/cutter.dir/transmitter.cpp.o  -o cutter -rdynamic 
