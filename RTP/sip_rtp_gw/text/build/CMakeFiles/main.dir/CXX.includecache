@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/richsoap/Workspaces/SateLTEGateway/RTP/text/common.h
+stdint.h
+-
+stddef.h
+-
+string.h
+-
+stdlib.h
+-
+math.h
+-
+iostream
+-
+
+/home/richsoap/Workspaces/SateLTEGateway/RTP/text/main.cpp
+textblank.hpp
+/home/richsoap/Workspaces/SateLTEGateway/RTP/text/textblank.hpp
+textclip.hpp
+/home/richsoap/Workspaces/SateLTEGateway/RTP/text/textclip.hpp
+common.h
+/home/richsoap/Workspaces/SateLTEGateway/RTP/text/common.h
+list
+-
+iostream
+-
+
+/home/richsoap/Workspaces/SateLTEGateway/RTP/text/textblank.hpp
+common.h
+/home/richsoap/Workspaces/SateLTEGateway/RTP/text/common.h
+
+/home/richsoap/Workspaces/SateLTEGateway/RTP/text/textclip.hpp
+common.h
+/home/richsoap/Workspaces/SateLTEGateway/RTP/text/common.h
+list
+-
+textblank.hpp
+/home/richsoap/Workspaces/SateLTEGateway/RTP/text/textblank.hpp
+
