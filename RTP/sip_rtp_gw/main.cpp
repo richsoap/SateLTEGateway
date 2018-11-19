@@ -18,17 +18,13 @@
 #define BUFFER_SIZE 10240
 
 using namespace std;
-using namespace jrtplib;
 struct user {
-    RTPSession *sess;
-    RTPIPv4Address *raddr;
     sockaddr_in *saddr;
-    uint32_t timestamp;
-    int speakTo;
-    int port;
+    sockaddr_in *raddr;
+    user* speakTo;
+    int rfd;// RTP socket fd
+    int rtfd;// RTCP socket fd
 };
-
-
 
 static map<sring, user> users;
 static int listenPort;
@@ -45,18 +41,19 @@ static string getText(const string& patten, const string& target) {
         return string();
 }
 
-static RTPIPv4Address *sockaddr2RTPaddr(const sockaddr_in &saddr) {
-    uint8_t ip[] = {0,0,0,0};
-    int count = 0;
-    char cip[20];
-    uint16_t port;
-    inet_ntop(AF_INET, &saddr.sin_addr, cip, 20);
-    for(int i = 0;i < 20 && cip[i] != '\0';i ++) {
-        ip[count] *= 10;
-        ip[count] += (cip[i] - '0');
+static string replaceFirst(const string& patten,const string& src, const string& tar) {
+    return regex_replace(src, patten, tar, regex_constants::format_first_only);
+}
+static string replaceAll(const string& patten, const string& src, const string& tar) {
+    return regex_replace(src, patten, tar);
+}
+
+static user& getUser(const string& id) {
+    if(0 == users.count(id)) {
+        user newUser = {NULL, NULL, NULL, -1, -1};
+        users[id] = newUser;
     }
-    port = ntohs(saddr.sin_port);
-    return new RTPIPv4Address(ip, port);
+    return users[id];
 }
 
 static void* SIPThread(void* input) {
@@ -76,6 +73,12 @@ static void* SIPThread(void* input) {
     string fromPatten = "From: <sip:[0-9]+";
     string toPatten = "To: <sip:[0-9]+";
     string sdpLengthPatten = "Content-Length: [0-9]+";
+    string viaPatten = "Via: SIP/2.0/UDP [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:[0-9]+";
+    string sdpIPPatten = "IN IP4 [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+";
+    string sdpPortPatten = "audio [0-9]+";
+
+    string viaString = "Via: SIP/2.0/UDP " + listenIP + ":" + to_string(listenPort);
+    string sdpIPString = "IN IP4 " + listenIP;
     
     listenAddr.sin_family = AF_INET;
     inet_pton(AF_INET, listenIP.c_str(), &listenAddr.sin_addr);
@@ -101,58 +104,35 @@ static void* SIPThread(void* input) {
                 toID = toID.substr(9);
                 sdpLength = sdpLength.substr(18);
                 cout<<"From:"<<fromID<<" To:"<<toID<<endl;
-                if(memcmp(&tempAddr, &serverAddr, sizeof(sockaddr)) == 0) {
-               //TODO cout<<"user: "<<;
-               //Get To ID
-               //Change IPs and port in SDP to the sess
-               //send this packet
-               // TODO when 200OK Bye cut sess down
-                }
-                else {
-                    user newUser;
-                    if(0 == users.count(fromID)) {
-                        offsetPort += 2;
-                        newUser.saddr = new sockaddr_in();
-                        memcpy(addr.saddr, &tempAddr, sizeof(sockaddr));
-                        users[fromID] = newUser;
-                    }
-                    newUser = users[fromID];
+                
+                receiveString = replaceFirst(viaPatten, receiveString, viaString);
 
-               // change IPs and port in SDP to the sess
-               // or
-               // send this packet
+                if(!sdpLength.compare("0")) {
+                    user fromUser = getUser(fromID);
+                    string fromRIP = getText(sdpIPPatten, receiveString).substr(7);
+                    string fromRPort = getText(sdpIPPatten, receiveString).substr(6);
+                    fromUser.raddr = new sockaddr_in;
+                    fromUser.raddr->sin_family = AF_INET;
+                    fromUser.raddr->sin_port = htons(atoi(fromRPort.c_str()));
+                    inet_pton(AF_INET, fromRIP.c_str(), &fromUser.raddr->sin_addr);
+                    
+                    if(memcpy(&tempAddr, &serverAddr, sizeof(sockaddr)) == 0) { // From server
+
+                                                // TODO rewrite everything after o=
+                    }
+                    else { // From client
+                        // TODO rewrite everything after o=
+                    }
+                    receiveString = replaceAll(sdpIPPatten, receiveString, sdpIPString);
                 }
-                if(sdpLength.compare("0"))
             }
         }
     }
     return NULL;
 }
 static void* RTPThread(void* input) {
-    RTPSession* sess;
-    RTPSourceData* src;
-    RTPPacket* packet;
     while(true) {
         pthread_testcancel();
-        for(map<int, user>::iterator it = users.begin(); it != users.end(); it ++) {
-            sess = it->second.sess;
-            sess->Poll();
-            if(sess->GotoFirstSourceWithData()) {
-                do {
-                    src = sess->GetCurrentSourceInfo();
-                    while(packet = src->GetNextPacket()) {
-                        // send this packet to the other user
-                        users[it->second.speakTo].sess->SendPacket(packet->GetPacketData(),
-                                                            packet->GetPacketLength(),
-                                                            packet->GetPayloadType(),
-                                                            false,
-                                                            packet->GetTimestamp() - it->second.timestamp);
-                        it->second.timestamp = packet->GetTimestamp();
-                        delete packet;
-                    }
-                } while(sess->GotoNextSourceWithData());
-            }
-        }
     }
     return NULL;
 }
