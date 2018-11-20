@@ -1,6 +1,6 @@
 cxx = g++
 exe = demo
-tail = -lpthread -ljrtp -std=c++11 -I/usr/local/include/jrtplib3
+tail = -lpthread -std=c++11
 objs = main.o
 file = main.cpp
 
