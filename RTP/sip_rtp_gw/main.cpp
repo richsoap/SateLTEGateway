@@ -20,6 +20,11 @@ struct user {
     user* speakTo;
 };
 
+struct server {
+    sockaddr_in addr;
+    string ip;
+};
+
 struct addrComp {
     bool operator() (const sockaddr_in& a, const sockaddr_in& b) const {
         return memcmp(&a, &b, sizeof(sockaddr_in)) < 0;
@@ -27,6 +32,7 @@ struct addrComp {
 };
 
 static map<string, user> users;
+static map<string, server> servers;
 static map<sockaddr_in, sockaddr_in, addrComp> rtpMap;
 static int listenPort;
 static int rtpPort;
@@ -47,6 +53,13 @@ static string getText(const string& patten, const string& target) {
         return string();
 }
 
+static bool isFromServer(const string& id, const sockaddr_in& addr) {
+    if(servers.count(id) != 0)
+        return memcmp(&servers[id], &addr, sizeof(sockaddr_in)) == 0;
+    else
+        return false;
+}
+
 static string replaceFirst(const string& patten, const string& src, const string& tar) {
     return regex_replace(src, regex(patten, regex_constants::icase), tar, regex_constants::format_first_only);
 }
@@ -58,6 +71,10 @@ static bool isContain(const string& patten, const string& src) {
 }
 static bool isStateCode(const string& src) {
     return getText(" [0-9]{3} ", src).length() != 0;
+}
+static string replaceMedia(const string& src, const string& tar) {
+
+
 }
 
 static string refreshSdpLength(const string& src) {
@@ -123,6 +140,8 @@ static void* SIPThread(void* input) {
     string viaString = "SIP/2.0/UDP " + listenIP + ":" + to_string(listenPort);
     string sdpIPString = "IN IP4 " + listenIP;
     string sdpPortString = "audio " + to_string(rtpPort);
+    string sdpToClientString = "";
+    string sdpToServerString = "";
 
     listenAddr.sin_family = AF_INET;
     inet_pton(AF_INET, listenIP.c_str(), &listenAddr.sin_addr);
@@ -155,13 +174,14 @@ static void* SIPThread(void* input) {
                 receiveString = replaceFirst(viaPatten, receiveString, viaString);
 // Add SIP Addr
                 user* fromUser = getUser(fromID);
-		        if(memcmp(&tempAddr, &serverAddr, sizeof(sockaddr)) != 0 && (isContain(regesterPatten, receiveString) || fromUser->saddr == NULL) && ntohs(tempAddr.sin_port) != 0) {
+		        if(!isFromServer(fromID, tempAddr) && (isContain(regesterPatten, receiveString) || fromUser->saddr == NULL) && ntohs(tempAddr.sin_port) != 0) {
                     fromUser->saddr = new sockaddr_in;
 		            memcpy(fromUser->saddr, &tempAddr, sizeof(sockaddr));
 		            inet_ntop(AF_INET, &getUser(fromID)->saddr->sin_addr, buffer_test, 20);
 		            //cout<<"From Saddr: "<< buffer_test<<":"<<ntohs(getUser(fromID)->saddr->sin_port)<<endl;
 		        }
 // Add SDP Addr
+			    string tarID = isStateCode(receiveString)?fromID:toID;
                 if(atoi(sdpLength.c_str()) > 0 && isContain(INVITEPatten, receiveString)) {
                     string fromRIP = getText(ipPatten, getText(sdpIPPatten, receiveString));
                     string fromRPort = getText(numberPatten, getText(sdpIPPatten, receiveString));
@@ -174,18 +194,19 @@ static void* SIPThread(void* input) {
                         rtpMap[*getUser(fromID)->raddr] = rtpMap[*getUser(toID)->raddr];
                         rtpMap[*getUser(toID)->raddr] = rtpMap[*getUser(fromID)->raddr];
                     }
-                    if(memcmp(&tempAddr, &serverAddr, sizeof(sockaddr)) == 0) { // From server
+                    if(isFromServer(tarID, tempAddr)) { // From server
+                        receiveString = replaceMedia(receiveString, sdpToClientString);
                     }
                     else { // From client
+                        receiveString = replaceMedia(receiveString, sdpToServerString);
                     }
-                    receiveString = replaceAll(sdpIPPatten, receiveString, sdpIPString);
+                    receiveString = replaceAll(sdpIPPatten, receiveString, sdpIPString);// TODO change to serverIP uplink: ServerIP downlink: listenIP
                     receiveString = replaceFirst(sdpPortPatten, receiveString, sdpPortString);
                     receiveString = refreshSdpLength(receiveString);
                 }
 // Send SIP packet
-		        if(memcmp(&tempAddr, &serverAddr, sizeof(sockaddr)) == 0) {
 			    cout<<"In send to server"<<endl;
-			    string tarID = isStateCode(receiveString)?fromID:toID;
+		        if(isFromServer(tarID, tempAddr)) {
 		            if(getUser(tarID)->saddr != NULL) {
 		                ssize_t result = sendto(socket_fd, receiveString.c_str(), receiveString.length(), 0, (sockaddr*)(getUser(tarID)->saddr), sizeof(sockaddr));
 		                inet_ntop(AF_INET, &getUser(tarID)->saddr->sin_addr, buffer_test, 20);
@@ -194,7 +215,8 @@ static void* SIPThread(void* input) {
 		            }
 		        }
 		        else {
-		            sendto(socket_fd, receiveString.c_str(), receiveString.length(), 0, (sockaddr*)&serverAddr, sizeof(sockaddr));
+                    if(servers.count(tarID))
+		                sendto(socket_fd, receiveString.c_str(), receiveString.length(), 0, (sockaddr*)&servers[tarID], sizeof(sockaddr));
 		        }
             }
         }
@@ -281,19 +303,33 @@ int main(int argc, char** argv) {
     serverIP = argv[3];
     serverPort = atoi(argv[4]);
     offsetPort = 1;
-    string command;
+    string buffer;
     pthread_t SIPTid;
     pthread_t RTPTid;
     pthread_t RTCPTid;
     pthread_create(&SIPTid, NULL, &SIPThread, NULL);
     pthread_create(&RTPTid, NULL, &RTPThread, NULL);
     pthread_create(&RTCPTid, NULL, &RTCPThread, NULL);
-    while(cin>>command) {
-        if(command.compare("quit")) {
-            pthread_cancel(SIPTid);
-            pthread_cancel(RTPTid);
+    while(cin>>buffer) {
+        string command = getText("[{a-z}+]", buffer);
+        if(command.compare("[quit]") == 0) {
             break;
         }
+        else if(command.compare("[add]") == 0) {
+            string IP = getText("[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+", buffer);
+            string imsi = getText("[0-9]{15}", buffer);
+            if(IP.length() != 0 && imsi.length() != 0) {
+                sockaddr_in addr;
+                addr.sin_family = AF_INET;
+                addr.sin_port = htons(5060);
+                inet_pton(AF_INET, IP.c_str(), &addr.sin_addr);
+                servers[IP] = {addr, IP};
+            }
+            else {
+                cout<<"Add command need IP and IMSI"<<endl;
+            }
+        }
+        
     }
     return 0;
 }
