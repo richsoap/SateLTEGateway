@@ -70,11 +70,16 @@ static bool isContain(const string& patten, const string& src) {
     return getText(patten, src).length() != 0;
 }
 static bool isStateCode(const string& src) {
-    return getText(" [0-9]{3} ", src).length() != 0;
+    string text = getText("SIP/2.0 [0-9]{3}", src);
+    cout<<"In isStateCode: "<<text<<endl;
+    return text.length() != 0;
 }
 static string replaceMedia(const string& src, const string& tar) {
-
-
+    smatch sm;
+    if(regex_search(src.cbegin(), src.cend(), sm, regex("m=", regex_constants::icase)))
+        return string(sm.prefix()) + string(sm.str()) + tar;
+    else
+        return src;
 }
 
 static string refreshSdpLength(const string& src) {
@@ -90,7 +95,7 @@ static string refreshSdpLength(const string& src) {
  * */
 static user* getUser(const string& id) {
     if(0 == users.count(id)) {
-	cout<<"Add new user\n";
+	cout<<"Add new user"<<id<<endl;
         user newUser = {NULL, NULL, NULL};
         users[id] = newUser;
     }
@@ -103,6 +108,25 @@ static void addr2rtp(sockaddr_in& addr) {
 static void addr2rtcp(sockaddr_in& addr) {
     addr.sin_port = htons(ntohs(addr.sin_port) + 1);
 }
+/*
+* 
+* RTP Helper
+*
+*/
+
+static uint8_t getPT(uint8_t* buffer) {
+    return buffer[1] & 0x7f;
+}
+static void setPT(uint8_t* buffer, uint8_t PT) {
+    buffer[1] = (buffer[1] & 0x80) | PT;
+}
+
+static void printAddr(const sockaddr_in& addr) {
+	char buffer_test[20];
+	inet_ntop(AF_INET, &addr.sin_addr, buffer_test, 20);
+        cout<< buffer_test<<":"<<ntohs(addr.sin_port)<<endl;
+}
+
 /*
  *
  * SIP Thread
@@ -125,9 +149,9 @@ static void* SIPThread(void* input) {
 
     char buffer_test[1000];
 
-    string fromPatten = "(f|From):.*<sip:[0-9]+";
-    string toPatten = "(t|To):.*<sip:[0-9]+";
-    string sdpLengthPatten = "(Content-Length|l): [0-9]+";
+    string fromPatten = "(f|From):.*<(sip|tel):[0-9]+";
+    string toPatten = "(t|To):.*<(sip|tel):[0-9]+";
+    string sdpLengthPatten = "(Content-Length|l):\\s+[0-9]+";
     string viaPatten = "SIP/2.0/UDP [0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+:[0-9]+";
     string sdpIPPatten = "IN IP4 [0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+";
     string sdpPortPatten = "audio [0-9]+";
@@ -140,9 +164,10 @@ static void* SIPThread(void* input) {
     string viaString = "SIP/2.0/UDP " + listenIP + ":" + to_string(listenPort);
     string sdpIPString = "IN IP4 " + listenIP;
     string sdpPortString = "audio " + to_string(rtpPort);
-    string sdpToClientString = "";
-    string sdpToServerString = "";
+    string sdpToClientString = "audio 5062 RTP/AVP 118\r\na=sendrecv\r\na=rtpmap:118 AMR-WB/16000/1\r\na=ptim:20\r\na=maxptime:240\r\n";
 
+    string sdpToServerString = "audio 50010 RTP/AVP 99\r\na=rtpmap:99 AMR-WB/16000/1\r\na=fmtp:99 mode-change-capability=2;max-red=0\r\na=maxptime:240\r\na=ptime:20\r\n";
+    //string sdpToServerString = "audio 50010 RTP/AVP 99\r\nb=AS:49\r\nb=RS:600\r\nb=RR:2000\r\na=rtpmap:99 AMR-WB/16000/1\r\na=fmtp:99 mode-change-capability=2;max-red=0\r\na=curr:qos local none\r\na=curr:qos remote none\r\na=des:qos mandatory local sendrecv\r\na=des:qos optional remote sendrecv\r\na=sendrecv\r\na=maxptime:240\r\na=ptime:20\r\n";
     listenAddr.sin_family = AF_INET;
     inet_pton(AF_INET, listenIP.c_str(), &listenAddr.sin_addr);
     listenAddr.sin_port = htons(listenPort);
@@ -150,6 +175,8 @@ static void* SIPThread(void* input) {
     inet_pton(AF_INET, serverIP.c_str(), &serverAddr.sin_addr);
     serverAddr.sin_port = htons(serverPort);
 
+    servers["001010000000001"] = {serverAddr, "192.168.4.1"};
+    servers["001010000000003"] = {serverAddr, "192.168.4.1"};
     if(bind(socket_fd, (sockaddr*)&listenAddr, sizeof(sockaddr_in)) < 0) {
         cout<<"Error SIP bind"<<endl<<"Exit"<<endl;
         return NULL;
@@ -157,44 +184,66 @@ static void* SIPThread(void* input) {
     while(true) {
         pthread_testcancel();
         ssize_t len = recvfrom(socket_fd, receiveBuffer, BUFFER_SIZE, 0, (sockaddr*)&tempAddr, &addrSize);
-	//inet_ntop(AF_INET, &tempAddr.sin_addr, buffer_test, 20);
-        //cout<<"Temp addr: "<<addrSize<<" :"<< buffer_test<<":"<<ntohs(tempAddr.sin_port)<<":"<<(int)len<<endl;
+
+        cout<<"Temp addr: ";
+printAddr(tempAddr);
+cout<<(int)len<<endl;
         if(len >= 0) {
             string receiveString((char*)&receiveBuffer[0], (int)len);
             string fromID = getText(fromPatten, receiveString);
             string toID = getText(toPatten, receiveString);
             string sdpLength = getText(sdpLengthPatten, receiveString);
-            cout<<fromID<<endl;
+cout<<"raw sdpLength: "<<sdpLength<<" Length: "<<sdpLength.length()<<endl;
+            //cout<<fromID<<endl;
             if(fromID.length()) {
+cout<<receiveString;
                 fromID = getText(numberPatten, fromID);
                 toID = getText(numberPatten, toID);
                 sdpLength = getText(numberPatten, sdpLength);
                 //cout<<"From:"<<fromID<<" To:"<<toID<<" sdp:"<<sdpLength<<endl;
-		cout<<fromID<<endl;
+		//cout<<fromID<<endl;
                 receiveString = replaceFirst(viaPatten, receiveString, viaString);
 // Add SIP Addr
                 user* fromUser = getUser(fromID);
 		        if(!isFromServer(fromID, tempAddr) && (isContain(regesterPatten, receiveString) || fromUser->saddr == NULL) && ntohs(tempAddr.sin_port) != 0) {
                     fromUser->saddr = new sockaddr_in;
 		            memcpy(fromUser->saddr, &tempAddr, sizeof(sockaddr));
-		            inet_ntop(AF_INET, &getUser(fromID)->saddr->sin_addr, buffer_test, 20);
-		            //cout<<"From Saddr: "<< buffer_test<<":"<<ntohs(getUser(fromID)->saddr->sin_port)<<endl;
+		            cout<<"From Saddr: ";
+printAddr(*fromUser->saddr);
 		        }
+cout<<"Finish add sip addr"<<endl;
 // Add SDP Addr
-			    string tarID = isStateCode(receiveString)?fromID:toID;
-                if(atoi(sdpLength.c_str()) > 0 && isContain(INVITEPatten, receiveString)) {
+                string tarID = isStateCode(receiveString)?fromID:toID;
+                string srcID = isStateCode(receiveString)?toID:fromID;
+                if(atoi(sdpLength.c_str()) > 0 && ntohs(tempAddr.sin_port) == 5060 /*&& isContain(INVITEPatten, receiveString)*/) {
                     string fromRIP = getText(ipPatten, getText(sdpIPPatten, receiveString));
-                    string fromRPort = getText(numberPatten, getText(sdpIPPatten, receiveString));
-                    if(fromUser->raddr == NULL)
-		                fromUser->raddr = new sockaddr_in;
-                    fromUser->raddr->sin_family = AF_INET;
-                    fromUser->raddr->sin_port = htons(atoi(fromRPort.c_str()));
-                    inet_pton(AF_INET, fromRIP.c_str(), &fromUser->raddr->sin_addr);
+                    string fromRPort = getText(numberPatten, getText(sdpPortPatten, receiveString));
+cout<<"***************RIP:"<<fromRIP<<" "<<fromRPort<<" "<<isStateCode(receiveString)<<endl;
+		    user* srcUser = getUser(srcID);
+		    user* tarUser = getUser(tarID);
+                    if(srcUser->raddr != NULL)
+                        delete srcUser->raddr;
+		    srcUser->raddr = new sockaddr_in;
+		    memset(srcUser->raddr, 0, sizeof(sockaddr));
+                    srcUser->raddr->sin_family = AF_INET;
+                    srcUser->raddr->sin_port = htons(atoi(fromRPort.c_str()));
+                    inet_pton(AF_INET, fromRIP.c_str(), &srcUser->raddr->sin_addr);
+		cout<<srcID<<": ";
+                    printAddr(*srcUser->raddr);
+cout<<"--------------------"<<endl;
                     if(isContain(OKPatten, receiveString)) {
-                        rtpMap[*getUser(fromID)->raddr] = rtpMap[*getUser(toID)->raddr];
-                        rtpMap[*getUser(toID)->raddr] = rtpMap[*getUser(fromID)->raddr];
+                        rtpMap[*srcUser->raddr] = *tarUser->raddr;
+                        rtpMap[*tarUser->raddr] = *srcUser->raddr;
+			cout<<"Add rtp con ";
+			printAddr(rtpMap[*srcUser->raddr]);
+			cout<<" ";
+			printAddr(rtpMap[*tarUser->raddr]);
+			cout<<endl;
+
                     }
+                    cout<<"Tar ID: "<<tarID<<" is from server: "<<isFromServer(tarID, tempAddr)<<endl;
                     if(isFromServer(tarID, tempAddr)) { // From server
+			//cout<<"***************** Change SDP to client\n";
                         receiveString = replaceMedia(receiveString, sdpToClientString);
                     }
                     else { // From client
@@ -205,18 +254,23 @@ static void* SIPThread(void* input) {
                     receiveString = refreshSdpLength(receiveString);
                 }
 // Send SIP packet
-			    cout<<"In send to server"<<endl;
 		        if(isFromServer(tarID, tempAddr)) {
+			    //cout<<"In send to user"<<endl;
 		            if(getUser(tarID)->saddr != NULL) {
 		                ssize_t result = sendto(socket_fd, receiveString.c_str(), receiveString.length(), 0, (sockaddr*)(getUser(tarID)->saddr), sizeof(sockaddr));
 		                inet_ntop(AF_INET, &getUser(tarID)->saddr->sin_addr, buffer_test, 20);
 		                //cout<<"Saddr: "<< buffer_test<<":"<<ntohs(getUser(toID)->saddr->sin_port)<<endl;
-		                cout<<"Send to user "<<tarID<<" "<<getUser(tarID)->saddr<<" "<<(int)result<<endl;
+		                //cout<<"Send to user "<<tarID<<" "<<getUser(tarID)->saddr<<" "<<(int)result<<endl;
 		            }
 		        }
 		        else {
-                    if(servers.count(tarID))
+                           //cout<<"In send to server"<<endl;
+                    if(servers.count(tarID)) {
 		                sendto(socket_fd, receiveString.c_str(), receiveString.length(), 0, (sockaddr*)&servers[tarID], sizeof(sockaddr));
+				//sendto(socket_fd, receiveString.c_str(), receiveString.length(), 0, (sockaddr*)(getUser(fromID)->saddr), sizeof(sockaddr));
+                    }
+                    //else
+                           //cout<<"Not find serverAddr"<<endl;
 		        }
             }
         }
@@ -242,16 +296,26 @@ static void* RTPThread(void* input) {
     rtpAddr.sin_port = htons(rtpPort);
      if(bind(socket_fd, (sockaddr*)&rtpAddr, sizeof(sockaddr_in)) < 0) {
         cout<<"Error RTP bind"<<endl<<"Exit"<<endl;
+	perror("In RTP:");
         return NULL;
     }
     while(true) {
         pthread_testcancel();
         len = recvfrom(socket_fd, receiveBuffer, BUFFER_SIZE, 0, (sockaddr*)&tempAddr, &addrSize);
-	    inet_ntop(AF_INET, &tempAddr.sin_addr, buffer_test, 20);
 	    //cout<<"Temp addr: "<<addrSize<<" :"<< buffer_test<<":"<<ntohs(tempAddr.sin_port)<<endl;
+        switch(getPT(receiveBuffer)) {
+            case 118:setPT(receiveBuffer, 99);cout<<"[in PT 118(client)\n";
+                     break;
+            case 99:setPT(receiveBuffer, 118);cout<<"[in PT 99(phone)\n";
+                     break;
+            default:
+                     cout<<"Unknow PT:"<<getPT(receiveBuffer)<<endl;
+        }
         if((it = rtpMap.find(tempAddr)) != rtpMap.end()) {
+            printAddr(tempAddr);
+            printAddr(it->second);
             len = sendto(socket_fd, receiveBuffer, len, 0, (sockaddr*)&it->second, sizeof(sockaddr));
-            //cout<<"Transmit size: "<<len<<endl;
+            cout<<"Transmit size: "<<len<<endl;
         }
     }
     return NULL;
@@ -274,6 +338,7 @@ static void* RTCPThread(void* input) {
     rtcpAddr.sin_port = htons(rtpPort + 1);
      if(bind(socket_fd, (sockaddr*)&rtcpAddr, sizeof(sockaddr_in)) < 0) {
         cout<<"Error RTCP bind"<<endl<<"Exit"<<endl;
+        perror("In RTCP:");
         return NULL;
     }
      while(true) {
@@ -286,7 +351,7 @@ static void* RTCPThread(void* input) {
             tempAddr = it->second;
             addr2rtcp(tempAddr);
             len = sendto(socket_fd, receiveBuffer, len, 0, (sockaddr*)&tempAddr, sizeof(sockaddr));
-            //cout<<"Transmit size: "<<len<<endl;
+            cout<<"RTCP transmit size: "<<len<<endl;
         }
 
      }
@@ -299,7 +364,7 @@ int main(int argc, char** argv) {
     }
     listenIP = argv[1];
     listenPort = atoi(argv[2]);
-    rtpPort = (listenPort + 10) & 0xfffe;
+    rtpPort = 10020;
     serverIP = argv[3];
     serverPort = atoi(argv[4]);
     offsetPort = 1;
@@ -323,7 +388,7 @@ int main(int argc, char** argv) {
                 addr.sin_family = AF_INET;
                 addr.sin_port = htons(5060);
                 inet_pton(AF_INET, IP.c_str(), &addr.sin_addr);
-                servers[IP] = {addr, IP};
+                servers[imsi] = {addr, IP};
             }
             else {
                 cout<<"Add command need IP and IMSI"<<endl;
