@@ -164,10 +164,10 @@ static void* SIPThread(void* input) {
     string viaString = "SIP/2.0/UDP " + listenIP + ":" + to_string(listenPort);
     string sdpIPString = "IN IP4 " + listenIP;
     string sdpPortString = "audio " + to_string(rtpPort);
-    string sdpToClientString = "audio 5062 RTP/AVP 118\r\na=sendrecv\r\na=rtpmap:118 AMR-WB/16000/1\r\na=ptim:20\r\na=maxptime:240\r\n";
+    string sdpToClientString = "audio 5062 RTP/AVP 118\r\na=sendrecv\r\na=rtpmap:118 AMR-WB/16000/1\r\na=fmtp:118 octet-align=1;mode-change-capability=2;max-red=0\r\na=ptime:20\r\na=maxptime:240\r\n";
 
-    string sdpToServerString = "audio 50010 RTP/AVP 99\r\na=rtpmap:99 AMR-WB/16000/1\r\na=fmtp:99 mode-change-capability=2;max-red=0\r\na=maxptime:240\r\na=ptime:20\r\n";
-    //string sdpToServerString = "audio 50010 RTP/AVP 99\r\nb=AS:49\r\nb=RS:600\r\nb=RR:2000\r\na=rtpmap:99 AMR-WB/16000/1\r\na=fmtp:99 mode-change-capability=2;max-red=0\r\na=curr:qos local none\r\na=curr:qos remote none\r\na=des:qos mandatory local sendrecv\r\na=des:qos optional remote sendrecv\r\na=sendrecv\r\na=maxptime:240\r\na=ptime:20\r\n";
+    string sdpToServerString = "audio 50010 RTP/AVP 99\r\na=rtpmap:99 AMR-WB/16000/1\r\na=fmtp:99 octet-align=1;mode-change-capability=2;max-red=0\r\na=maxptime:240\r\na=ptime:20\r\n";
+    string qosString = "a=sendrecv\r\na=curr:qos local sendrecv\r\na=curr:qos remote sendrecv\r\na=des:qos mandatory local sendrecv\r\na=des:qos mandatory remote sendrecv\r\n";
     listenAddr.sin_family = AF_INET;
     inet_pton(AF_INET, listenIP.c_str(), &listenAddr.sin_addr);
     listenAddr.sin_port = htons(listenPort);
