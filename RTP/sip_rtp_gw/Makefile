@@ -1,8 +1,8 @@
 cxx = g++
-exe = demo
+exe = gsm_demo
 tail = -lpthread -std=c++11
-objs = main.o
-file = main.cpp
+objs = gsm_main.o
+file = gsm_main.cpp
 
 
 all: 
