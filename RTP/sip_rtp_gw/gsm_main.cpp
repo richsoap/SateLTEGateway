@@ -218,20 +218,23 @@ static void* SIPThread(void* input) {
         ssize_t len = recvfrom(socket_fd, receiveBuffer, BUFFER_SIZE, 0, (sockaddr*)&tempAddr, &addrSize);
         if(len >= 0) {
             string receiveString((char*)&receiveBuffer[0], (int)len);
-            cout<<receiveString;
             receiveString = replaceFirst(viaPatten, receiveString, viaString);
             string fromRIP = getText(ipPatten, getText(sdpIPPatten, receiveString));
             string fromRPort = getText(numberPatten, getText(sdpPortPatten, receiveString));
             receiveString = replaceFirst(ipPatten + ":" + numberPatten +" SIP/2.0", receiveString, "ims.mnc001.mcc001.3gppnetwork.org SIP/2.0");
+            cout<<receiveString.length()<<endl;
             receiveString = replaceFirst(forwardsPatten, receiveString, allowString);
-            receiveString = removeFirst(phyPatten, receiveString);
-            receiveString = removeFirst(prePatten, receiveString);
-            receiveString = removeFirst(accessPatten, receiveString);
+            //receiveString = removeFirst(phyPatten, receiveString);
+            cout<<receiveString.length()<<endl;
+            //receiveString = removeFirst(prePatten, receiveString);
+            //receiveString = removeFirst(accessPatten, receiveString);
             receiveString = replaceAll(IMSIPatten, receiveString, "");
+            cout<<receiveString.length()<<endl;
             if(memcmp(&tempAddr, &serverAddr, sizeof(sockaddr)) == 0)
                 receiveString = BTSnormalDomain(receiveString);
             else 
                 receiveString = IMSnormalDomain(receiveString);
+            cout<<receiveString.length()<<endl;
             if(fromRIP.length() != 0) {
                 string branch = getText(branchPatten, receiveString);
                 branch = branch.substr(8);
@@ -258,12 +261,15 @@ static void* SIPThread(void* input) {
                 receiveString = replaceAll(sdpPortPatten, receiveString, sdpPortString);
                 receiveString = refreshSdpLength(receiveString);
             }
+            cout<<receiveString;
 // Send SIP packet
-            if(memcmp(&tempAddr, &serverAddr, sizeof(sockaddr)) == 0)
+            if(memcmp(&tempAddr, &serverAddr, sizeof(sockaddr)) == 0) {
                  sendto(socket_fd, receiveString.c_str(), receiveString.length(), 0, (sockaddr*)&BTSAddr, sizeof(sockaddr));
-            else
+            
+cout<<"to bts"<<endl;} 
+            else {
                  sendto(socket_fd, receiveString.c_str(), receiveString.length(), 0, (sockaddr*)&serverAddr, sizeof(sockaddr));
-        }
+        cout<<"to ims"<<endl;}}
     }
     return NULL;
 }
