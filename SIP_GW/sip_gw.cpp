@@ -12,6 +12,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#include "controlpacket.h"
 
 #define BUFFER_SIZE 10240
 
@@ -34,6 +35,7 @@ static string RTPIP;
 string sdpPortPatten = "audio [0-9]+";
 string numberPatten = "[0-9]+";
 string ipPatten = "[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+";
+string AMRPatten = "AMR-WB";
 
 
 static string getText(const string& patten, const string& target) {
@@ -73,6 +75,18 @@ static sockaddr_in str2addr(string IP, int port) {
 	return result;
 }
 
+static void transControl(string sdp) {
+  string IP = getText(ipPatten, sdp);
+  int port = atoi(getText(numberPatten, getText(sdpPortPatten, sdp)));
+  int code = CONTROL_UNKNOWN;
+  if(getText("AMR-WB", sdp).length() != 0) {
+    code = CONTROL_AMR;
+  }
+  else if(getText("GSM", sdp).length != 0) {
+    code = CONTROL_GSM;
+  }
+  else {}
+}
 /*
  *
  * SIP Thread
@@ -101,7 +115,7 @@ static void* SIPThread(void* input) {
 	osip_body_t* sdpBody;
 	char* out_buffer;
 	char* temp_point;
-    
+
 	listenAddr = str2addr(listenIP, listenPort);
 	serverAddr = str2addr(serverIP, serverPort);
 	clientAddr = str2addr(clientIP, clientPort);
@@ -152,7 +166,7 @@ static void* SIPThread(void* input) {
 						sdpBody->length = 0;
 						continue;
 					}
-					//TODO get/send rtp ip and port
+          transControl(sdp);
 					sdp = filtSDP(sdp);
 					if(memcmp(&tempAddr, &serverAddr, sizeof(sockaddr)) == 0) {
 						sdp += sdpToClientString;

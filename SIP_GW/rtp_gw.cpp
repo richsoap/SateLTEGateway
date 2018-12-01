@@ -20,13 +20,7 @@ using namespace std;
 static int listenPort;
 static int controlPort;
 static string listenIP;
-struct ControlPacket {
-	uint8_t command;
-	uint8_t payload;
-	uint8_t code;
-	sockaddr addr;
-	string callid;
-};
+
 struct SrcInfo {
 	uint8_t payload;
 	uint8_t codetype;
@@ -114,7 +108,7 @@ static void* RTPControlThread(void* input) {
 	}
 	while(true) {
 		count = (int)recv(socket_fd, receiveBuffer, BUFFER_SIZE, 0);
-		
+
 	}
     return NULL;
 }
