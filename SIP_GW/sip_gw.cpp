@@ -35,8 +35,9 @@ static string RTPIP;
 string sdpPortPatten = "audio [0-9]+";
 string numberPatten = "[0-9]+";
 string ipPatten = "[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+";
-string AMRPatten = "AMR-WB";
-
+string AMRPatten = "a=.*AMR-WB.*\r\n";
+string GSMPatten = "a=.*GSM.*\r\n";
+string callidPatten = "Callid";
 
 static string getText(const string& patten, const string& target) {
     smatch sm;
@@ -75,17 +76,30 @@ static sockaddr_in str2addr(string IP, int port) {
 	return result;
 }
 
-static void transControl(string sdp) {
-  string IP = getText(ipPatten, sdp);
-  int port = atoi(getText(numberPatten, getText(sdpPortPatten, sdp)));
-  int code = CONTROL_UNKNOWN;
-  if(getText("AMR-WB", sdp).length() != 0) {
-    code = CONTROL_AMR;
-  }
-  else if(getText("GSM", sdp).length != 0) {
-    code = CONTROL_GSM;
-  }
-  else {}
+
+static int buildControl(const string& packet, ControlPacket& control) {
+    int len;
+    string IP = getText(IPPatten, packet);
+    string Port = getText(numberPatten, getText(sdpPortPatten, packet));
+    control.addr = str2addr(IP, atoi(Port.c_str()));
+    string AMRString = getText(AMRPatten, packet);
+    string GSMString = getText(GSMPatten, packet);
+    control.callid = getText(callidPatten, packet);
+    //TODO need to get callid
+    string payload;
+    control.command = CONTROL_ADD;
+    if(AMRString.length() != 0) {
+        payload = getText(numberPatten, AMRString);
+        control.code = CONTROL_AMR;
+    }
+    else if(GSMString.length() != 0) {
+        payload = getText(numberPatten, GSMString);
+        control.code = CONTROL_GSM;
+    }
+    if(payload.length() == 0) 
+        return -1;
+    control.payload = atoi(payload.c_str());
+    return 0;
 }
 /*
  *
@@ -107,8 +121,10 @@ static void* SIPThread(void* input) {
 	sockaddr_in rtpControlAddr;
 	socklen_t addrSize = sizeof(sockaddr_in);
     uint8_t receiveBuffer[BUFFER_SIZE];
+    uint8_t outputBuffer[BUFFER_SIZE];
 	int err;
 	int count;
+    ControlPacket controlPacket;
 	osip_message_t* sip;
 	osip_via_t* sip_via;
 	osip_content_length_t* sdpLength;
@@ -137,7 +153,6 @@ static void* SIPThread(void* input) {
         ssize_t len = recvfrom(socket_fd, receiveBuffer, BUFFER_SIZE, 0, (sockaddr*)&tempAddr, &addrSize);
         if(len >= 0 && (memcmp(&tempAddr, &serverAddr, sizeof(sockaddr) == 0 || memcmp(&tempAddr, &clientAddr, sizeof(sockaddr) == 0)))) {
 
-			osip_message_t* sip;
 			osip_message_init(&sip);
 			err = osip_message_parse(sip, receiveBuffer, len);
 			if(err != 0) {
@@ -166,7 +181,9 @@ static void* SIPThread(void* input) {
 						sdpBody->length = 0;
 						continue;
 					}
-          transControl(sdp);
+                    buildControl(sdp, controlPacket);
+                    len = controlPacket.toBuffer(outputBuffer);
+                    sendto(socket_fd, outputBuffer, len, 0, (sockaddr*)rtpControlAddr, sizeof(sockaddr));
 					sdp = filtSDP(sdp);
 					if(memcmp(&tempAddr, &serverAddr, sizeof(sockaddr)) == 0) {
 						sdp += sdpToClientString;

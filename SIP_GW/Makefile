@@ -1,13 +1,8 @@
 cxx = g++
-exe = gsm_demo
-tail = -lpthread -std=c++11
-objs = gsm_main.o
-file = gsm_main.cpp
+file = libosipparser2.a
 
 
 all: 
-	$(cxx) -c $(file) $(tail)
-	$(cxx) -o $(exe) $(objs) $(tail)
+	$(cxx) sip_gw.cpp $(file) -o sip
+	$(cxx) rtp_gw.cpp $(file) -o rtp
 
-clean:
-	rm *.o
