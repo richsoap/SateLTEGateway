@@ -1,6 +1,6 @@
 #include <pthread.h>
-#include <osip_message.h>
-#include <osip_parser.h>
+#include <osipparser2/osip_message.h>
+#include <osipparser2/osip_parser.h>
 #include <string>
 #include <regex>
 #include <map>
@@ -12,7 +12,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
-#include "controlpacket.h"
+#include "controlpacket.hpp"
 
 #define BUFFER_SIZE 10240
 
@@ -46,22 +46,23 @@ static string getText(const string& patten, const string& target) {
     else
         return string();
 }
-static string filtSDP(const string& src) {
-	string result = replaceAll("m=.*\r\n", src, "");
-	result = replaceAll("a=.*\r\n", src, "");
-	return result;
-}
-static string replaceSDP(const string& src) {
-	string result = replaceAll(ipPatten, RTPIP);
-	result = replaceAll(sdpPortPatten, sdpPortString);
-}
-
 static string replaceFirst(const string& patten, const string& src, const string& tar) {
     return regex_replace(src, regex(patten, regex_constants::icase), tar, regex_constants::format_first_only);
 }
 static string replaceAll(const string& patten, const string& src, const string& tar) {
     return regex_replace(src, regex(patten, regex_constants::icase), tar);
 }
+static string filtSDP(const string& src) {
+	string result = replaceAll("m=.*\r\n", src, "");
+	result = replaceAll("a=.*\r\n", src, "");
+	return result;
+}
+static string replaceSDP(const string& src, const string& ipString, const string& portString) {
+	string result = replaceAll(ipPatten, RTPIP, ipString);
+	result = replaceAll(sdpPortPatten, result, portString);
+}
+
+
 /*
  * Addr helper
  *
@@ -79,7 +80,7 @@ static sockaddr_in str2addr(string IP, int port) {
 
 static int buildControl(const string& packet, ControlPacket& control) {
     int len;
-    string IP = getText(IPPatten, packet);
+    string IP = getText(ipPatten, packet);
     string Port = getText(numberPatten, getText(sdpPortPatten, packet));
     control.addr = str2addr(IP, atoi(Port.c_str()));
     string AMRString = getText(AMRPatten, packet);
@@ -136,8 +137,8 @@ static void* SIPThread(void* input) {
 	serverAddr = str2addr(serverIP, serverPort);
 	clientAddr = str2addr(clientIP, clientPort);
 	rtpControlAddr = str2addr(RTPIP, RTPControlPort);
-	string sdpIPString = "IN IP4 " + listenIP;
-	string sdpPortString = "audio " + to_string(rtpPort);
+	string sdpIPString = "IN IP4 " + RTPIP;
+	string sdpPortString = "audio " + to_string(RTPListenPort);
 	string listenPortStr = to_string(listenPort);
 	string sdpToClientString = "audio 5062 RTP/AVP 118\r\na=sendrecv\r\na=rtpmap:118 AMR-WB/16000/1\r\na=fmtp:118 octet-align=1;mode-change-capability=2;max-red=0\r\na=ptime:20\r\na=maxptime:240\r\n";
 	string sdpToServerString = "audio 50010 RTP/AVP 99\r\na=rtpmap:99 AMR-WB/16000/1\r\na=fmtp:99 octet-align=1;mode-change-capability=2;max-red=0\r\na=maxptime:240\r\na=ptime:20\r\n";
@@ -154,7 +155,7 @@ static void* SIPThread(void* input) {
         if(len >= 0 && (memcmp(&tempAddr, &serverAddr, sizeof(sockaddr) == 0 || memcmp(&tempAddr, &clientAddr, sizeof(sockaddr) == 0)))) {
 
 			osip_message_init(&sip);
-			err = osip_message_parse(sip, receiveBuffer, len);
+			err = osip_message_parse(sip, (char*)receiveBuffer, len);
 			if(err != 0) {
 				cout<<"Error: failed while parsing!"<<endl;
 				continue;
@@ -162,8 +163,8 @@ static void* SIPThread(void* input) {
 
 			osip_message_get_via(sip, osip_list_size(&sip->vias)-1, &sip_via);
 			osip_free(sip_via->host);
-			sip_via->host = (char*)osip_malloc(ListenIP.length());
-			memcpy(sip_via->host, ListenIP.c_str(), ListenIP.length());
+			sip_via->host = (char*)osip_malloc(listenIP.length());
+			memcpy(sip_via->host, listenIP.c_str(), listenIP.length());
 			osip_free(sip_via->port);
 			sip_via->port = (char*)osip_malloc(listenPortStr.length());
 			memcpy(sip_via->port, listenPortStr.c_str(), listenPortStr.length());
@@ -182,8 +183,8 @@ static void* SIPThread(void* input) {
 						continue;
 					}
                     buildControl(sdp, controlPacket);
-                    len = controlPacket.toBuffer(outputBuffer);
-                    sendto(socket_fd, outputBuffer, len, 0, (sockaddr*)rtpControlAddr, sizeof(sockaddr));
+                    len = controlPacket.toBuffer((char*)outputBuffer);
+                    sendto(socket_fd, outputBuffer, len, 0, (sockaddr*)&rtpControlAddr, sizeof(sockaddr));
 					sdp = filtSDP(sdp);
 					if(memcmp(&tempAddr, &serverAddr, sizeof(sockaddr)) == 0) {
 						sdp += sdpToClientString;
@@ -191,18 +192,18 @@ static void* SIPThread(void* input) {
 					else if(memcmp(&tempAddr, &clientAddr, sizeof(sockaddr)) == 0){
 						sdp += sdpToServerString;
 					}
-					replaceSDP(sdp, RTPIP, RTPListenPort);
+					replaceSDP(sdp, sdpIPString, sdpPortString);
 					osip_free(sdpBody->body);
-					sdpBody->body = osip_malloc(sdp.length());
+					sdpBody->body = (char*)osip_malloc(sdp.length());
 					sdpBody->length = sdp.length();
 				}
 			}
-			err = osip_message_to_str(sip, &out_buffer, &count);
+			err = osip_message_to_str(sip, &out_buffer, (size_t*)&count);
 			if(memcmp(&tempAddr, &serverAddr, sizeof(sockaddr)) == 0) {
 				count = (int)sendto(socket_fd, out_buffer, count, 0, (sockaddr*)&clientAddr, sizeof(sockaddr));
 			}
 			else {
-				count = (int)sendto(socket_fd, out_buffer, count, 0, (sockaddrr*)&serverAddr, sizeof(sockaddr));
+				count = (int)sendto(socket_fd, out_buffer, count, 0, (sockaddr*)&serverAddr, sizeof(sockaddr));
 			}
         }
     }
@@ -220,14 +221,14 @@ int main(int argc, char** argv) {
     serverPort = atoi(argv[4]);
 	clientIP = argv[5];
 	clientPort = atoi(argv[6]);
-	rtpIP = argv[7];
-	rtpControlPort = atoi(argv[8]);
-	rtpListenPort = atoi(argv[9]);
+	RTPIP = argv[7];
+	RTPControlPort = atoi(argv[8]);
+	RTPListenPort = atoi(argv[9]);
     string buffer;
     pthread_t SIPTid;
     pthread_create(&SIPTid, NULL, &SIPThread, NULL);
     while(cin>>buffer) {
-        if(command.compare("quit") == 0) {
+        if(buffer.compare("quit") == 0) {
             break;
         }
     }

@@ -12,11 +12,12 @@
 
 #define CONTROL_AMR 0x01
 #define CONTROL_GSM 0x02
+using namespace std;
 struct ControlPacket {
   	uint8_t command;
   	uint8_t payload;
   	uint8_t code;
-  	sockaddr addr;
+  	sockaddr_in addr;
   	string callid;
     void init(uint8_t _command, uint8_t _pt, uint8_t _code, const sockaddr& _addr, const string& _callid) {
       command = _command;
@@ -26,9 +27,9 @@ struct ControlPacket {
       callid = string(_callid);
     }
     int toBuffer(char* buffer) {
-      int result = 0
+      int result = 0;
       buffer[result ++] = command;
-      buffer[result ++] = pt;
+      buffer[result ++] = payload;
       buffer[result ++] = code;
       memcpy[buffer + result, &addr, sizeof(sockaddr)];
       result += sizeof(sockaddr);

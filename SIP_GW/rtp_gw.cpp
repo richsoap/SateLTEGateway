@@ -1,6 +1,6 @@
 #include <pthread.h>
-#include <osip_message.h>
-#include <osip_parser.h>
+#include <osipparser2/osip_message.h>
+#include <osipparser2/osip_parser.h>
 #include <string>
 #include <regex>
 #include <map>
@@ -12,6 +12,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#include "rtp.hpp"
+#include "controlpacket.hpp"
 
 #define BUFFER_SIZE 10240
 
@@ -27,7 +29,7 @@ static string listenIP;
 struct SrcInfo {
 	uint8_t payload;
 	uint8_t codetype;
-}
+};
 
 struct TransConf {
     uint8_t type;
@@ -35,10 +37,16 @@ struct TransConf {
     uint8_t srcCode;
     uint8_t tarCode;
     sockaddr tarAddr;
-}
+};
 
-map<sockaddr, SrcInfo> srcMap;
-map<sockaddr, sockaddr> pairMap;
+struct addrComp { 
+    bool operator () (const sockaddr& a1, const sockaddr& a2) const {
+        return memcmp(&a1, &a2, sizeof(sockaddr)) < 0;
+    }
+};
+
+map<sockaddr, SrcInfo, addrComp> srcMap;
+map<sockaddr, sockaddr, addrComp> pairMap;
 map<string, sockaddr> callidMap;
 /*
  * Addr helper
