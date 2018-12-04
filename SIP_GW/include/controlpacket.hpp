@@ -31,9 +31,9 @@ struct ControlPacket {
       buffer[result ++] = command;
       buffer[result ++] = payload;
       buffer[result ++] = code;
-      memcpy[buffer + result, &addr, sizeof(sockaddr)];
+      memcpy(buffer + result, &addr, sizeof(sockaddr));
       result += sizeof(sockaddr);
-      memcpy[buffer + result, callid.c_str(), callid.length()];
+      memcpy(buffer + result, callid.c_str(), callid.length());
       result += callid.length();
       return result;
     }
@@ -42,5 +42,22 @@ struct ControlPacket {
       memcpy(this, buffer, 3+sizeof(sockaddr));
       callid = string(buffer + offset, length - offset);
     }
+	void print() {
+		switch(command) {
+			case CONTROL_ADD: cout<<"Add: ";
+							  break;
+			case CONTROL_REMOVE: cout<<"Remove: ";
+								 break;
+			default: cout<<"Unknow: ";
+		}
+		switch(code) {
+			case CONTROL_AMR: cout<<"AMR ";
+							  break;
+			case CONTROL_GSM: cout<<"GSM ";
+							  break;
+			default: cout<<"Unknow ";
+		}
+		cout<<to_string(payload)<<" "<<callid<<endl;
+	}
 };
 #endif

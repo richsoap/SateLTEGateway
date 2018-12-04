@@ -19,7 +19,7 @@
 
 #define TYPE_ABORT 0x00
 #define TYPE_NOCHANGE 0x01
-#define TYPE_CHANGE
+#define TYPE_CHANGE 0x02
 using namespace std;
 
 static int listenPort;
@@ -36,18 +36,18 @@ struct TransConf {
     uint8_t tarPT;
     uint8_t srcCode;
     uint8_t tarCode;
-    sockaddr tarAddr;
+    sockaddr_in tarAddr;
 };
 
 struct addrComp { 
-    bool operator () (const sockaddr& a1, const sockaddr& a2) const {
-        return memcmp(&a1, &a2, sizeof(sockaddr)) < 0;
+    bool operator () (const sockaddr_in& a1, const sockaddr_in& a2) const {
+        return memcmp(&a1, &a2, sizeof(sockaddr_in)) < 0;
     }
 };
 
-map<sockaddr, SrcInfo, addrComp> srcMap;
-map<sockaddr, sockaddr, addrComp> pairMap;
-map<string, sockaddr> callidMap;
+map<sockaddr_in, SrcInfo, addrComp> srcMap;
+map<sockaddr_in, sockaddr_in, addrComp> pairMap;
+map<string, sockaddr_in> callidMap;
 /*
  * Addr helper
  *
@@ -62,7 +62,7 @@ static sockaddr_in str2addr(string IP, int port) {
 	return result;
 }
 
-static int getRTCPAddr(sockaddr_in srcAddr, sockaddr_in& tarAddr) {
+static int getRTCPTarAddr(sockaddr_in srcAddr, sockaddr_in& tarAddr) {
     srcAddr.sin_port = htons(ntohs(srcAddr.sin_port) - 1);
     if(pairMap.count(srcAddr) == 0)
         return -1;
@@ -70,9 +70,9 @@ static int getRTCPAddr(sockaddr_in srcAddr, sockaddr_in& tarAddr) {
     tarAddr.sin_port = htons(ntohs(tarAddr.sin_port) + 1);
 }
 
-static TransConf getConf(const sockaddr& addr) {
+static TransConf getConf(const sockaddr_in& addr) {
     TransConf conf;
-    map<sockaddr, sockaddr>::iterator it = pairMap.find(addr);
+    map<sockaddr_in, sockaddr_in>::iterator it = pairMap.find(addr);
     if(it == pairMap.end()) {
         conf.type = TYPE_ABORT;
         return conf;
@@ -81,36 +81,35 @@ static TransConf getConf(const sockaddr& addr) {
     SrcInfo tarInfo = srcMap[it->second];
     if(srcInfo.codetype == tarInfo.codetype)
         conf.type = TYPE_NOCHANGE;
-    else {
+    else 
         conf.type = TYPE_CHANGE;
-    }
     conf.tarPT = tarInfo.payload;
-    conf.srcCode = srcInfo.code;
-    conf.tarCode = tarInfo.code;
-    conf.tarAddr = tarInfo.addr;
+    conf.srcCode = srcInfo.codetype;
+    conf.tarCode = tarInfo.codetype;
+    conf.tarAddr = it->second;
     return conf;
 }
 
 static void addSrc(const ControlPacket& packet) {
     SrcInfo info = {packet.payload, packet.code};
     srcMap[packet.addr] = info;
-    map<string, sockaddr>::interator it = callidMap.find(packet.callid);
+    map<string, sockaddr_in>::iterator it = callidMap.find(packet.callid);
     if(it == callidMap.end()) {
         callidMap[packet.callid] = packet.addr;
     }
     else {
         pairMap[it->second] = packet.addr;
-        pariMap[packet.addr] = it->second;
+        pairMap[packet.addr] = it->second;
     }
 }
 
 static void removeCall(const string& callid) {
-    map<string, sockaddr>::iterator it = callidMap.find(callid);
+    map<string, sockaddr_in>::iterator it = callidMap.find(callid);
     if(it == callidMap.end()) {
         return;
     }
     srcMap.erase(srcMap.find(it->second));
-    map<sockaddr, sockaddr>::iterator addrit = pairMap.find(it->second);
+    map<sockaddr_in, sockaddr_in>::iterator addrit = pairMap.find(it->second);
     if(addrit == pairMap.end())
         return;
     srcMap.erase(srcMap.find(addrit->second));
@@ -133,18 +132,19 @@ static void* RTPControlThread(void* input) {
     }
     sockaddr_in listenAddr = str2addr(listenIP, controlPort);
 	socklen_t addrSize = sizeof(sockaddr_in);
-	ControlPacketi packet;
+	ControlPacket packet;
     uint8_t receiveBuffer[BUFFER_SIZE];
 	int err;
 	int count;
 	if(bind(socket_fd, (sockaddr*)&listenAddr, sizeof(sockaddr)) != 0) {
 		cout<<"Wrong while binding control"<<endl;
-		return;
+		return NULL;
 	}
 	while(true) {
 		count = (int)recv(socket_fd, receiveBuffer, BUFFER_SIZE, 0);
         if(count > 0) {
-            packet.fromBuffer(receiveBuffer, count);
+            packet.fromBuffer((char*)receiveBuffer, count);
+			packet.print();
             switch(packet.command) {
                 case CONTROL_ADD:
                     addSrc(packet);
@@ -172,6 +172,7 @@ static void* RTPThread(void* input) {
     sockaddr_in tempAddr;
     socklen_t addrSize = sizeof(sockaddr);
     RTPPacket packet;
+	int len;
     rtpAddr = str2addr(listenIP, listenPort);
      if(bind(socket_fd, (sockaddr*)&rtpAddr, sizeof(sockaddr_in)) < 0) {
         cout<<"Error RTP bind"<<endl<<"Exit"<<endl;
@@ -183,12 +184,12 @@ static void* RTPThread(void* input) {
         if(len <= 0)
             continue;
         TransConf conf = getConf(tempAddr);
+        pharse_gsm(receiveBuffer, len, &packet);
         if(conf.type == TYPE_ABORT)
             continue;
         else if(conf.type == TYPE_CHANGE) {
             switch(conf.srcCode) {
                 case CONTROL_GSM:
-                    pharse_gsm(receiveBuffer, len, &packet);
                     //TODO GSM to PCM
                     break;
                 case CONTROL_AMR:
@@ -210,8 +211,8 @@ static void* RTPThread(void* input) {
                     break;
             }
         }
-        packet->setPT(conf.tarPT);
-        len = rtp2buffer(outputBuffer, packet);
+        packet.setPT(conf.tarPT);
+        len = rtp2buffer(outputBuffer, &packet);
         sendto(socket_fd, outputBuffer, len, 0, (sockaddr*)&conf.tarAddr, sizeof(sockaddr));
     }
     return NULL;
@@ -239,7 +240,7 @@ static void* RTCPThread(void* input) {
      while(true) {
         pthread_testcancel();
         len = recvfrom(socket_fd, receiveBuffer, BUFFER_SIZE, 0, (sockaddr*)&tempAddr, &addrSize);
-        if(getRTCPTarAddr(tempAddr, &tarAddr) == 0) {
+        if(getRTCPTarAddr(tempAddr, tarAddr) == 0) {
             sendto(socket_fd, receiveBuffer, len, 0, (sockaddr*)&tarAddr, sizeof(sockaddr));
         }
      }
@@ -253,14 +254,15 @@ int main(int argc, char** argv) {
     listenIP = argv[1];
     listenPort = atoi(argv[2]);
 	controlPort = atoi(argv[3]);
+	string buffer;
     pthread_t RTPid;
-	pthread_t RTPCid;
+	pthread_t RTCPid;
 	pthread_t RTPControlid;
     pthread_create(&RTPid, NULL, &RTPThread, NULL);
-	pthread_create(&RTPCid, NULL, &RTPCThread, NULL);
-	pthread_create(&RTPControlid, NULL, &RTPControlid, NULL);
+	pthread_create(&RTCPid, NULL, &RTCPThread, NULL);
+	pthread_create(&RTPControlid, NULL, &RTPControlThread, NULL);
     while(cin>>buffer) {
-        if(command.compare("quit") == 0) {
+        if(buffer.compare("quit") == 0) {
             break;
         }
     }

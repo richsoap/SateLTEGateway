@@ -1,5 +1,5 @@
 cxx = g++
-file = libosipparser2.a
+file = /usr/local/lib/libosipparser2.a
 tail = -I./include -std=c++11 -lpthread
 
 
