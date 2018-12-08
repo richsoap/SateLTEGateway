@@ -48,6 +48,7 @@ struct addrComp {
 map<sockaddr_in, SrcInfo, addrComp> srcMap;
 map<sockaddr_in, sockaddr_in, addrComp> pairMap;
 map<string, sockaddr_in> callidMap;
+map<sockaddr_in, int> countMap;
 /*
  * Addr helper
  *
@@ -93,6 +94,7 @@ static TransConf getConf(const sockaddr_in& addr) {
 static void addSrc(const ControlPacket& packet) {
     SrcInfo info = {packet.payload, packet.code};
     srcMap[packet.addr] = info;
+	countMap[packet.addr] = 0;
     map<string, sockaddr_in>::iterator it = callidMap.find(packet.callid);
     if(it == callidMap.end()) {
         callidMap[packet.callid] = packet.addr;
@@ -104,6 +106,7 @@ static void addSrc(const ControlPacket& packet) {
 }
 
 static void removeCall(const string& callid) {
+	//TODO remove addr of count from countMap
     map<string, sockaddr_in>::iterator it = callidMap.find(callid);
     if(it == callidMap.end()) {
         return;
@@ -184,33 +187,36 @@ static void* RTPThread(void* input) {
         if(len <= 0)
             continue;
         TransConf conf = getConf(tempAddr);
-        pharse_gsm(receiveBuffer, len, &packet);
         if(conf.type == TYPE_ABORT)
             continue;
         else if(conf.type == TYPE_CHANGE) {
+			countMap[tempAddr] ++;
             switch(conf.srcCode) {
                 case CONTROL_GSM:
-                    //TODO GSM to PCM
+					pharse_GSM(receiveBuffer, len, &packet)
                     break;
                 case CONTROL_AMR:
-                    //TODO pharse_PCM(receiveBuffer, len, &packet);
-                    // AMR to PCM
+					pharse_AMR(receiveBufer, len, &packet);
                     break;
                 default:
                     break;
             }
             switch(conf.tarCode) {
                 case CONTROL_GSM:
-                    //TODO encode GSM
+					// encode GSM
+					packet_GSM(packet);
                     break;
                 case CONTROL_AMR:
-                    //TODO encode AMR
-                    // Add extHead
+					// encode AMR
+					packet_AMR(packet);
                     break;
                 default:
                     break;
             }
         }
+		else {
+			pharse_raw(receiveBuffer, len, &packet);
+		}
         packet.setPT(conf.tarPT);
         len = rtp2buffer(outputBuffer, &packet);
         sendto(socket_fd, outputBuffer, len, 0, (sockaddr*)&conf.tarAddr, sizeof(sockaddr));

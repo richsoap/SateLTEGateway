@@ -16,6 +16,7 @@
 
 #define BUFFER_SIZE 10240
 #define ADDRSIZE sizeof(sockaddr_in)
+#define IMS_DOMAIN "ims.mnc001.mcc001.3gppnetwork.org"
 
 using namespace std;
 
@@ -40,6 +41,7 @@ string AMRPatten = "a=.*AMR-WB.*\r\n";
 string GSMPatten = "a=.*GSM.*\r\n";
 string callidPatten = "Callid";
 string mediaPatten = "m=";
+string sessIDPatten = "[0-9]+ [0-9]+ IN IP4";
 
 static void printAddr(const sockaddr_in& addr) {
 	char buffer_test[20];
@@ -129,6 +131,24 @@ static osip_list_t getAllows() {
 	}
 	return result;
 }
+
+
+static void setCharValue(char** src, const char* tar) {
+	if(*src != NULL) {
+		cout<<"Free src"<<endl;
+		osip_free(*src);
+	}
+	cout<<"Malloc"<<endl;
+	*src = (char*)osip_malloc(strlen(tar) + 10);
+	cout<<"Copy"<<endl;
+	strcpy(*src, tar);
+}
+
+static void deleteCharValue(char **src) {
+	osip_free(*src);
+	*src = NULL;
+}
+
 /*
  *
  * SIP Thread
@@ -169,9 +189,14 @@ static void* SIPThread(void* input) {
 	string sdpIPString = "IN IP4 " + RTPIP;
 	string sdpPortString = "audio " + to_string(RTPListenPort);
 	string listenPortStr = to_string(listenPort);
+	string sessIDString = "10086 10086 IN IP4";
+	string sdpToClientString;
 
-	string sdpToClientString = "m=audio 5062 RTP/AVP 3\r\na=rtpmap:3 GSM/8000\r\nc=IN IP4 127.0.0.1\r\n";
-	//string sdpToClientString = "m=audio 5062 RTP/AVP 118\r\na=sendrecv\r\na=rtpmap:118 AMR-WB/16000/1\r\na=fmtp:118 octet-align=1;mode-change-capability=2;max-red=0\r\na=ptime:20\r\na=maxptime:240\r\nc=IN IP4 127.0.0.1\r\n";
+#ifdef AMRGSM
+	sdpToClientString = "m=audio 5062 RTP/AVP 3\r\na=rtpmap:3 GSM/8000/1\r\nc=IN IP4 127.0.0.1\r\n";
+#else
+	sdpToClientString = "m=audio 5062 RTP/AVP 118\r\na=rtpmap:118 AMR-WB/16000/1\r\na=fmtp:118 octet-align=1\r\nc=IN IP4 127.0.0.1\r\n";
+#endif
 	string sdpToServerString = "m=audio 50010 RTP/AVP 99\r\na=rtpmap:99 AMR-WB/16000/1\r\na=fmtp:99 octet-align=1;mode-change-capability=2;max-red=0\r\na=maxptime:240\r\na=ptime:20\r\nc=IN IP4 127.0.0.1\r\n";
 	string qosString = "a=sendrecv\r\na=curr:qos local sendrecv\r\na=curr:qos remote sendrecv\r\na=des:qos mandatory local sendrecv\r\na=des:qos mandatory remote sendrecv\r\n";
 
@@ -196,62 +221,71 @@ static void* SIPThread(void* input) {
 			cout<<"parse done"<<endl;
 
 			osip_message_get_via(sip, osip_list_size(&sip->vias)-1, &sip_via);
-			osip_free(sip_via->host);
-			sip_via->host = (char*)osip_malloc(listenIP.length() + 1);
-			strcpy(sip_via->host, listenIP.c_str());
-			osip_free(sip_via->port);
-			sip_via->port = (char*)osip_malloc(listenPortStr.length() + 1);
-			strcpy(sip_via->port, listenPortStr.c_str());
+			setCharValue(&sip_via->host, listenIP.c_str());
+			setCharValue(&sip_via->port, listenPortStr.c_str());
+			osip_generic_param_add(&sip_via->via_params, osip_strdup("rport"), NULL);
+			if(addrCmp(tempAddr, clientAddr)) {
 			//remove IMSI and change domain
-			if(strlen(sip->from->url->username) > 15) {
-				strcpy(sip->from->url->username, sip->from->url->username + 4);
-			}
-			if(strlen(sip->to->url->username) > 15) {
-				strcpy(sip->to->url->username, sip->to->url->username + 4);
-			}
-			osip_free(sip->from->url->host);
-			sip->from->url->host = (char*) osip_malloc(40);
-			strcpy(sip->from->url->host, "ims.mcc001.mnc001.3gppnetwork.org");
-			osip_free(sip->to->url->host);
-			sip->to->url->host = (char*) osip_malloc(40);
-			strcpy(sip->to->url->host, "ims.mcc001.mnc001.3gppnetwork.org");
-			while(osip_list_size(&sip->headers) > 1) {
-				osip_list_remove(&sip->headers, 0);
-			}
-			osip_header_t* head;
-			osip_header_init(&head);
-			head->hname = (char*)osip_malloc(10);
-			head->hvalue = (char*) osip_malloc(20);
-			strcpy(head->hname, "K");
-			strcpy(head->hvalue, "100rel");
-			osip_list_add(&sip->headers, head, -1);
-			osip_header_init(&head);
-			head->hname = (char*)osip_malloc(10);
-			head->hvalue = (char*) osip_malloc(20);
-			strcpy(head->hname, "K");
-			strcpy(head->hvalue, "replaces");
-			osip_list_add(&sip->headers, head, -1);
-			osip_header_init(&head);
-			head->hname = (char*)osip_malloc(20);
-			head->hvalue = (char*) osip_malloc(20);
-			strcpy(head->hname, "Max-Forwards");
-			strcpy(head->hvalue, "70");
-			osip_list_add(&sip->headers, head, -1);
+				setCharValue(&sip->req_uri->host, IMS_DOMAIN);
+				deleteCharValue(&sip->req_uri->port);
+				if(strlen(sip->from->url->username) > 15) {
+					strcpy(sip->from->url->username, sip->from->url->username + 4);
+				}
+				if(strlen(sip->to->url->username) > 15) {
+					strcpy(sip->to->url->username, sip->to->url->username + 4);
+				}
+				cout<<"Remove \"IMSI\" successfully"<<endl;
+			
+				setCharValue(&sip->from->url->host, IMS_DOMAIN);
+				setCharValue(&sip->to->url->host, IMS_DOMAIN);
+				deleteCharValue(&sip->from->url->port);
+				deleteCharValue(&sip->to->url->port);
+				while(osip_list_size(&sip->headers) > 1) {
+					osip_list_remove(&sip->headers, 0);
+				}
+				osip_header_t* head;
+				osip_header_init(&head);
+				setCharValue(&head->hname, "K");
+				setCharValue(&head->hvalue, "100rel");
+				osip_list_add(&sip->headers, head, -1);
+				osip_header_init(&head);
+				setCharValue(&head->hname, "K");
+				setCharValue(&head->hvalue, "replaces");
+				osip_list_add(&sip->headers, head, -1);
+				osip_header_init(&head);
+				setCharValue(&head->hname, "Max-Forwards");
+				setCharValue(&head->hvalue, "70");
+				osip_list_add(&sip->headers, head, -1);
+				cout<<"Add headers done"<<endl;
 
-			if(osip_list_size(&sip->allows) == 0)
-				sip->allows = getAllows();
-			if(sip->content_type != NULL) {
-				cout<<"Body Type: "<<sip->content_type->subtype << endl;
-				cout<<string((char*)&receiveBuffer[0])<<endl;
-			}
-			// change contact
-			if(addrCmp(tempAddr, clientAddr) && osip_list_size(&sip->contacts) > 0) {
-				contact = (osip_contact_t*)osip_list_get(&sip->contacts, 0);
-				if(strlen(contact->url->username) > 15)
-					strcpy(contact->url->username, contact->url->username + 4);
-				strcpy(contact->url->host, "162.105.85.217");
-				contact->displayname = (char*) osip_malloc(100);
-				strcpy(contact->displayname, "\"001010123456780@ims.mcc001.mnc001.3gppnetwork.org\"");
+				if(osip_list_size(&sip->allows) == 0)
+					sip->allows = getAllows();
+
+				if(osip_list_size(&sip->contacts) > 0) {
+					contact = (osip_contact_t*)osip_list_get(&sip->contacts, 0);
+					if(strlen(contact->url->username) > 15)
+						strcpy(contact->url->username, contact->url->username + 4);
+					setCharValue(&contact->url->host, listenIP.c_str());
+					deleteCharValue(&contact->url->port);
+					setCharValue(&contact->displayname, (string("\"") + string(sip->from->url->username) + string("@") + string(sip->from->url->host) + "\"").c_str());				
+					osip_header_init(&head);
+					setCharValue(&head->hname, "Expires");
+					setCharValue(&head->hvalue, "3600");
+					osip_list_add(&sip->headers, head, -1);
+					cout<<"change contacts done"<<endl;
+				}
+				if(MSG_IS_REGISTER(sip)) {
+					osip_route_t* route;
+					osip_route_init(&route);
+					osip_uri_init(&route->url);
+					setCharValue(&route->url->host, listenIP.c_str());
+					setCharValue(&route->url->port, (to_string(listenPort) + ";lr").c_str());
+					setCharValue(&route->url->scheme, "sip");
+					osip_list_add(&sip->routes, route, -1);
+					cout<<"Add route done"<<endl;
+					osip_generic_param_add(&contact->gen_params, osip_strdup("q=1"), NULL);
+
+				}
 			}
 			if(sip->content_type != NULL && strcmp("sdp", sip->content_type->subtype)== 0) {
 				cout<<"in SDP: "<<to_string(osip_list_size(&sip->bodies))<<endl;
@@ -262,21 +296,32 @@ static void* SIPThread(void* input) {
 				if(err != 0)
 					continue;
 				controlPacket.callid = sip->call_id->number;
-                len = controlPacket.toBuffer((char*)outputBuffer);
-                len = sendto(socket_fd, outputBuffer, len, 0, (sockaddr*)&rtpControlAddr, sizeof(sockaddr));
+
 				// change sdp
 				if(addrCmp(tempAddr, serverAddr)) {
 					sdp = replaceMedia(sdp, sdpToClientString);
+					controlPacket.payload = 99;
+					controlPacket.code = CONTROL_AMR;
 				}
 				else if(addrCmp(tempAddr, clientAddr)){
 					sdp = replaceMedia(sdp, sdpToServerString);
+#ifdef GSMAMR
+					controlPacket.payload = 3;
+					controlPacket.code = CONTROL_GSM;
+#else
+					controlPacket.payload = 118;
+					controlPacket.code = CONTROL_AMR;
+#endif
 				}
 				sdp = replaceSDP(sdp, sdpIPString, sdpPortString);
+				sdp = replaceFirst(sessIDPatten, sdp, sessIDString);
 				cout<<"Replaced SDP: "<<sdp;
 				osip_free(sdpBody->body);
 				sdpBody->body = (char*)osip_malloc(sdp.length() + 1);
 				strcpy(sdpBody->body, sdp.c_str());
 				sdpBody->length = sdp.length();
+				len = controlPacket.toBuffer((char*)outputBuffer);
+                len = sendto(socket_fd, outputBuffer, len, 0, (sockaddr*)&rtpControlAddr, sizeof(sockaddr));
 			}
 			cout<<"SIP to str"<<endl;
 			err = osip_message_to_str(sip, &out_buffer, (size_t*)&len);

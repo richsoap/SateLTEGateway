@@ -12,7 +12,8 @@ struct RTPHead {
 };
 struct RTPPacket {
   RTPHead head;
-  string extHead;
+  uint8_t extHead[4];
+  uint8_t extLen;
   uint32_t len;
   uint8_t* buffer;
   uint8_t getPT() {
@@ -22,12 +23,33 @@ struct RTPPacket {
     head.pt = (head.pt & 0x80) | PT;
   }
 };
-static uint32_t pharse_gsm(uint8_t* buffer, uint32_t len, RTPPacket* packet) {
+static uint32_t pharse_GSM(uint8_t* buffer, uint32_t len, RTPPacket* packet) {
   memcpy(packet, buffer, sizeof(RTPHead));
+  packet->extLen = 0;
   packet->buffer = buffer + sizeof(RTPHead);
   packet->len = len - sizeof(RTPHead);
   return packet->len;
 }
+
+static uint32_t pharse_AMR(uint8_t* buffer, uint32_t len, RTPPacket* packet) {
+	memcpy(packet, buffer, sizeof(RTPHead));
+	memcpy(&packet->extHead[0], buffer + sizeof(RTPHead), 2);
+	packet->extLen = 2;
+	packet->buffer = buffer + sizeof(RTPHead) + 2;
+	packet->len = len - sizeof(RTPHead) - 2;
+	return packet->len;
+}
+
+static uint32_t packet_GSM(RTPPacket* packet) {
+	packet->extLen = 0;
+}
+
+static uint32_t packet_AMR(RTPPacket* packet) {
+	packet->extHead[0] = 0x80;
+	packet->extHead[1] = 0x44;
+	packet->extLen = 2;
+}
+
 static uint32_t rtp2buffer(uint8_t* buffer, RTPPacket* packet) {
     uint32_t offset = 0;
     memcpy(buffer + offset, &packet->head, sizeof(RTPHead));
