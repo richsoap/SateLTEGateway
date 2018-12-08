@@ -30,6 +30,13 @@ static uint32_t pharse_GSM(uint8_t* buffer, uint32_t len, RTPPacket* packet) {
   packet->len = len - sizeof(RTPHead);
   return packet->len;
 }
+static uint32_t pharse_raw(uint8_t* buffer, uint32_t len, RTPPacket* packet) {
+  memcpy(packet, buffer, sizeof(RTPHead));
+  packet->extLen = 0;
+  packet->buffer = buffer + sizeof(RTPHead);
+  packet->len = len - sizeof(RTPHead);
+  return packet->len;
+}
 
 static uint32_t pharse_AMR(uint8_t* buffer, uint32_t len, RTPPacket* packet) {
 	memcpy(packet, buffer, sizeof(RTPHead));
@@ -54,8 +61,8 @@ static uint32_t rtp2buffer(uint8_t* buffer, RTPPacket* packet) {
     uint32_t offset = 0;
     memcpy(buffer + offset, &packet->head, sizeof(RTPHead));
     offset += sizeof(RTPHead);
-    memcpy(buffer + offset, packet->extHead.c_str(), packet->extHead.length());
-    offset += packet->extHead.length();
+    memcpy(buffer + offset, packet->extHead, packet->extLen);
+    offset += packet->extLen;
     memcpy(buffer + offset, packet->buffer, packet->len);
     offset += packet->len;
     return offset;

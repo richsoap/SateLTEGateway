@@ -48,7 +48,6 @@ struct addrComp {
 map<sockaddr_in, SrcInfo, addrComp> srcMap;
 map<sockaddr_in, sockaddr_in, addrComp> pairMap;
 map<string, sockaddr_in> callidMap;
-map<sockaddr_in, int> countMap;
 /*
  * Addr helper
  *
@@ -94,7 +93,6 @@ static TransConf getConf(const sockaddr_in& addr) {
 static void addSrc(const ControlPacket& packet) {
     SrcInfo info = {packet.payload, packet.code};
     srcMap[packet.addr] = info;
-	countMap[packet.addr] = 0;
     map<string, sockaddr_in>::iterator it = callidMap.find(packet.callid);
     if(it == callidMap.end()) {
         callidMap[packet.callid] = packet.addr;
@@ -106,7 +104,6 @@ static void addSrc(const ControlPacket& packet) {
 }
 
 static void removeCall(const string& callid) {
-	//TODO remove addr of count from countMap
     map<string, sockaddr_in>::iterator it = callidMap.find(callid);
     if(it == callidMap.end()) {
         return;
@@ -190,13 +187,12 @@ static void* RTPThread(void* input) {
         if(conf.type == TYPE_ABORT)
             continue;
         else if(conf.type == TYPE_CHANGE) {
-			countMap[tempAddr] ++;
             switch(conf.srcCode) {
                 case CONTROL_GSM:
-					pharse_GSM(receiveBuffer, len, &packet)
+					pharse_GSM(receiveBuffer, len, &packet);
                     break;
                 case CONTROL_AMR:
-					pharse_AMR(receiveBufer, len, &packet);
+					pharse_AMR(receiveBuffer, len, &packet);
                     break;
                 default:
                     break;
@@ -204,11 +200,11 @@ static void* RTPThread(void* input) {
             switch(conf.tarCode) {
                 case CONTROL_GSM:
 					// encode GSM
-					packet_GSM(packet);
+					packet_GSM(&packet);
                     break;
                 case CONTROL_AMR:
 					// encode AMR
-					packet_AMR(packet);
+					packet_AMR(&packet);
                     break;
                 default:
                     break;
