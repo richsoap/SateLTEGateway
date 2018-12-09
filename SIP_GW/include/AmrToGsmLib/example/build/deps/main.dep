@@ -1,0 +1,2 @@
+build/objs/main.o build/deps/main.dep:main.cpp include/coder.h include/amr.h include/gsm.h \
+ include/fir.h

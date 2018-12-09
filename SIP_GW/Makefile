@@ -1,6 +1,6 @@
 cxx = g++
 file = /usr/local/lib/libosipparser2.a
-tail = -I./include -std=c++11 -lpthread -D GSMAMR
+tail = -I./include -std=c++11 -lpthread 
 
 
 all: 

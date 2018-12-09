@@ -205,6 +205,7 @@ static void* SIPThread(void* input) {
         return NULL;
     }
 	parser_init();
+	int sleep_flag = 0;
     while(true) {
         pthread_testcancel();
 		addrSize = sizeof(sockaddr);
@@ -260,14 +261,15 @@ static void* SIPThread(void* input) {
 
 				if(osip_list_size(&sip->allows) == 0)
 					sip->allows = getAllows();
-
+				cout<<"After add allows"<<endl;
 				if(osip_list_size(&sip->contacts) > 0) {
+					cout<<"Changing contacts"<<endl;
 					contact = (osip_contact_t*)osip_list_get(&sip->contacts, 0);
 					if(strlen(contact->url->username) > 15)
 						strcpy(contact->url->username, contact->url->username + 4);
 					setCharValue(&contact->url->host, listenIP.c_str());
 					deleteCharValue(&contact->url->port);
-					setCharValue(&contact->displayname, (string("\"") + string(sip->from->url->username) + string("@") + string(sip->from->url->host) + "\"").c_str());				
+					setCharValue(&contact->displayname, (string("\"sip:") + string(sip->from->url->username) + string("@") + string(sip->from->url->host) + "\"").c_str());				
 					osip_header_init(&head);
 					setCharValue(&head->hname, "Expires");
 					setCharValue(&head->hvalue, "3600");
@@ -275,6 +277,7 @@ static void* SIPThread(void* input) {
 					cout<<"change contacts done"<<endl;
 				}
 				if(MSG_IS_REGISTER(sip)) {
+					cout<<"Adding route"<<endl;
 					osip_route_t* route;
 					osip_route_init(&route);
 					osip_uri_init(&route->url);
@@ -283,10 +286,12 @@ static void* SIPThread(void* input) {
 					setCharValue(&route->url->scheme, "sip");
 					osip_list_add(&sip->routes, route, -1);
 					cout<<"Add route done"<<endl;
-					osip_generic_param_add(&contact->gen_params, osip_strdup("q=1"), NULL);
-
 				}
 			}
+			if(MSG_IS_INVITE(sip)) {
+				sleep_flag = 1;
+			}
+			cout<<"Changing heads done"<<endl;
 			if(sip->content_type != NULL && strcmp("sdp", sip->content_type->subtype)== 0) {
 				cout<<"in SDP: "<<to_string(osip_list_size(&sip->bodies))<<endl;
 				sdpBody = (osip_body_t*) osip_list_get(&sip->bodies, 0);
@@ -330,6 +335,10 @@ static void* SIPThread(void* input) {
 			}
 			else {
 				count = (int)sendto(socket_fd, out_buffer, len, 0, (sockaddr*)&serverAddr, sizeof(sockaddr));
+			}
+			if(1 == sleep_flag) {
+				usleep(200000);
+				sleep_flag = 0;
 			}
         }
     }
