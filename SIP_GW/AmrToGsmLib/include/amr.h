@@ -30,7 +30,7 @@ public:
 AmrEnCoder(){
 	st1 = E_IF_init();
 	coding_mode = 8;
-	allow_dtx = 0;
+	allow_dtx = 1;
 }
 ~AmrEnCoder(){
 	E_IF_exit(st1);
@@ -54,7 +54,21 @@ AmrDeCoder(){
 	D_IF_exit(st2);
 }
 void DeCode(unsigned char *input, short* output){
-	D_IF_decode( st2, input, output, _good_frame);
+	short mode;
+	const int FrameLength16k=320;
+	#ifdef IF2
+	mode = (short)(input[0] >> 4);
+    #else
+	mode = (short)((input[0] >> 3) & 0x0F);
+    #endif
+	if(mode != 9) {
+		D_IF_decode( st2, input, output, _good_frame);
+	}
+	else{
+		for(int i = 0; i < FrameLength16k; i++) {
+			output[i] = 0;
+		}
+	}
 }
 private:
 void *st2;

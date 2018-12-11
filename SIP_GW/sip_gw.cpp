@@ -41,6 +41,7 @@ string AMRPatten = "a=.*AMR-WB.*\r\n";
 string GSMPatten = "a=.*GSM.*\r\n";
 string callidPatten = "Callid";
 string mediaPatten = "m=";
+string activePatten = "t=0 0";
 string sessIDPatten = "o=.+ [0-9]+ [0-9]+ IN IP4";
 
 static void printAddr(const sockaddr_in& addr) {
@@ -66,6 +67,7 @@ static string replaceFirst(const string& patten, const string& src, const string
 static string replaceAll(const string& patten, const string& src, const string& tar) {
     return regex_replace(src, regex(patten, regex_constants::icase), tar);
 }
+
 static string replaceSDP(const string& src, const string& ipString, const string& portString) {
 	string result = replaceAll(ipPatten, src, ipString);
 	result = replaceAll(sdpPortPatten, result, portString);
@@ -78,7 +80,20 @@ static string replaceMedia(const string& src, const string& media) {
 	else
 		return src;
 }
-
+static string replaceConnection(const string& src, const string& connection) {
+	smatch sm;
+	if(regex_search(src.cbegin(), src.cend(), sm, regex(activePatten, regex_constants::icase))) {
+		cout << "******************************" << endl;
+		cout << string(sm.prefix()) << endl;
+		cout << string(sm.suffix()) << endl;
+		string result = string(sm.prefix()) + connection + activePatten + string(sm.suffix());
+		cout << result << endl;
+		cout << "******************************" << endl;
+		return result;
+	}
+	else
+		return src;
+}
 /*
  * Addr helper
  *
@@ -190,11 +205,11 @@ static void* SIPThread(void* input) {
 	string sdpToClientString;
 
 #ifdef AMRGSM
-	sdpToClientString = "m=audio 5062 RTP/AVP 3\r\na=rtpmap:3 GSM/8000/1\r\nc=IN IP4 127.0.0.1\r\n";
+	sdpToClientString = "m=audio 5062 RTP/AVP 3\r\na=rtpmap:3 GSM/8000/1\r\n";
 #else
-	sdpToClientString = "m=audio 5062 RTP/AVP 118\r\na=rtpmap:118 AMR-WB/16000/1\r\na=fmtp:118 octet-align=1\r\nc=IN IP4 127.0.0.1\r\n";
+	sdpToClientString = "m=audio 5062 RTP/AVP 118\r\na=rtpmap:118 AMR-WB/16000/1\r\na=fmtp:118 octet-align=1\r\n";
 #endif
-	string sdpToServerString = "m=audio 50010 RTP/AVP 99\r\na=rtpmap:99 AMR-WB/16000/1\r\na=fmtp:99 octet-align=1;mode-change-capability=2;max-red=0\r\na=maxptime:240\r\na=ptime:20\r\nc=IN IP4 127.0.0.1\r\n";
+	string sdpToServerString = "m=audio 50010 RTP/AVP 99\r\na=rtpmap:99 AMR-WB/16000/1\r\na=fmtp:99 octet-align=1;mode-change-capability=2;max-red=0\r\na=maxptime:240\r\na=ptime:20\r\n";
 	string qosString = "a=sendrecv\r\na=curr:qos local sendrecv\r\na=curr:qos remote sendrecv\r\na=des:qos mandatory local sendrecv\r\na=des:qos mandatory remote sendrecv\r\n";
 
     if(bind(socket_fd, (sockaddr*)&listenAddr, sizeof(sockaddr_in)) < 0) {
@@ -349,6 +364,7 @@ static void* SIPThread(void* input) {
 					controlPacket.code = CONTROL_AMR;
 #endif
 				}
+				sdp = replaceConnection(sdp, "c=IN IP4 127.0.0.1\r\n");
 				sdp = replaceSDP(sdp, sdpIPString, sdpPortString);
 				sdp = replaceFirst(sessIDPatten, sdp, sessIDString);
 				cout<<"Replaced SDP: "<<sdp;

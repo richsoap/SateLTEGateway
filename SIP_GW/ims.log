@@ -1,0 +1,3238 @@
+# lteims version 2018-05-22, gcc 7.3.1
+# Licensed to 'Space Star Technology Co., Ltd' [42a716babc07eaf102d5dd17161b16f6fb44969600d2d200aa]
+14:39:51.974 [SIP] FROM 0 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK3a63553b-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=ca41553b-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 1a3d553b-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 1 REGISTER
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=0.667
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length: 0
+        
+14:39:51.974 [SIP] TO 0 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK3a63553b-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=ca41553b-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=e018bab404014f42
+        Call-ID: 1a3d553b-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 1 REGISTER
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3600
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:39:51.974 [SIP] FROM 1 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK2686553b-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=ca41553b-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 1a3d553b-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 REGISTER
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1
+        Contact: <sip:001010000000003@162.105.85.56:5060>;q=0.667
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        Expires: 3600
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:39:51.974 [SIP] TO 1 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK2686553b-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=ca41553b-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=303d248eced97064
+        Call-ID: 1a3d553b-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 REGISTER
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1;expires=3600
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3600
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:39:51.975 [SIP] FROM 2 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKa4ad553b-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=ca41553b-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 1a3d553b-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 REGISTER
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1
+        Contact: <sip:001010000000003@162.105.85.56:5060>;q=0.667
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        Expires: 3600
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:39:51.975 [SIP] TO 2 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKa4ad553b-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=ca41553b-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=d4c6d25bc57b36be
+        Call-ID: 1a3d553b-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 REGISTER
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1;expires=3600
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1;expires=3599
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3599
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:39:51.976 [SIP] FROM 3 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK4053553b-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=2c4e553b-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 2640553b-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 1 SUBSCRIBE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length: 0
+        
+14:39:51.976 [SIP] TO 3 162.105.85.217:5060 SIP/2.0 400 Bad request
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK4053553b-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=2c4e553b-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 2640553b-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@192.168.4.1:5060>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:39:51.976 [SIP] FROM 4 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK88d3553b-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=2c4e553b-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 2640553b-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@172.17.0.1>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        User-agent: Ekiga/4.0.1
+        Expires: 300
+        Event: presence.winfo
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:39:51.976 [SIP] TO 4 162.105.85.217:5060 SIP/2.0 400 Bad request
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK88d3553b-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=2c4e553b-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 2640553b-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@192.168.4.1:5060>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:39:51.977 [SIP] FROM 4 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK86ee553b-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=2c4e553b-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 2640553b-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@172.22.0.1>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        User-agent: Ekiga/4.0.1
+        Expires: 300
+        Event: presence.winfo
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:39:51.977 [SIP] TO 4 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK86ee553b-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=2c4e553b-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 2640553b-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:39:59.803 [SIP] FROM 5 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK8a0e0040-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=6adeff3f-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 7cdbff3f-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 2 REGISTER
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=0.667
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length: 0
+        
+14:39:59.803 [SIP] TO 5 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK8a0e0040-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=6adeff3f-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=800f0ba717ccb440
+        Call-ID: 7cdbff3f-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 2 REGISTER
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3600
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1;expires=3592
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1;expires=3592
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:39:59.804 [SIP] FROM 6 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK8c430040-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=6adeff3f-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 7cdbff3f-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 2 REGISTER
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1
+        Contact: <sip:001010000000003@162.105.85.56:5060>;q=0.667
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        Expires: 3600
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:39:59.804 [SIP] TO 6 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK8c430040-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=6adeff3f-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=03e331cf79cc17cb
+        Call-ID: 7cdbff3f-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 2 REGISTER
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1;expires=3600
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3599
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1;expires=3592
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:39:59.806 [SIP] FROM 7 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK38790040-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=6adeff3f-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 7cdbff3f-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 2 REGISTER
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1
+        Contact: <sip:001010000000003@162.105.85.56:5060>;q=0.667
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        Expires: 3600
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:39:59.806 [SIP] TO 7 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK38790040-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=6adeff3f-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=af2ca2709643466e
+        Call-ID: 7cdbff3f-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 2 REGISTER
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1;expires=3600
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1;expires=3599
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3599
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:39:59.806 [SIP] FROM 8 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK1cfaff3f-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af3ff3f-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 66e2ff3f-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 1 SUBSCRIBE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length: 0
+        
+14:39:59.806 [SIP] TO 8 162.105.85.217:5060 SIP/2.0 400 Bad request
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK1cfaff3f-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af3ff3f-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 66e2ff3f-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@192.168.4.1:5060>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:39:59.807 [SIP] FROM 9 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK38b50040-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af3ff3f-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 66e2ff3f-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@172.17.0.1>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        User-agent: Ekiga/4.0.1
+        Expires: 300
+        Event: presence.winfo
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:39:59.807 [SIP] TO 9 162.105.85.217:5060 SIP/2.0 400 Bad request
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK38b50040-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af3ff3f-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 66e2ff3f-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@192.168.4.1:5060>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:39:59.808 [SIP] FROM 9 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKa0de0040-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af3ff3f-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 66e2ff3f-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@172.22.0.1>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        User-agent: Ekiga/4.0.1
+        Expires: 300
+        Event: presence.winfo
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:39:59.808 [SIP] TO 9 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKa0de0040-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af3ff3f-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 66e2ff3f-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:40:11.789 [SIP] FROM a 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKcceb2447-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=ccb42447-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 06b22447-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 3 REGISTER
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=0.667
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length: 0
+        
+14:40:11.789 [SIP] TO a 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKcceb2447-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=ccb42447-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=121f9b1a249f66cd
+        Call-ID: 06b22447-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 3 REGISTER
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3600
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1;expires=3588
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1;expires=3588
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:40:11.790 [SIP] FROM b 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK7a332547-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=ccb42447-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 06b22447-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 3 REGISTER
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1
+        Contact: <sip:001010000000003@162.105.85.56:5060>;q=0.667
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        Expires: 3600
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:40:11.790 [SIP] TO b 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK7a332547-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=ccb42447-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=27f88a641596670a
+        Call-ID: 06b22447-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 3 REGISTER
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1;expires=3600
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3599
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1;expires=3588
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:40:11.793 [SIP] FROM c 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK1a8e2547-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=ccb42447-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 06b22447-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 3 REGISTER
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1
+        Contact: <sip:001010000000003@162.105.85.56:5060>;q=0.667
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        Expires: 3600
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:40:11.793 [SIP] TO c 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK1a8e2547-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=ccb42447-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=12e9eaec8643cb88
+        Call-ID: 06b22447-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 3 REGISTER
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1;expires=3600
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1;expires=3599
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3599
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:40:11.794 [SIP] FROM d 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKfadb2447-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f2d42447-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: f0bd2447-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 1 SUBSCRIBE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length: 0
+        
+14:40:11.794 [SIP] TO d 162.105.85.217:5060 SIP/2.0 400 Bad request
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKfadb2447-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f2d42447-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: f0bd2447-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@192.168.4.1:5060>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:40:11.795 [SIP] FROM e 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK42ca2547-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f2d42447-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: f0bd2447-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@172.17.0.1>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        User-agent: Ekiga/4.0.1
+        Expires: 300
+        Event: presence.winfo
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:40:11.795 [SIP] TO e 162.105.85.217:5060 SIP/2.0 400 Bad request
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK42ca2547-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f2d42447-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: f0bd2447-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@192.168.4.1:5060>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:40:11.796 [SIP] FROM e 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK18f92547-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f2d42447-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: f0bd2447-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@172.22.0.1>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        User-agent: Ekiga/4.0.1
+        Expires: 300
+        Event: presence.winfo
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:40:11.796 [SIP] TO e 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK18f92547-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f2d42447-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: f0bd2447-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:40:24.329 [SIP] FROM f 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK0e3d9e4e-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=68b69d4e-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 66ae9d4e-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 4 REGISTER
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=0.667
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length: 0
+        
+14:40:24.329 [SIP] TO f 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK0e3d9e4e-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=68b69d4e-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f4880be5d6998d63
+        Call-ID: 66ae9d4e-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 4 REGISTER
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3600
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1;expires=3587
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1;expires=3587
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:40:24.330 [SIP] FROM 10 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKd4b29e4e-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=68b69d4e-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 66ae9d4e-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 4 REGISTER
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1
+        Contact: <sip:001010000000003@162.105.85.56:5060>;q=0.667
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        Expires: 3600
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:40:24.330 [SIP] TO 10 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKd4b29e4e-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=68b69d4e-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=392aeb391f47cce9
+        Call-ID: 66ae9d4e-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 4 REGISTER
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1;expires=3600
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3599
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1;expires=3587
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:40:24.331 [SIP] FROM 11 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKbcd49e4e-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=68b69d4e-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 66ae9d4e-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 4 REGISTER
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1
+        Contact: <sip:001010000000003@162.105.85.56:5060>;q=0.667
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        Expires: 3600
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:40:24.331 [SIP] TO 11 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKbcd49e4e-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=68b69d4e-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=3e6c0dac7161c13c
+        Call-ID: 66ae9d4e-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 4 REGISTER
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1;expires=3600
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1;expires=3600
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3599
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:40:24.332 [SIP] FROM 12 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK6e0f9e4e-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=54fc9d4e-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: d8c89d4e-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 1 SUBSCRIBE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length: 0
+        
+14:40:24.332 [SIP] TO 12 162.105.85.217:5060 SIP/2.0 400 Bad request
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK6e0f9e4e-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=54fc9d4e-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: d8c89d4e-7dfb-e811-8292-fcaa149f9719@162.105.85.56
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@192.168.4.1:5060>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:40:24.332 [SIP] FROM 13 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK20f89e4e-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=54fc9d4e-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: d8c89d4e-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@172.17.0.1>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        User-agent: Ekiga/4.0.1
+        Expires: 300
+        Event: presence.winfo
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:40:24.332 [SIP] TO 13 162.105.85.217:5060 SIP/2.0 400 Bad request
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK20f89e4e-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=54fc9d4e-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: d8c89d4e-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@192.168.4.1:5060>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:40:24.333 [SIP] FROM 13 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK64139f4e-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=54fc9d4e-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: d8c89d4e-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@172.22.0.1>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        User-agent: Ekiga/4.0.1
+        Expires: 300
+        Event: presence.winfo
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:40:24.333 [SIP] TO 13 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK64139f4e-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=54fc9d4e-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: d8c89d4e-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:42.321 [SIP] FROM 14 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKe4fc1a7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=54921a7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 788c1a7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 5 REGISTER
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=0.667
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length: 0
+        
+14:41:42.321 [SIP] TO 14 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKe4fc1a7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=54921a7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=e73089e69480f558
+        Call-ID: 788c1a7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 5 REGISTER
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3600
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1;expires=3522
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1;expires=3522
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:41:42.324 [SIP] FROM 15 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKe8751b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=54921a7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 788c1a7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 5 REGISTER
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1
+        Contact: <sip:001010000000003@162.105.85.56:5060>;q=0.667
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        Expires: 3600
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:41:42.324 [SIP] TO 15 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKe8751b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=54921a7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5736618e05cd30ef
+        Call-ID: 788c1a7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 5 REGISTER
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1;expires=3600
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3599
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1;expires=3522
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:41:42.327 [SIP] FROM 16 162.105.85.217:5060 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK08ec1b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=54921a7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 788c1a7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 5 REGISTER
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1
+        Contact: <sip:001010000000003@162.105.85.56:5060>;q=0.667
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=0.334
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        Expires: 3600
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:41:42.327 [SIP] TO 16 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK08ec1b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=54921a7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=e7b7b7e9db116fd3
+        Call-ID: 788c1a7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 5 REGISTER
+        Contact: <sip:001010000000003@172.22.0.1:5060>;q=1;expires=3600
+        Contact: <sip:001010000000003@172.17.0.1:5060>;q=1;expires=3599
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>;expires=3599
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000003>
+        Content-Length: 0
+        
+14:41:42.328 [SIP] FROM 17 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKbed21a7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=b0c21a7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: c09e1a7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length: 0
+        
+14:41:42.328 [SIP] TO 17 162.105.85.217:5060 SIP/2.0 400 Bad request
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKbed21a7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=b0c21a7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: c09e1a7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@192.168.4.1:5060>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:42.328 [SIP] FROM 17 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK00351c7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=b0c21a7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: c09e1a7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@172.17.0.1>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        User-agent: Ekiga/4.0.1
+        Expires: 300
+        Event: presence.winfo
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:41:42.328 [SIP] TO 17 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK00351c7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=b0c21a7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: c09e1a7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:42.329 [SIP] FROM 17 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK40541c7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=b0c21a7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: c09e1a7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@172.22.0.1>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/watcherinfo+xml
+        User-agent: Ekiga/4.0.1
+        Expires: 300
+        Event: presence.winfo
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:41:42.329 [SIP] TO 17 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK40541c7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=b0c21a7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: c09e1a7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:42.428 [SIP] FROM 18 162.105.85.217:5060 PUBLISH sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK78712b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: f8642b7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 6 PUBLISH
+        Content-Type: application/pidf+xml
+        Allow: INVITE
+        Allow: REGISTER
+        Allow: SUBSCRIBE
+        Allow: ACK
+        Allow: CANCEL
+        Allow: PRACK
+        Allow: UPDATE
+        Allow: BYE
+        Allow: MESSAGE
+        Allow: OPTIONS
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: INFO
+        Allow: PING
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Content-Length:   550
+        
+14:41:42.428 [SIP] TO 18 162.105.85.217:5060 SIP/2.0 501 Not implemented
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK78712b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: f8642b7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 6 PUBLISH
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:42.429 [SIP] FROM 19 162.105.85.217:5060 PUBLISH sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK66882b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: f8642b7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 6 PUBLISH
+        Content-Type: application/pidf+xml
+        User-agent: Ekiga/4.0.1
+        Expires: 300
+        Event: presence
+        Max-forwards: 70
+        Content-Length:   550
+        
+14:41:42.429 [SIP] TO 19 162.105.85.217:5060 SIP/2.0 501 Not implemented
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK66882b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: f8642b7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 6 PUBLISH
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:42.429 [SIP] FROM 1a 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf2742b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=1c6e2b7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 305f2b7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:001010000000003@162.105.85.217:5060>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/simple-message-summary
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length: 0
+        
+14:41:42.429 [SIP] TO 1a 162.105.85.217:5060 SIP/2.0 400 Bad request
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf2742b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=1c6e2b7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 305f2b7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@192.168.4.1:5060>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:42.429 [SIP] FROM 1b 162.105.85.217:5060 PUBLISH sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK189f2b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: f8642b7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 6 PUBLISH
+        Content-Type: application/pidf+xml
+        User-agent: Ekiga/4.0.1
+        Expires: 300
+        Event: presence
+        Max-forwards: 70
+        Content-Length:   550
+        
+14:41:42.429 [SIP] TO 1b 162.105.85.217:5060 SIP/2.0 501 Not implemented
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK189f2b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: f8642b7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 6 PUBLISH
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:42.430 [SIP] FROM 1a 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK4ca72b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=1c6e2b7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 305f2b7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@172.17.0.1>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/simple-message-summary
+        User-agent: Ekiga/4.0.1
+        Expires: 3600
+        Event: message-summary
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:41:42.430 [SIP] TO 1a 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK4ca72b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=1c6e2b7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 305f2b7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:42.431 [SIP] FROM 1a 162.105.85.217:5060 SUBSCRIBE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKb4d52b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=1c6e2b7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 305f2b7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Contact: <sip:001010000000003@172.22.0.1>
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Accept: application/simple-message-summary
+        User-agent: Ekiga/4.0.1
+        Expires: 3600
+        Event: message-summary
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:41:42.431 [SIP] TO 1a 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKb4d52b7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=1c6e2b7d-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 305f2b7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 SUBSCRIBE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:42.433 [SIP] FROM 1c 162.105.85.217:5060 PUBLISH sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKce152c7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: a0072c7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 9 PUBLISH
+        Content-Type: application/pidf+xml
+        Allow: INVITE
+        Allow: REGISTER
+        Allow: SUBSCRIBE
+        Allow: ACK
+        Allow: CANCEL
+        Allow: PRACK
+        Allow: UPDATE
+        Allow: BYE
+        Allow: MESSAGE
+        Allow: OPTIONS
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: INFO
+        Allow: PING
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Content-Length:   550
+        
+14:41:42.433 [SIP] TO 1c 162.105.85.217:5060 SIP/2.0 501 Not implemented
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKce152c7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: a0072c7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 9 PUBLISH
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:42.433 [SIP] FROM 1d 162.105.85.217:5060 PUBLISH sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK10332c7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: a0072c7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 9 PUBLISH
+        Content-Type: application/pidf+xml
+        User-agent: Ekiga/4.0.1
+        Expires: 300
+        Event: presence
+        Max-forwards: 70
+        Content-Length:   550
+        
+14:41:42.433 [SIP] TO 1d 162.105.85.217:5060 SIP/2.0 501 Not implemented
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK10332c7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: a0072c7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 9 PUBLISH
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:42.434 [SIP] FROM 1e 162.105.85.217:5060 PUBLISH sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK20502c7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: a0072c7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 9 PUBLISH
+        Content-Type: application/pidf+xml
+        User-agent: Ekiga/4.0.1
+        Expires: 300
+        Event: presence
+        Max-forwards: 70
+        Content-Length:   550
+        
+14:41:42.434 [SIP] TO 1e 162.105.85.217:5060 SIP/2.0 501 Not implemented
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK20502c7d-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: a0072c7d-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 9 PUBLISH
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:50.204 [SIP] FROM 1f 162.105.85.217:5060 REGISTER sip:162.105.85.217 SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKOBTSadvulayrzqseszlh;rport
+        From: <sip:IMSI460018231610577@162.105.85.217:5060>;tag=OBTSprbrxzlfvesokhnc
+        To: <sip:IMSI460018231610577@162.105.85.217:5060>
+        Call-ID: 5c112aa366aee88d
+        CSeq: 89834 REGISTER
+        Contact: <sip:IMSI460018231610577@162.105.85.99:5060>;expires=5400
+        Max-forwards: 70
+        P-preferred-identity: <sip:IMSI460018231610577@162.105.85.99>
+        P-phy-info: OpenBTS; IMSI=no-MMUser TA=2 TE=-0.022949 UpRSSI=-38.750000 TxPwr=39 DnRSSIdBm=-79 time=1544510509.906
+        P-access-network-info: 3GPP-GERAN; cgi-3gpp=0010103e8000a
+        User-agent: OpenBTS 5.0-master Build Date 2018-11-24T12:09:55
+        Content-Length: 0
+        
+14:41:50.204 [SIP] TO 1f 162.105.85.217:5060 SIP/2.0 404 Not found
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKOBTSadvulayrzqseszlh;rport
+        From: <sip:IMSI460018231610577@162.105.85.217:5060>;tag=OBTSprbrxzlfvesokhnc
+        To: <sip:IMSI460018231610577@162.105.85.217:5060>
+        Call-ID: 5c112aa366aee88d
+        CSeq: 89834 REGISTER
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:55.901 [SIP] FROM 20 162.105.85.217:5060 INVITE sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKda592e85-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:houmin@162.105.85.217:5060>
+        Content-Type: application/sdp
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length:   258
+        
+        v=0
+        o=- 10086 10086 IN IP4 162.105.85.217
+        s=Ekiga/4.0.1
+        c=IN IP4 162.105.85.217
+        t=0 0
+        m=audio 10020 RTP/AVP 99
+        a=rtpmap:99 AMR-WB/16000/1
+        a=fmtp:99 octet-align=1;mode-change-capability=2;max-red=0
+        a=maxptime:240
+        a=ptime:20
+        c=IN IP4 162.105.85.217
+14:41:55.901 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 410 Gone
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKda592e85-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Contact: <sip:001010000000003@192.168.4.1:5060>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:55.907 [SIP] FROM 20 162.105.85.217:5060 INVITE sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKb2f03285-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:houmin@172.17.0.1>
+        Content-Type: application/sdp
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        K: 100rel
+        K: replaces
+        Max-forwards: 70
+        Content-Length:  1365
+        
+        v=0
+        o=- 10086 10086 IN IP4 162.105.85.217
+        s=Ekiga/4.0.1
+        c=IN IP4 162.105.85.217
+        t=0 0
+        m=audio 10020 RTP/AVP 9 116 117 118 113 110 8 0 122 121 120 119 3 112 109 123 101
+        a=sendrecv
+        a=rtpmap:9 G722/8000/1
+        a=rtpmap:116 G7221/16000/1
+        a=fmtp:116 bitrate=24000
+        a=rtpmap:117 G7221/16000/1
+        a=fmtp:117 bitrate=32000
+        a=rtpmap:118 AMR-WB/16000/1
+        a=fmtp:118 octet-align=1
+        a=rtpmap:113 SILK/16000/1
+        a=rtpmap:110 Speex/16000/1
+        a=rtpmap:8 PCMA/8000/1
+        a=rtpmap:0 PCMU/8000/1
+        a=rtpmap:122 G726-16/8000/1
+        a=rtpmap:121 G726-24/8000/1
+        a=rtpmap:120 G726-32/8000/1
+        a=rtpmap:119 G726-40/8000/1
+        a=rtpmap:3 gsm/8000/1
+        a=rtpmap:112 SILK/8000/1
+        a=rtpmap:109 Speex/8000/1
+        a=rtpmap:123 iLBC/8000/1
+        a=fmtp:123 mode=20
+        a=rtpmap:101 telephone-event/8000
+        a=fmtp:101 0-16,32,36
+        a=maxptime:30
+        m=video 5068 RTP/AVP 89 31 34 95 92 93 126
+        b=AS:4096
+        b=TIAS:4096000
+        a=sendrecv
+        a=rtpmap:89 theora/90000
+        a=fmtp:89 height=576;width=704
+        a=rtpmap:31 h261/90000
+        a=fmtp:31 CIF=1;QCIF=1
+        a=rtpmap:34 H263/90000
+        a=fmtp:34 F=1;CIF=1;CIF4=1;QCIF=1
+        a=rtpmap:95 H263-1998/90000
+        a=fmtp:95 D=1;F=1;I=1;J=1;CIF=1;CIF4=1;QCIF=1
+        a=rtpmap:92 H264/90000
+        a=fmtp:92 max-fs=6336;max-mbps=190080;profile-level-id=42801e
+        a=rtpmap:93 H264/90000
+        a=fmtp:93 packetization-mode=1;max-fs=6336;max-mbps=190080;profile-level-id=42801e
+        a=rtpmap:126 MP4V-ES/90000
+        a=fmtp:126 profile-level-id=5
+14:41:55.907 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKb2f03285-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:55.912 [SIP] FROM 20 162.105.85.217:5060 INVITE sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf4c63385-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:houmin@172.22.0.1>
+        Content-Type: application/sdp
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        K: 100rel
+        K: replaces
+        Max-forwards: 70
+        Content-Length:  1365
+        
+        v=0
+        o=- 10086 10086 IN IP4 162.105.85.217
+        s=Ekiga/4.0.1
+        c=IN IP4 162.105.85.217
+        t=0 0
+        m=audio 10020 RTP/AVP 9 116 117 118 113 110 8 0 122 121 120 119 3 112 109 123 101
+        a=sendrecv
+        a=rtpmap:9 G722/8000/1
+        a=rtpmap:116 G7221/16000/1
+        a=fmtp:116 bitrate=24000
+        a=rtpmap:117 G7221/16000/1
+        a=fmtp:117 bitrate=32000
+        a=rtpmap:118 AMR-WB/16000/1
+        a=fmtp:118 octet-align=1
+        a=rtpmap:113 SILK/16000/1
+        a=rtpmap:110 Speex/16000/1
+        a=rtpmap:8 PCMA/8000/1
+        a=rtpmap:0 PCMU/8000/1
+        a=rtpmap:122 G726-16/8000/1
+        a=rtpmap:121 G726-24/8000/1
+        a=rtpmap:120 G726-32/8000/1
+        a=rtpmap:119 G726-40/8000/1
+        a=rtpmap:3 gsm/8000/1
+        a=rtpmap:112 SILK/8000/1
+        a=rtpmap:109 Speex/8000/1
+        a=rtpmap:123 iLBC/8000/1
+        a=fmtp:123 mode=20
+        a=rtpmap:101 telephone-event/8000
+        a=fmtp:101 0-16,32,36
+        a=maxptime:30
+        m=video 5072 RTP/AVP 89 31 34 95 92 93 126
+        b=AS:4096
+        b=TIAS:4096000
+        a=sendrecv
+        a=rtpmap:89 theora/90000
+        a=fmtp:89 height=576;width=704
+        a=rtpmap:31 h261/90000
+        a=fmtp:31 CIF=1;QCIF=1
+        a=rtpmap:34 H263/90000
+        a=fmtp:34 F=1;CIF=1;CIF4=1;QCIF=1
+        a=rtpmap:95 H263-1998/90000
+        a=fmtp:95 D=1;F=1;I=1;J=1;CIF=1;CIF4=1;QCIF=1
+        a=rtpmap:92 H264/90000
+        a=fmtp:92 max-fs=6336;max-mbps=190080;profile-level-id=42801e
+        a=rtpmap:93 H264/90000
+        a=fmtp:93 packetization-mode=1;max-fs=6336;max-mbps=190080;profile-level-id=42801e
+        a=rtpmap:126 MP4V-ES/90000
+        a=fmtp:126 profile-level-id=5
+14:41:55.912 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf4c63385-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:55.912 [SIP] FROM 20 162.105.85.217:5060 ACK sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKda592e85-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 ACK
+        Allow: INVITE
+        Allow: REGISTER
+        Allow: SUBSCRIBE
+        Allow: ACK
+        Allow: CANCEL
+        Allow: PRACK
+        Allow: UPDATE
+        Allow: BYE
+        Allow: MESSAGE
+        Allow: OPTIONS
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: INFO
+        Allow: PING
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Content-Length: 0
+        
+14:41:55.912 [SIP] FROM 20 162.105.85.217:5060 CANCEL sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKb2f03285-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 CANCEL
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:41:55.912 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKb2f03285-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 CANCEL
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:55.912 [SIP] FROM 20 162.105.85.217:5060 CANCEL sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf4c63385-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 CANCEL
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:41:55.912 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf4c63385-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 CANCEL
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:55.912 [SIP] FROM 20 162.105.85.217:5060 ACK sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKb2f03285-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 ACK
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:41:56.432 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf4c63385-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:57.452 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf4c63385-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:41:59.472 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf4c63385-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:42:03.491 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf4c63385-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:42:07.510 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf4c63385-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:42:11.530 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf4c63385-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:42:15.549 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf4c63385-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:42:19.155 [SIP] FROM 21 162.105.85.217:5060 REGISTER sip:162.105.85.217 SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKOBTSgnhgddsrzbnuyqkd;rport
+        From: <sip:IMSI460018231610577@162.105.85.217:5060>;tag=OBTStcfaqespzzmkknkh
+        To: <sip:IMSI460018231610577@162.105.85.217:5060>
+        Call-ID: 5c112aa366aee88d
+        CSeq: 89835 REGISTER
+        Contact: <sip:IMSI460018231610577@162.105.85.99:5060>;expires=5400
+        Max-forwards: 70
+        P-preferred-identity: <sip:IMSI460018231610577@162.105.85.99>
+        P-phy-info: OpenBTS; IMSI=no-MMUser TA=2 TE=-0.176270 UpRSSI=-42.125000 TxPwr=39 DnRSSIdBm=-84 time=1544510537.824
+        P-access-network-info: 3GPP-GERAN; cgi-3gpp=0010103e8000a
+        User-agent: OpenBTS 5.0-master Build Date 2018-11-24T12:09:55
+        Content-Length: 0
+        
+14:42:19.155 [SIP] TO 21 162.105.85.217:5060 SIP/2.0 404 Not found
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKOBTSgnhgddsrzbnuyqkd;rport
+        From: <sip:IMSI460018231610577@162.105.85.217:5060>;tag=OBTStcfaqespzzmkknkh
+        To: <sip:IMSI460018231610577@162.105.85.217:5060>
+        Call-ID: 5c112aa366aee88d
+        CSeq: 89835 REGISTER
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:42:19.569 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf4c63385-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:42:23.588 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf4c63385-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:42:27.598 [SIP] TO 20 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKf4c63385-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5af31485-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 00f81485-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:42:48.107 [SIP] FROM 22 162.105.85.217:5060 REGISTER sip:162.105.85.217 SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKOBTSupsefkdlzifxrphc;rport
+        From: <sip:IMSI460018231610577@162.105.85.217:5060>;tag=OBTSfkuzevohxmmmmsgc
+        To: <sip:IMSI460018231610577@162.105.85.217:5060>
+        Call-ID: 5c112aa366aee88d
+        CSeq: 89836 REGISTER
+        Contact: <sip:IMSI460018231610577@162.105.85.99:5060>;expires=5400
+        Max-forwards: 70
+        P-preferred-identity: <sip:IMSI460018231610577@162.105.85.99>
+        P-phy-info: OpenBTS; IMSI=no-MMUser TA=2 TE=0.011719 UpRSSI=-40.000000 TxPwr=39 DnRSSIdBm=-83 time=1544510567.815
+        P-access-network-info: 3GPP-GERAN; cgi-3gpp=0010103e8000a
+        User-agent: OpenBTS 5.0-master Build Date 2018-11-24T12:09:55
+        Content-Length: 0
+        
+14:42:48.107 [SIP] TO 22 162.105.85.217:5060 SIP/2.0 404 Not found
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKOBTSupsefkdlzifxrphc;rport
+        From: <sip:IMSI460018231610577@162.105.85.217:5060>;tag=OBTSfkuzevohxmmmmsgc
+        To: <sip:IMSI460018231610577@162.105.85.217:5060>
+        Call-ID: 5c112aa366aee88d
+        CSeq: 89836 REGISTER
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:22.789 [SIP] FROM 23 162.105.85.217:5060 INVITE sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK8444fcb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:houmin@162.105.85.217:5060>
+        Content-Type: application/sdp
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length:   258
+        
+        v=0
+        o=- 10086 10086 IN IP4 162.105.85.217
+        s=Ekiga/4.0.1
+        c=IN IP4 162.105.85.217
+        t=0 0
+        m=audio 10020 RTP/AVP 99
+        a=rtpmap:99 AMR-WB/16000/1
+        a=fmtp:99 octet-align=1;mode-change-capability=2;max-red=0
+        a=maxptime:240
+        a=ptime:20
+        c=IN IP4 162.105.85.217
+14:43:22.789 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 410 Gone
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK8444fcb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Contact: <sip:001010000000003@192.168.4.1:5060>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:22.795 [SIP] FROM 23 162.105.85.217:5060 INVITE sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5004fdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:houmin@172.17.0.1>
+        Content-Type: application/sdp
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        K: 100rel
+        K: replaces
+        Max-forwards: 70
+        Content-Length:  1365
+        
+        v=0
+        o=- 10086 10086 IN IP4 162.105.85.217
+        s=Ekiga/4.0.1
+        c=IN IP4 162.105.85.217
+        t=0 0
+        m=audio 10020 RTP/AVP 9 116 117 118 113 110 8 0 122 121 120 119 3 112 109 123 101
+        a=sendrecv
+        a=rtpmap:9 G722/8000/1
+        a=rtpmap:116 G7221/16000/1
+        a=fmtp:116 bitrate=24000
+        a=rtpmap:117 G7221/16000/1
+        a=fmtp:117 bitrate=32000
+        a=rtpmap:118 AMR-WB/16000/1
+        a=fmtp:118 octet-align=1
+        a=rtpmap:113 SILK/16000/1
+        a=rtpmap:110 Speex/16000/1
+        a=rtpmap:8 PCMA/8000/1
+        a=rtpmap:0 PCMU/8000/1
+        a=rtpmap:122 G726-16/8000/1
+        a=rtpmap:121 G726-24/8000/1
+        a=rtpmap:120 G726-32/8000/1
+        a=rtpmap:119 G726-40/8000/1
+        a=rtpmap:3 gsm/8000/1
+        a=rtpmap:112 SILK/8000/1
+        a=rtpmap:109 Speex/8000/1
+        a=rtpmap:123 iLBC/8000/1
+        a=fmtp:123 mode=20
+        a=rtpmap:101 telephone-event/8000
+        a=fmtp:101 0-16,32,36
+        a=maxptime:30
+        m=video 5080 RTP/AVP 89 31 34 95 92 93 126
+        b=AS:4096
+        b=TIAS:4096000
+        a=sendrecv
+        a=rtpmap:89 theora/90000
+        a=fmtp:89 height=576;width=704
+        a=rtpmap:31 h261/90000
+        a=fmtp:31 CIF=1;QCIF=1
+        a=rtpmap:34 H263/90000
+        a=fmtp:34 F=1;CIF=1;CIF4=1;QCIF=1
+        a=rtpmap:95 H263-1998/90000
+        a=fmtp:95 D=1;F=1;I=1;J=1;CIF=1;CIF4=1;QCIF=1
+        a=rtpmap:92 H264/90000
+        a=fmtp:92 max-fs=6336;max-mbps=190080;profile-level-id=42801e
+        a=rtpmap:93 H264/90000
+        a=fmtp:93 packetization-mode=1;max-fs=6336;max-mbps=190080;profile-level-id=42801e
+        a=rtpmap:126 MP4V-ES/90000
+        a=fmtp:126 profile-level-id=5
+14:43:22.795 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5004fdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:22.801 [SIP] FROM 23 162.105.85.217:5060 INVITE sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK74dafdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:houmin@172.22.0.1>
+        Content-Type: application/sdp
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        K: 100rel
+        K: replaces
+        Max-forwards: 70
+        Content-Length:  1365
+        
+        v=0
+        o=- 10086 10086 IN IP4 162.105.85.217
+        s=Ekiga/4.0.1
+        c=IN IP4 162.105.85.217
+        t=0 0
+        m=audio 10020 RTP/AVP 9 116 117 118 113 110 8 0 122 121 120 119 3 112 109 123 101
+        a=sendrecv
+        a=rtpmap:9 G722/8000/1
+        a=rtpmap:116 G7221/16000/1
+        a=fmtp:116 bitrate=24000
+        a=rtpmap:117 G7221/16000/1
+        a=fmtp:117 bitrate=32000
+        a=rtpmap:118 AMR-WB/16000/1
+        a=fmtp:118 octet-align=1
+        a=rtpmap:113 SILK/16000/1
+        a=rtpmap:110 Speex/16000/1
+        a=rtpmap:8 PCMA/8000/1
+        a=rtpmap:0 PCMU/8000/1
+        a=rtpmap:122 G726-16/8000/1
+        a=rtpmap:121 G726-24/8000/1
+        a=rtpmap:120 G726-32/8000/1
+        a=rtpmap:119 G726-40/8000/1
+        a=rtpmap:3 gsm/8000/1
+        a=rtpmap:112 SILK/8000/1
+        a=rtpmap:109 Speex/8000/1
+        a=rtpmap:123 iLBC/8000/1
+        a=fmtp:123 mode=20
+        a=rtpmap:101 telephone-event/8000
+        a=fmtp:101 0-16,32,36
+        a=maxptime:30
+        m=video 5084 RTP/AVP 89 31 34 95 92 93 126
+        b=AS:4096
+        b=TIAS:4096000
+        a=sendrecv
+        a=rtpmap:89 theora/90000
+        a=fmtp:89 height=576;width=704
+        a=rtpmap:31 h261/90000
+        a=fmtp:31 CIF=1;QCIF=1
+        a=rtpmap:34 H263/90000
+        a=fmtp:34 F=1;CIF=1;CIF4=1;QCIF=1
+        a=rtpmap:95 H263-1998/90000
+        a=fmtp:95 D=1;F=1;I=1;J=1;CIF=1;CIF4=1;QCIF=1
+        a=rtpmap:92 H264/90000
+        a=fmtp:92 max-fs=6336;max-mbps=190080;profile-level-id=42801e
+        a=rtpmap:93 H264/90000
+        a=fmtp:93 packetization-mode=1;max-fs=6336;max-mbps=190080;profile-level-id=42801e
+        a=rtpmap:126 MP4V-ES/90000
+        a=fmtp:126 profile-level-id=5
+14:43:22.801 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK74dafdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:22.801 [SIP] FROM 23 162.105.85.217:5060 ACK sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK8444fcb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 ACK
+        Allow: INVITE
+        Allow: REGISTER
+        Allow: SUBSCRIBE
+        Allow: ACK
+        Allow: CANCEL
+        Allow: PRACK
+        Allow: UPDATE
+        Allow: BYE
+        Allow: MESSAGE
+        Allow: OPTIONS
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: INFO
+        Allow: PING
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Content-Length: 0
+        
+14:43:22.801 [SIP] FROM 23 162.105.85.217:5060 CANCEL sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5004fdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 CANCEL
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:43:22.801 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5004fdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 CANCEL
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:22.801 [SIP] FROM 23 162.105.85.217:5060 CANCEL sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK74dafdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 CANCEL
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:43:22.801 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK74dafdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 CANCEL
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:23.315 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5004fdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:23.315 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK74dafdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:24.334 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5004fdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:24.334 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK74dafdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:26.354 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5004fdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:26.354 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK74dafdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:30.364 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5004fdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:30.364 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK74dafdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:34.384 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5004fdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:34.384 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK74dafdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:38.403 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5004fdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:38.403 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK74dafdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:42.418 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5004fdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:42.418 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK74dafdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:46.438 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5004fdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:46.438 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK74dafdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:50.458 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5004fdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:50.458 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK74dafdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:54.478 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5004fdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:43:54.478 [SIP] TO 23 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK74dafdb8-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=5006fbb8-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: bc08fbb8-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:45:05.544 [SIP] FROM 24 192.168.4.2:32100 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        From: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185258346
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        CSeq: 185258336 REGISTER
+        Call-ID: 185258336_2326039528@192.168.4.2
+        Via: SIP/2.0/TCP 192.168.4.2:5060;branch=z9hG4bK4058483932
+        Max-Forwards: 70
+        Authorization: Digest uri="sip:ims.mnc001.mcc001.3gppnetwork.org",username="001010000000001@ims.mnc001.mcc001.3gppnetwork.org",response="",realm="ims.mnc001.mcc001.3gppnetwork.org",nonce=""
+        Expires: 600000
+        Require: sec-agree
+        Proxy-Require: sec-agree
+        Supported: path,sec-agree
+        Allow: INVITE,BYE,CANCEL,ACK,NOTIFY,UPDATE,PRACK,INFO,MESSAGE,OPTIONS
+        User-Agent: M653
+        Security-Client: ipsec-3gpp; alg=hmac-md5-96; ealg=des-ede3-cbc; spi-c=3200390421; spi-s=4122870522; port-c=8001; port-s=8901,ipsec-3gpp; alg=hmac-md5-96; ealg=aes-cbc; spi-c=3200390421; spi-s=4122870522; port-c=8001; port-s=8901,ipsec-3gpp; alg=hmac-md5-96; ealg=null; spi-c=3200390421; spi-s=4122870522; port-c=8001; port-s=8901,ipsec-3gpp; alg=hmac-sha-1-96; ealg=des-ede3-cbc; spi-c=3200390421; spi-s=4122870522; port-c=8001; port-s=8901,ipsec-3gpp; alg=hmac-sha-1-96; ealg=aes-cbc; spi-c=3200390421; spi-s=4122870522; port-c=8001; port-s=8901,ipsec-3gpp; alg=hmac-sha-1-96; ealg=null; spi-c=3200390421; spi-s=4122870522; port-c=8001; port-s=8901
+        Contact: <sip:001010000000001@192.168.4.2:5060>;+sip.instance="<urn:gsma:imei:86745003-515473-0>";+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel";+g.3gpp.smsip;g.3gpp.nw-init-ussi;video;+g.3gpp.accesstype="cellular2"
+        Content-Length: 0
+        
+14:45:05.545 [SIP] TO 24 192.168.4.2:5060 SIP/2.0 401 Unauthorized
+        Via: SIP/2.0/TCP 192.168.4.2:5060;branch=z9hG4bK4058483932
+        From: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185258346
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 185258336_2326039528@192.168.4.2
+        CSeq: 185258336 REGISTER
+        WWW-Authenticate: Digest realm="ims.mnc001.mcc001.3gppnetwork.org", domain="ims.mnc001.mcc001.3gppnetwork.org", nonce="dZPVwj+t4n/CwVp7durd/AHjH8jaIJABZDiWV5ucUak=", opaque="02a674d5", algorithm=AKAv1-MD5
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Supported: sec-agree
+        Security-Server: ipsec-3gpp;prot=esp;mod=trans;spi-c=15712148;spi-s=15712149;port-c=59163;port-s=59645;alg=hmac-md5-96;ealg=null
+        Server: Amarisoft-IMS-2018-05-22
+        Expires: 60
+        Content-Length: 0
+        
+14:45:05.744 [IMS] -  - Error on socket: Resource temporarily unavailable
+14:45:05.804 [SIP] FROM 25 192.168.4.2:8001 REGISTER sip:ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        From: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185258663
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        CSeq: 185258337 REGISTER
+        Call-ID: 185258336_2326039528@192.168.4.2
+        Via: SIP/2.0/TCP 192.168.4.2:8901;branch=z9hG4bK44029043
+        Max-Forwards: 70
+        P-Access-Network-Info: 3GPP-E-UTRAN-TDD; utran-cell-id-3gpp=0010100011A2D001
+        Security-Verify: ipsec-3gpp;prot=esp;mod=trans;spi-c=15712148;spi-s=15712149;port-c=59163;port-s=59645;alg=hmac-md5-96;ealg=null
+        Content-Length: 0
+        Authorization: Digest username="001010000000001@ims.mnc001.mcc001.3gppnetwork.org",realm="ims.mnc001.mcc001.3gppnetwork.org",uri="sip:ims.mnc001.mcc001.3gppnetwork.org",nonce="dZPVwj+t4n/CwVp7durd/AHjH8jaIJABZDiWV5ucUak=",algorithm=AKAv1-MD5,response="841f9763396f5bedac23be0a600e40e6",opaque="02a674d5"
+        Expires: 600000
+        Require: sec-agree
+        Proxy-Require: sec-agree
+        Supported: path,sec-agree
+        Allow: INVITE,BYE,CANCEL,ACK,NOTIFY,UPDATE,PRACK,INFO,MESSAGE,OPTIONS
+        User-Agent: M653
+        Security-Client: ipsec-3gpp; alg=hmac-md5-96; ealg=des-ede3-cbc; spi-c=3200390421; spi-s=4122870522; port-c=8001; port-s=8901,ipsec-3gpp; alg=hmac-md5-96; ealg=aes-cbc; spi-c=3200390421; spi-s=4122870522; port-c=8001; port-s=8901,ipsec-3gpp; alg=hmac-md5-96; ealg=null; spi-c=3200390421; spi-s=4122870522; port-c=8001; port-s=8901,ipsec-3gpp; alg=hmac-sha-1-96; ealg=des-ede3-cbc; spi-c=3200390421; spi-s=4122870522; port-c=8001; port-s=8901,ipsec-3gpp; alg=hmac-sha-1-96; ealg=aes-cbc; spi-c=3200390421; spi-s=4122870522; port-c=8001; port-s=8901,ipsec-3gpp; alg=hmac-sha-1-96; ealg=null; spi-c=3200390421; spi-s=4122870522; port-c=8001; port-s=8901
+        Contact: <sip:001010000000001@192.168.4.2:8901>;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel";+g.3gpp.smsip;g.3gpp.nw-init-ussi;video;+sip.instance="<urn:gsma:imei:86745003-515473-0>";+g.3gpp.accesstype="cellular2"
+        
+14:45:05.804 [SIP] TO 25 192.168.4.2:8901 SIP/2.0 200 OK
+        Via: SIP/2.0/TCP 192.168.4.2:8901;branch=z9hG4bK44029043
+        From: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185258663
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=346c4667a3c031bb
+        Call-ID: 185258336_2326039528@192.168.4.2
+        CSeq: 185258337 REGISTER
+        Contact: <sip:001010000000001@192.168.4.2:8901>;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel";+g.3gpp.smsip;g.3gpp.nw-init-ussi;video;+sip.instance="<urn:gsma:imei:86745003-515473-0>";+g.3gpp.accesstype="cellular2";expires=3599
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Supported: sec-agree
+        Security-Server: ipsec-3gpp;prot=esp;mod=trans;spi-c=15712148;spi-s=15712149;port-c=59163;port-s=59645;alg=hmac-md5-96;ealg=null
+        Server: Amarisoft-IMS-2018-05-22
+        P-Associated-URI: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>,<tel:001010000000001>
+        Content-Length: 0
+        
+14:45:05.854 [SIP] FROM 26 192.168.4.2:8001 SUBSCRIBE sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        From: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185258716
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        CSeq: 185258712 SUBSCRIBE
+        Call-ID: 185258712_2325918728@192.168.4.2
+        Via: SIP/2.0/UDP 192.168.4.2:8901;branch=z9hG4bK4072720541
+        Max-Forwards: 70
+        Route: <sip:192.168.4.1:59645;lr>
+        P-Access-Network-Info: 3GPP-E-UTRAN-TDD; utran-cell-id-3gpp=0010100011A2D001
+        Security-Verify: ipsec-3gpp;prot=esp;mod=trans;spi-c=15712148;spi-s=15712149;port-c=59163;port-s=59645;alg=hmac-md5-96;ealg=null
+        Event: reg
+        Content-Length: 0
+        Require: sec-agree
+        Proxy-Require: sec-agree
+        Contact: <sip:001010000000001@192.168.4.2:8901>
+        User-Agent: M653
+        P-Preferred-Identity: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Expires: 600000
+        
+14:45:05.854 [SIP] TO 26 192.168.4.2:8901 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 192.168.4.2:8901;branch=z9hG4bK4072720541
+        From: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185258716
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=90fcb4c18da95f7b
+        Call-ID: 185258712_2325918728@192.168.4.2
+        CSeq: 185258712 SUBSCRIBE
+        Contact: <sip:001010000000001@192.168.4.2:8901>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Supported: sec-agree
+        Security-Server: ipsec-3gpp;prot=esp;mod=trans;spi-c=15712148;spi-s=15712149;port-c=59163;port-s=59645;alg=hmac-md5-96;ealg=null
+        Server: Amarisoft-IMS-2018-05-22
+        Expires: 600000
+        Content-Length: 0
+        
+14:45:05.854 [SIP] TO 26 192.168.4.2:8901 NOTIFY sip:001010000000001@192.168.4.2:8901 SIP/2.0
+        Via: SIP/2.0/TCP 192.168.4.1:59645;branch=z9hG4bK8fb07c2d2
+        Route: <sip:192.168.4.2:8001;lr>
+        From: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=90fcb4c18da95f7b
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185258716
+        Call-ID: 185258712_2325918728@192.168.4.2
+        CSeq: 185258712 NOTIFY
+        Contact: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Content-Type: application/reginfo+xml
+        Supported: 100rel
+        User-Agent: Amarisoft-IMS-2018-05-22
+        Max-Forwards: 70
+        Subscription-State: active
+        Event: reg
+        Content-Length:  1317
+        
+        <?xml version="1.0"?>
+        <reginfo xmlns="urn:ietf:params:xml:ns:reginfo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0" state="full">
+        <registration aor="sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org" id="ab295e94" state="active"><contact id="4" state="active" event="registered"><uri>sip:001010000000001@192.168.4.2:8901</uri>
+        <unknown-param name="+g.3gpp.icsi-ref">"urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel"</unknown-param><unknown-param name="+g.3gpp.smsip"/><unknown-param name="g.3gpp.nw-init-ussi"/><unknown-param name="video"/><unknown-param name="+sip.instance">"&lt;urn:gsma:imei:86745003-515473-0&gt;"</unknown-param><unknown-param name="+g.3gpp.accesstype">"cellular2"</unknown-param></contact></registration>
+        <registration aor="tel:001010000000001" id="ab295e94" state="active"><contact id="4" state="active" event="registered"><uri>sip:001010000000001@192.168.4.2:8901</uri>
+        <unknown-param name="+g.3gpp.icsi-ref">"urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel"</unknown-param><unknown-param name="+g.3gpp.smsip"/><unknown-param name="g.3gpp.nw-init-ussi"/><unknown-param name="video"/><unknown-param name="+sip.instance">"&lt;urn:gsma:imei:86745003-515473-0&gt;"</unknown-param><unknown-param name="+g.3gpp.accesstype">"cellular2"</unknown-param></contact></registration>
+        </reginfo>
+14:45:05.934 [SIP] FROM 26 192.168.4.2:8901 SIP/2.0 200 OK
+        Via: SIP/2.0/TCP 192.168.4.1:59645;branch=z9hG4bK8fb07c2d2
+        From: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=90fcb4c18da95f7b
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185258716
+        Call-ID: 185258712_2325918728@192.168.4.2
+        CSeq: 185258712 NOTIFY
+        Content-Length: 0
+        P-Access-Network-Info: 3GPP-E-UTRAN-TDD; utran-cell-id-3gpp=0010100011A2D001
+        
+14:45:19.770 [SIP] FROM 27 162.105.85.217:5060 INVITE sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5023b6fe-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f669b5fe-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: ae6bb5fe-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:houmin@162.105.85.217:5060>
+        Content-Type: application/sdp
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length:   258
+        
+        v=0
+        o=- 10086 10086 IN IP4 162.105.85.217
+        s=Ekiga/4.0.1
+        c=IN IP4 162.105.85.217
+        t=0 0
+        m=audio 10020 RTP/AVP 99
+        a=rtpmap:99 AMR-WB/16000/1
+        a=fmtp:99 octet-align=1;mode-change-capability=2;max-red=0
+        a=maxptime:240
+        a=ptime:20
+        c=IN IP4 162.105.85.217
+14:45:19.770 [SIP] TO 27 162.105.85.217:5060 SIP/2.0 100 Trying
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5023b6fe-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f669b5fe-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: ae6bb5fe-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:45:19.770 [SIP] TO 28 192.168.4.2:8901 INVITE sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 192.168.4.1:59645;branch=z9hG4bKcb830247a
+        Route: <sip:192.168.4.2:8001;lr>
+        From: <tel:001010000000003>;tag=z9hG4bKb8b957cfe
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 11d840d42d1e9449
+        CSeq: 1 INVITE
+        Contact: <sip:001010000000003@192.168.4.1:59645>
+        Content-Type: application/sdp
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        P-Access-Network-Info: 3GPP-E-UTRAN-FDD;utran-cell-id-3gpp=001011a2d001
+        Accept-Contact: *;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel";+g.3gpp.smsip
+        Min-SE: 90
+        Session-Expires: 3600
+        P-Asserted-Identity: <tel:001010000000003;phone-context=ims.mnc001.mcc001.3gppnetwork.org>
+        Supported: precondition,100rel
+        User-Agent: Amarisoft-IMS-2018-05-22
+        Max-Forwards: 70
+        Content-Length:   405
+        
+        v=0
+        o=Amarisoft-IMS-2018-05-22 10086 1 IN IP4 192.168.4.1
+        s=Amarisoft-IMS-2018-05-22
+        c=IN IP4 192.168.4.1
+        t=0 0
+        m=audio 10000 RTP/AVP 99
+        c=IN IP4 192.168.4.1
+        a=rtpmap:99 AMR-WB/16000/1
+        a=fmtp:99 octet-align=1;mode-change-capability=2;max-red=0
+        a=maxptime:240
+        a=ptime:20
+        a=curr:qos local none
+        a=des:qos mandatory local none
+        a=curr:qos remote none
+        a=des:qos mandatory remote none
+        a=sendrecv
+14:45:19.775 [SIP] FROM 27 162.105.85.217:5060 INVITE sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK0eceb6fe-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f669b5fe-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: ae6bb5fe-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:houmin@172.17.0.1>
+        Content-Type: application/sdp
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        K: 100rel
+        K: replaces
+        Max-forwards: 70
+        Content-Length:  1365
+        
+        v=0
+        o=- 10086 10086 IN IP4 162.105.85.217
+        s=Ekiga/4.0.1
+        c=IN IP4 162.105.85.217
+        t=0 0
+        m=audio 10020 RTP/AVP 9 116 117 118 113 110 8 0 122 121 120 119 3 112 109 123 101
+        a=sendrecv
+        a=rtpmap:9 G722/8000/1
+        a=rtpmap:116 G7221/16000/1
+        a=fmtp:116 bitrate=24000
+        a=rtpmap:117 G7221/16000/1
+        a=fmtp:117 bitrate=32000
+        a=rtpmap:118 AMR-WB/16000/1
+        a=fmtp:118 octet-align=1
+        a=rtpmap:113 SILK/16000/1
+        a=rtpmap:110 Speex/16000/1
+        a=rtpmap:8 PCMA/8000/1
+        a=rtpmap:0 PCMU/8000/1
+        a=rtpmap:122 G726-16/8000/1
+        a=rtpmap:121 G726-24/8000/1
+        a=rtpmap:120 G726-32/8000/1
+        a=rtpmap:119 G726-40/8000/1
+        a=rtpmap:3 gsm/8000/1
+        a=rtpmap:112 SILK/8000/1
+        a=rtpmap:109 Speex/8000/1
+        a=rtpmap:123 iLBC/8000/1
+        a=fmtp:123 mode=20
+        a=rtpmap:101 telephone-event/8000
+        a=fmtp:101 0-16,32,36
+        a=maxptime:30
+        m=video 5092 RTP/AVP 89 31 34 95 92 93 126
+        b=AS:4096
+        b=TIAS:4096000
+        a=sendrecv
+        a=rtpmap:89 theora/90000
+        a=fmtp:89 height=576;width=704
+        a=rtpmap:31 h261/90000
+        a=fmtp:31 CIF=1;QCIF=1
+        a=rtpmap:34 H263/90000
+        a=fmtp:34 F=1;CIF=1;CIF4=1;QCIF=1
+        a=rtpmap:95 H263-1998/90000
+        a=fmtp:95 D=1;F=1;I=1;J=1;CIF=1;CIF4=1;QCIF=1
+        a=rtpmap:92 H264/90000
+        a=fmtp:92 max-fs=6336;max-mbps=190080;profile-level-id=42801e
+        a=rtpmap:93 H264/90000
+        a=fmtp:93 packetization-mode=1;max-fs=6336;max-mbps=190080;profile-level-id=42801e
+        a=rtpmap:126 MP4V-ES/90000
+        a=fmtp:126 profile-level-id=5
+14:45:19.775 [SIP] TO 27 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK0eceb6fe-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f669b5fe-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: ae6bb5fe-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:45:19.779 [SIP] FROM 27 162.105.85.217:5060 INVITE sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK3c7cb7fe-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f669b5fe-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: ae6bb5fe-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:houmin@172.22.0.1>
+        Content-Type: application/sdp
+        Allow: INVITE
+        Allow: ACK
+        Allow: OPTIONS
+        Allow: BYE
+        Allow: CANCEL
+        Allow: SUBSCRIBE
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: MESSAGE
+        Allow: INFO
+        Allow: PING
+        Allow: PRACK
+        User-agent: Ekiga/4.0.1
+        K: 100rel
+        K: replaces
+        Max-forwards: 70
+        Content-Length:  1365
+        
+        v=0
+        o=- 10086 10086 IN IP4 162.105.85.217
+        s=Ekiga/4.0.1
+        c=IN IP4 162.105.85.217
+        t=0 0
+        m=audio 10020 RTP/AVP 9 116 117 118 113 110 8 0 122 121 120 119 3 112 109 123 101
+        a=sendrecv
+        a=rtpmap:9 G722/8000/1
+        a=rtpmap:116 G7221/16000/1
+        a=fmtp:116 bitrate=24000
+        a=rtpmap:117 G7221/16000/1
+        a=fmtp:117 bitrate=32000
+        a=rtpmap:118 AMR-WB/16000/1
+        a=fmtp:118 octet-align=1
+        a=rtpmap:113 SILK/16000/1
+        a=rtpmap:110 Speex/16000/1
+        a=rtpmap:8 PCMA/8000/1
+        a=rtpmap:0 PCMU/8000/1
+        a=rtpmap:122 G726-16/8000/1
+        a=rtpmap:121 G726-24/8000/1
+        a=rtpmap:120 G726-32/8000/1
+        a=rtpmap:119 G726-40/8000/1
+        a=rtpmap:3 gsm/8000/1
+        a=rtpmap:112 SILK/8000/1
+        a=rtpmap:109 Speex/8000/1
+        a=rtpmap:123 iLBC/8000/1
+        a=fmtp:123 mode=20
+        a=rtpmap:101 telephone-event/8000
+        a=fmtp:101 0-16,32,36
+        a=maxptime:30
+        m=video 5096 RTP/AVP 89 31 34 95 92 93 126
+        b=AS:4096
+        b=TIAS:4096000
+        a=sendrecv
+        a=rtpmap:89 theora/90000
+        a=fmtp:89 height=576;width=704
+        a=rtpmap:31 h261/90000
+        a=fmtp:31 CIF=1;QCIF=1
+        a=rtpmap:34 H263/90000
+        a=fmtp:34 F=1;CIF=1;CIF4=1;QCIF=1
+        a=rtpmap:95 H263-1998/90000
+        a=fmtp:95 D=1;F=1;I=1;J=1;CIF=1;CIF4=1;QCIF=1
+        a=rtpmap:92 H264/90000
+        a=fmtp:92 max-fs=6336;max-mbps=190080;profile-level-id=42801e
+        a=rtpmap:93 H264/90000
+        a=fmtp:93 packetization-mode=1;max-fs=6336;max-mbps=190080;profile-level-id=42801e
+        a=rtpmap:126 MP4V-ES/90000
+        a=fmtp:126 profile-level-id=5
+14:45:19.779 [SIP] TO 27 162.105.85.217:5060 SIP/2.0 491 Request pending
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK3c7cb7fe-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f669b5fe-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: ae6bb5fe-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:45:19.779 [SIP] FROM 27 162.105.85.217:5060 ACK sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK0eceb6fe-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f669b5fe-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: ae6bb5fe-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 ACK
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:45:19.781 [SIP] FROM 27 162.105.85.217:5060 ACK sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK3c7cb7fe-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f669b5fe-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: ae6bb5fe-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 ACK
+        Max-forwards: 70
+        Content-Length: 0
+        
+14:45:19.814 [SIP] FROM 28 192.168.4.2:8001 SIP/2.0 100 Trying
+        Via: SIP/2.0/UDP 192.168.4.1:59645;branch=z9hG4bKcb830247a
+        From: <tel:001010000000003>;tag=z9hG4bKb8b957cfe
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Call-ID: 11d840d42d1e9449
+        CSeq: 1 INVITE
+        Content-Length: 0
+        
+14:45:19.874 [SIP] FROM 28 192.168.4.2:8001 SIP/2.0 183 Session Progress
+        Via: SIP/2.0/UDP 192.168.4.1:59645;branch=z9hG4bKcb830247a
+        From: <tel:001010000000003>;tag=z9hG4bKb8b957cfe
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185272726
+        Call-ID: 11d840d42d1e9449
+        CSeq: 1 INVITE
+        Content-Type: application/sdp
+        P-Access-Network-Info: 3GPP-E-UTRAN-TDD; utran-cell-id-3gpp=0010100011A2D001
+        Content-Length: 441
+        RSeq: 1
+        Contact: <sip:001010000000001@192.168.4.2:8901>;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel";video;g.3gpp.nw-init-ussi
+        User-Agent: M653
+        Require: 100rel,precondition
+        Allow: INVITE,ACK,CANCEL,BYE,UPDATE,PRACK,MESSAGE,REFER,NOTIFY,INFO,OPTIONS
+        
+        v=0
+        o=- 1018 1000 IN IP4 192.168.4.2
+        s=QC VOIP
+        c=IN IP4 192.168.4.2
+        b=AS:41
+        b=RS:600
+        b=RR:2000
+        t=0 0
+        m=audio 50010 RTP/AVP 99
+        b=AS:41
+        b=RS:600
+        b=RR:2000
+        a=rtpmap:99 AMR-WB/16000/1
+        a=fmtp:99 octet-align=1;mode-change-capability=2;max-red=0
+        a=curr:qos local none
+        a=curr:qos remote none
+        a=des:qos mandatory local sendrecv
+        a=des:qos mandatory remote sendrecv
+        a=conf:qos remote sendrecv
+        a=sendrecv
+        a=maxptime:240
+        a=ptime:20
+14:45:19.874 [SIP] TO 28 192.168.4.2:8901 PRACK sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 192.168.4.1:59645;branch=z9hG4bKbfcc2217c
+        Route: <sip:192.168.4.2:8001;lr>
+        From: <tel:001010000000003>;tag=z9hG4bKb8b957cfe
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185272726
+        Call-ID: 11d840d42d1e9449
+        CSeq: 2 PRACK
+        Contact: <sip:001010000000003@192.168.4.1:59645>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Supported: precondition,100rel
+        User-Agent: Amarisoft-IMS-2018-05-22
+        Max-Forwards: 70
+        RAck: 1 1 INVITE
+        Content-Length: 0
+        
+14:45:19.924 [SIP] TO 28 192.168.4.2:8901 UPDATE sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 192.168.4.1:59645;branch=z9hG4bK3b4282e87
+        Route: <sip:192.168.4.2:8001;lr>
+        From: <tel:001010000000003>;tag=z9hG4bKb8b957cfe
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185272726
+        Call-ID: 11d840d42d1e9449
+        CSeq: 3 UPDATE
+        Contact: <sip:001010000000003@192.168.4.1:59645>
+        Content-Type: application/sdp
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        P-Access-Network-Info: 3GPP-E-UTRAN-FDD;utran-cell-id-3gpp=001011a2d001
+        Accept-Contact: *;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel";+g.3gpp.smsip
+        P-Prefered-Identity: <tel:001010000000003;phone-context=ims.mnc001.mcc001.3gppnetwork.org>
+        Supported: precondition,100rel
+        User-Agent: Amarisoft-IMS-2018-05-22
+        Max-Forwards: 70
+        Require: precondition
+        Content-Length:   417
+        
+        v=0
+        o=Amarisoft-IMS-2018-05-22 10086 2 IN IP4 192.168.4.1
+        s=Amarisoft-IMS-2018-05-22
+        c=IN IP4 192.168.4.1
+        t=0 0
+        m=audio 10000 RTP/AVP 99
+        c=IN IP4 192.168.4.1
+        a=rtpmap:99 AMR-WB/16000/1
+        a=fmtp:99 octet-align=1;mode-change-capability=2;max-red=0
+        a=maxptime:240
+        a=ptime:20
+        a=curr:qos local sendrecv
+        a=des:qos mandatory local sendrecv
+        a=curr:qos remote none
+        a=des:qos mandatory remote sendrecv
+        a=sendrecv
+14:45:19.974 [SIP] FROM 28 192.168.4.2:8001 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 192.168.4.1:59645;branch=z9hG4bKbfcc2217c
+        From: <tel:001010000000003>;tag=z9hG4bKb8b957cfe
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185272726
+        Call-ID: 11d840d42d1e9449
+        CSeq: 2 PRACK
+        Content-Length: 0
+        P-Access-Network-Info: 3GPP-E-UTRAN-TDD; utran-cell-id-3gpp=0010100011A2D001
+        User-Agent: M653
+        Supported: 100rel,tdialog
+        Allow: INVITE,ACK,CANCEL,BYE,UPDATE,PRACK,MESSAGE,REFER,NOTIFY,INFO,OPTIONS
+        
+14:45:19.994 [SIP] FROM 28 192.168.4.2:8001 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 192.168.4.1:59645;branch=z9hG4bK3b4282e87
+        From: <tel:001010000000003>;tag=z9hG4bKb8b957cfe
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185272726
+        Call-ID: 11d840d42d1e9449
+        CSeq: 3 UPDATE
+        Content-Type: application/sdp
+        P-Access-Network-Info: 3GPP-E-UTRAN-TDD; utran-cell-id-3gpp=0010100011A2D001
+        Content-Length: 421
+        Contact: <sip:001010000000001@192.168.4.2:8901>;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel";video;g.3gpp.nw-init-ussi
+        User-Agent: M653
+        Require: precondition
+        Supported: timer,100rel,tdialog
+        Allow: INVITE,ACK,CANCEL,BYE,UPDATE,PRACK,MESSAGE,REFER,NOTIFY,INFO,OPTIONS
+        Session-Expires: 1800;refresher=uas
+        
+        v=0
+        o=- 1018 1001 IN IP4 192.168.4.2
+        s=QC VOIP
+        c=IN IP4 192.168.4.2
+        b=AS:41
+        b=RS:600
+        b=RR:2000
+        t=0 0
+        m=audio 50010 RTP/AVP 99
+        b=AS:41
+        b=RS:600
+        b=RR:2000
+        a=rtpmap:99 AMR-WB/16000/1
+        a=fmtp:99 octet-align=1;mode-change-capability=2;max-red=0
+        a=curr:qos local sendrecv
+        a=curr:qos remote sendrecv
+        a=des:qos mandatory local sendrecv
+        a=des:qos mandatory remote sendrecv
+        a=sendrecv
+        a=maxptime:240
+        a=ptime:20
+14:45:19.994 [SIP] FROM 28 192.168.4.2:8001 SIP/2.0 180 Ringing
+        Via: SIP/2.0/UDP 192.168.4.1:59645;branch=z9hG4bKcb830247a
+        From: <tel:001010000000003>;tag=z9hG4bKb8b957cfe
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185272726
+        Call-ID: 11d840d42d1e9449
+        CSeq: 1 INVITE
+        P-Access-Network-Info: 3GPP-E-UTRAN-TDD; utran-cell-id-3gpp=0010100011A2D001
+        Content-Length: 0
+        Contact: <sip:001010000000001@192.168.4.2:8901>;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel";video;g.3gpp.nw-init-ussi
+        User-Agent: M653
+        Allow: INVITE,ACK,CANCEL,BYE,UPDATE,PRACK,MESSAGE,REFER,NOTIFY,INFO,OPTIONS
+        
+14:45:20.049 [SIP] TO 27 162.105.85.217:5060 SIP/2.0 180 Ringing
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5023b6fe-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f669b5fe-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=004d35994e43d0c8
+        Call-ID: ae6bb5fe-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Contact: <sip:001010000000003@192.168.4.1:5060>
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:45:26.294 [SIP] FROM 28 192.168.4.2:8001 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 192.168.4.1:59645;branch=z9hG4bKcb830247a
+        From: <tel:001010000000003>;tag=z9hG4bKb8b957cfe
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185272726
+        Call-ID: 11d840d42d1e9449
+        CSeq: 1 INVITE
+        P-Access-Network-Info: 3GPP-E-UTRAN-TDD; utran-cell-id-3gpp=0010100011A2D001
+        Session-Expires: 1800;refresher=uas
+        Content-Length: 0
+        Contact: <sip:001010000000001@192.168.4.2:8901>;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel";video;g.3gpp.nw-init-ussi
+        User-Agent: M653
+        Supported: timer,100rel,tdialog
+        Allow: INVITE,ACK,CANCEL,BYE,UPDATE,PRACK,MESSAGE,REFER,NOTIFY,INFO,OPTIONS
+        
+14:45:26.294 [SIP] TO 28 192.168.4.2:8901 ACK sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 192.168.4.1:59645;branch=z9hG4bKda7f26398
+        Route: <sip:192.168.4.2:8001;lr>
+        From: <tel:001010000000003>;tag=z9hG4bKb8b957cfe
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185272726
+        Call-ID: 11d840d42d1e9449
+        CSeq: 1 ACK
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Supported: 100rel
+        User-Agent: Amarisoft-IMS-2018-05-22
+        Max-Forwards: 70
+        Content-Length: 0
+        
+14:45:26.294 [SIP] TO 27 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bK5023b6fe-7dfb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f669b5fe-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=004d35994e43d0c8
+        Call-ID: ae6bb5fe-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 INVITE
+        Contact: <sip:001010000000003@192.168.4.1:5060>
+        Content-Type: application/sdp
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length:   458
+        
+        v=0
+        o=Amarisoft-IMS-2018-05-22 1018 1 IN IP4 192.168.4.1
+        s=Amarisoft-IMS-2018-05-22
+        c=IN IP4 192.168.4.1
+        b=AS:41
+        b=RS:600
+        b=RR:2000
+        t=0 0
+        m=audio 10002 RTP/AVP 99
+        b=AS:41
+        b=RS:600
+        b=RR:2000
+        a=rtpmap:99 AMR-WB/16000/1
+        a=fmtp:99 octet-align=1;mode-change-capability=2;max-red=0
+        a=curr:qos local sendrecv
+        a=curr:qos remote sendrecv
+        a=des:qos mandatory local sendrecv
+        a=des:qos mandatory remote sendrecv
+        a=sendrecv
+        a=maxptime:240
+        a=ptime:20
+14:45:26.301 [SIP] FROM - 162.105.85.217:5060 ACK sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKd0a59b02-7efb-e811-8292-fcaa149f9719;rport;rport
+        From: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f669b5fe-7dfb-e811-8292-fcaa149f9719
+        To: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=004d35994e43d0c8
+        Call-ID: ae6bb5fe-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 ACK
+        Contact: "sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org" <sip:houmin@162.105.85.217:5060>
+        Allow: INVITE
+        Allow: REGISTER
+        Allow: SUBSCRIBE
+        Allow: ACK
+        Allow: CANCEL
+        Allow: PRACK
+        Allow: UPDATE
+        Allow: BYE
+        Allow: MESSAGE
+        Allow: OPTIONS
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: INFO
+        Allow: PING
+        Max-forwards: 70
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Expires: 3600
+        Content-Length: 0
+        
+14:45:29.834 [SIP] FROM 28 192.168.4.2:8001 BYE sip:001010000000003@192.168.4.1:59645 SIP/2.0
+        To: <tel:001010000000003>;tag=z9hG4bKb8b957cfe
+        From: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185272726
+        Call-ID: 11d840d42d1e9449
+        CSeq: 2 BYE
+        Via: SIP/2.0/UDP 192.168.4.2:8901;branch=z9hG4bK1408652942
+        Max-Forwards: 70
+        P-Access-Network-Info: 3GPP-E-UTRAN-TDD; utran-cell-id-3gpp=0010100011A2D001
+        Security-Verify: ipsec-3gpp;prot=esp;mod=trans;spi-c=15712148;spi-s=15712149;port-c=59163;port-s=59645;alg=hmac-md5-96;ealg=null
+        P-Preferred-Identity: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>
+        Require: sec-agree
+        Proxy-Require: sec-agree
+        Reason: SIP; text="USER DISCONNECTED"
+        User-Agent: M653
+        Content-Length: 0
+        
+14:45:29.834 [SIP] TO 28 192.168.4.2:8901 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 192.168.4.2:8901;branch=z9hG4bK1408652942
+        From: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=185272726
+        To: <tel:001010000000003>;tag=z9hG4bKb8b957cfe
+        Call-ID: 11d840d42d1e9449
+        CSeq: 2 BYE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        Max-Forwards: 70
+        Supported: sec-agree
+        Security-Server: ipsec-3gpp;prot=esp;mod=trans;spi-c=15712148;spi-s=15712149;port-c=59163;port-s=59645;alg=hmac-md5-96;ealg=null
+        Server: Amarisoft-IMS-2018-05-22
+        Content-Length: 0
+        
+14:45:29.834 [SIP] TO 27 162.105.85.217:5060 BYE sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+        Via: SIP/2.0/UDP 192.168.4.1:5060;branch=z9hG4bKe3a924e94
+        Route: <sip:162.105.85.217:5060;lr>
+        From: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=004d35994e43d0c8
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f669b5fe-7dfb-e811-8292-fcaa149f9719
+        Call-ID: ae6bb5fe-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 BYE
+        Allow: REGISTER,SUBSCRIBE,INVITE,ACK,CANCEL,PRACK,UPDATE,BYE,MESSAGE
+        P-Access-Network-Info: 3GPP-E-UTRAN-FDD;utran-cell-id-3gpp=001011a2d001
+        Accept-Contact: *;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel";+g.3gpp.smsip
+        Supported: 100rel
+        User-Agent: Amarisoft-IMS-2018-05-22
+        Max-Forwards: 70
+        Reason: SIP ;cause=200;text="Terminated"
+        Content-Length: 0
+        
+14:45:29.836 [SIP] FROM 27 162.105.85.217:5060 SIP/2.0 200 OK
+        Via: SIP/2.0/UDP 162.105.85.217:5060;branch=z9hG4bKe3a924e94;rport;rport
+        From: <sip:001010000000001@ims.mnc001.mcc001.3gppnetwork.org>;tag=004d35994e43d0c8
+        To: <sip:001010000000003@ims.mnc001.mcc001.3gppnetwork.org>;tag=f669b5fe-7dfb-e811-8292-fcaa149f9719
+        Call-ID: ae6bb5fe-7dfb-e811-8292-fcaa149f9719@cosmos
+        CSeq: 1 BYE
+        Allow: INVITE
+        Allow: REGISTER
+        Allow: SUBSCRIBE
+        Allow: ACK
+        Allow: CANCEL
+        Allow: PRACK
+        Allow: UPDATE
+        Allow: BYE
+        Allow: MESSAGE
+        Allow: OPTIONS
+        Allow: NOTIFY
+        Allow: REFER
+        Allow: INFO
+        Allow: PING
+        K: 100rel
+        K: replaces
+        Max-Forwards: 70
+        Content-Length: 0
+        

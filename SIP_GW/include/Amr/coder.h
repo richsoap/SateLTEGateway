@@ -37,10 +37,10 @@ GsmToAmrCoder(){
 	delete [] middle8;
 	delete [] middle16;
 }
-void GsmToAmr(unsigned char* input, unsigned char* output){
+int GsmToAmr(unsigned char* input, unsigned char* output){
 	gsmCoder.DeCode(input, middle8);
 	changer.ChangeBpsTo16(middle8, middle16);
-	amrCoder.EnCode(middle16, output);
+	return amrCoder.EnCode(middle16, output);
 }
 private:
 AmrEnCoder amrCoder;
