@@ -41,7 +41,7 @@ string AMRPatten = "a=.*AMR-WB.*\r\n";
 string GSMPatten = "a=.*GSM.*\r\n";
 string callidPatten = "Callid";
 string mediaPatten = "m=";
-string sessIDPatten = "[0-9]+ [0-9]+ IN IP4";
+string sessIDPatten = "o=.+ [0-9]+ [0-9]+ IN IP4";
 
 static void printAddr(const sockaddr_in& addr) {
 	char buffer_test[20];
@@ -78,7 +78,6 @@ static string replaceMedia(const string& src, const string& media) {
 	else
 		return src;
 }
-
 
 /*
  * Addr helper
@@ -118,11 +117,11 @@ static int buildControl(const string& packet, ControlPacket& control) {
     return 0;
 }
 
-static string ALLOWS[] = {"INVITE", "REGISTER", "SUBSCRIBE", "ACK", "CANCEL", "PRACK", "UPDATE","BYE", "MESSAGE"};
+static string ALLOWS[] = {"INVITE", "REGISTER", "SUBSCRIBE", "ACK", "CANCEL", "PRACK", "UPDATE","BYE", "MESSAGE", "OPTIONS", "NOTIFY", "REFER", "INFO", "PING"};
 static osip_list_t getAllows() {
 	osip_list_t result;
 	osip_list_init(&result);
-	for(int i = 0;i < 9;i ++) {
+	for(int i = 0;i < 14;i ++) {
 		osip_allow_t* invite;
 		osip_allow_init(&invite);
 		invite->value = (char*)osip_malloc(ALLOWS[i].length() + 1);
@@ -135,17 +134,15 @@ static osip_list_t getAllows() {
 
 static void setCharValue(char** src, const char* tar) {
 	if(*src != NULL) {
-		cout<<"Free src"<<endl;
 		osip_free(*src);
 	}
-	cout<<"Malloc"<<endl;
 	*src = (char*)osip_malloc(strlen(tar) + 10);
-	cout<<"Copy"<<endl;
 	strcpy(*src, tar);
 }
 
 static void deleteCharValue(char **src) {
-	osip_free(*src);
+	if(*src != NULL)
+		osip_free(*src);
 	*src = NULL;
 }
 
@@ -186,10 +183,10 @@ static void* SIPThread(void* input) {
 	clientAddr = str2addr(clientIP, clientPort);
 	rtpControlAddr = str2addr(RTPIP, RTPControlPort);
 	string tempIP;
-	string sdpIPString = "IN IP4 " + RTPIP;
+	string sdpIPString = RTPIP;
 	string sdpPortString = "audio " + to_string(RTPListenPort);
 	string listenPortStr = to_string(listenPort);
-	string sessIDString = "10086 10086 IN IP4";
+	string sessIDString = "o=- 10086 10086 IN IP4";
 	string sdpToClientString;
 
 #ifdef AMRGSM
@@ -221,14 +218,31 @@ static void* SIPThread(void* input) {
 			}
 			cout<<"parse done"<<endl;
 
+			/*if(MSG_IS_PUBLISH(sip)) {
+				cout<<"publish"<<endl;
+				continue;
+			}
+			else if(MSG_IS_OPTIONS(sip)) {
+				cout<<"options"<<endl;
+				continue;
+			}
+			else if(MSG_IS_SUBSCRIBE(sip)) {
+				cout<<"subscribe"<<endl;
+				continue;
+			}*/
 			osip_message_get_via(sip, osip_list_size(&sip->vias)-1, &sip_via);
 			setCharValue(&sip_via->host, listenIP.c_str());
 			setCharValue(&sip_via->port, listenPortStr.c_str());
 			osip_generic_param_add(&sip_via->via_params, osip_strdup("rport"), NULL);
+			cout<<"Add rport done"<<endl;
 			if(addrCmp(tempAddr, clientAddr)) {
 			//remove IMSI and change domain
-				setCharValue(&sip->req_uri->host, IMS_DOMAIN);
-				deleteCharValue(&sip->req_uri->port);
+				if(sip->req_uri != NULL) {
+					setCharValue(&sip->req_uri->host, IMS_DOMAIN);
+					cout<<"set domain done"<<endl;
+					deleteCharValue(&sip->req_uri->port);
+					cout<<"deleting port in req done"<<endl;
+				}
 				if(strlen(sip->from->url->username) > 15) {
 					strcpy(sip->from->url->username, sip->from->url->username + 4);
 				}
@@ -262,13 +276,23 @@ static void* SIPThread(void* input) {
 				if(osip_list_size(&sip->allows) == 0)
 					sip->allows = getAllows();
 				cout<<"After add allows"<<endl;
+
+
+
 				if(osip_list_size(&sip->contacts) > 0) {
 					cout<<"Changing contacts"<<endl;
 					contact = (osip_contact_t*)osip_list_get(&sip->contacts, 0);
-					if(strlen(contact->url->username) > 15)
-						strcpy(contact->url->username, contact->url->username + 4);
-					setCharValue(&contact->url->host, listenIP.c_str());
-					deleteCharValue(&contact->url->port);
+					while(osip_list_size(&contact->gen_params) > 0) {
+						cout<<"Try to remove tail"<<endl;
+						osip_list_remove(&contact->gen_params, 0);
+					}
+					cout<<"Remove tails done"<<endl;
+					if(contact->url != NULL) {
+						setCharValue(&contact->url->host, listenIP.c_str());
+						setCharValue(&contact->url->port, to_string(listenPort).c_str());
+						if(contact->url->username[0] == 'I')
+							strcpy(contact->url->username, contact->url->username + 4);
+					}
 					setCharValue(&contact->displayname, (string("\"sip:") + string(sip->from->url->username) + string("@") + string(sip->from->url->host) + "\"").c_str());				
 					osip_header_init(&head);
 					setCharValue(&head->hname, "Expires");
@@ -276,16 +300,23 @@ static void* SIPThread(void* input) {
 					osip_list_add(&sip->headers, head, -1);
 					cout<<"change contacts done"<<endl;
 				}
+				setCharValue(&contact->url->port, to_string(listenPort).c_str());
+
+
+
+
 				if(MSG_IS_REGISTER(sip)) {
-					cout<<"Adding route"<<endl;
-					osip_route_t* route;
-					osip_route_init(&route);
-					osip_uri_init(&route->url);
-					setCharValue(&route->url->host, listenIP.c_str());
-					setCharValue(&route->url->port, (to_string(listenPort) + ";lr").c_str());
-					setCharValue(&route->url->scheme, "sip");
-					osip_list_add(&sip->routes, route, -1);
-					cout<<"Add route done"<<endl;
+					if(osip_list_size(&sip->routes) == 0) {
+						cout<<"Adding route"<<endl;
+						osip_route_t* route;
+						osip_route_init(&route);
+						osip_uri_init(&route->url);
+						setCharValue(&route->url->host, listenIP.c_str());
+						setCharValue(&route->url->port, (to_string(listenPort) + ";lr").c_str());
+						setCharValue(&route->url->scheme, "sip");
+						osip_list_add(&sip->routes, route, -1);
+						cout<<"Add route done"<<endl;
+					}
 				}
 			}
 			if(MSG_IS_INVITE(sip)) {
@@ -330,10 +361,21 @@ static void* SIPThread(void* input) {
 			}
 			cout<<"SIP to str"<<endl;
 			err = osip_message_to_str(sip, &out_buffer, (size_t*)&len);
+
+
+			/////////////////
+	
+			//////////////////////
 			if(addrCmp(tempAddr, serverAddr)) {
+				//string tempString(out_buffer, len);
+				//tempString = replaceAll("001010000000003", tempString, "001010123456780");
+				//strcpy(out_buffer, tempString.c_str());
 				count = (int)sendto(socket_fd, out_buffer, len, 0, (sockaddr*)&clientAddr, sizeof(sockaddr));
 			}
 			else {
+				//string tempString(out_buffer, len);
+				//tempString = replaceAll("001010123456780", tempString, "001010000000003");
+				//strcpy(out_buffer, tempString.c_str());
 				count = (int)sendto(socket_fd, out_buffer, len, 0, (sockaddr*)&serverAddr, sizeof(sockaddr));
 			}
 			if(1 == sleep_flag) {
