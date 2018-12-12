@@ -8,7 +8,7 @@ struct RTPHead {
   uint16_t seq_num;
   uint32_t timestamp;
   uint32_t ssrc;
-  uint32_t csrc;
+  //uint32_t csrc;
 };
 struct RTPPacket {
   RTPHead head;
@@ -40,10 +40,10 @@ static uint32_t pharse_raw(uint8_t* buffer, uint32_t len, RTPPacket* packet) {
 
 static uint32_t pharse_AMR(uint8_t* buffer, uint32_t len, RTPPacket* packet) {
 	memcpy(packet, buffer, sizeof(RTPHead));
-	memcpy(&packet->extHead[0], buffer + sizeof(RTPHead), 2);
-	packet->extLen = 2;
-	packet->buffer = buffer + sizeof(RTPHead) + 2;
-	packet->len = len - sizeof(RTPHead) - 2;
+	memcpy(&packet->extHead[0], buffer + sizeof(RTPHead), 1);
+	packet->extLen = 1;
+	packet->buffer = buffer + sizeof(RTPHead) + 1;
+	packet->len = len - sizeof(RTPHead) - 1;
 	return packet->len;
 }
 

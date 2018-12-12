@@ -116,6 +116,7 @@ static int buildControl(const string& packet, ControlPacket& control) {
     control.addr = str2addr(IP, atoi(Port.c_str()));
     string AMRString = getText(AMRPatten, packet);
     string GSMString = getText(GSMPatten, packet);
+	cout<<"in Build AMR: "<<AMRString<<" ---GSM: "<<GSMString<<" Addr: "<<inet_ntoa(control.addr.sin_addr)<<endl;
     string payload;
     control.command = CONTROL_ADD;
     if(AMRString.length() != 0) {
@@ -204,7 +205,7 @@ static void* SIPThread(void* input) {
 	string sessIDString = "o=- 10086 10086 IN IP4";
 	string sdpToClientString;
 
-#ifdef AMRGSM
+#ifdef GSM
 	sdpToClientString = "m=audio 5062 RTP/AVP 3\r\na=rtpmap:3 GSM/8000/1\r\n";
 #else
 	sdpToClientString = "m=audio 5062 RTP/AVP 118\r\na=rtpmap:118 AMR-WB/16000/1\r\na=fmtp:118 octet-align=1\r\n";
@@ -356,7 +357,7 @@ static void* SIPThread(void* input) {
 				}
 				else if(addrCmp(tempAddr, clientAddr)){
 					sdp = replaceMedia(sdp, sdpToServerString);
-#ifdef GSMAMR
+#ifdef GSM
 					controlPacket.payload = 3;
 					controlPacket.code = CONTROL_GSM;
 #else
@@ -372,6 +373,7 @@ static void* SIPThread(void* input) {
 				sdpBody->body = (char*)osip_malloc(sdp.length() + 1);
 				strcpy(sdpBody->body, sdp.c_str());
 				sdpBody->length = sdp.length();
+				controlPacket.print();
 				len = controlPacket.toBuffer((char*)outputBuffer);
                 len = sendto(socket_fd, outputBuffer, len, 0, (sockaddr*)&rtpControlAddr, sizeof(sockaddr));
 			}

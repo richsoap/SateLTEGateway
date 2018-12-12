@@ -6,7 +6,7 @@
 #include <arpa/inet.h>
 #include <string.h>
 
-#define CONTROL_UNKNOWN
+#define CONTROL_UNKNOWN 0x00
 #define CONTROL_ADD 0x01
 #define CONTROL_REMOVE 0x02
 
@@ -31,16 +31,20 @@ struct ControlPacket {
       buffer[result ++] = command;
       buffer[result ++] = payload;
       buffer[result ++] = code;
-      memcpy(buffer + result, &addr, sizeof(sockaddr));
-      result += sizeof(sockaddr);
+      memcpy(buffer + result, &addr, sizeof(sockaddr_in));
+      result += sizeof(sockaddr_in);
       memcpy(buffer + result, callid.c_str(), callid.length());
       result += callid.length();
       return result;
     }
     void fromBuffer(char* buffer, int length) {
-      int offset = 3+sizeof(sockaddr);
-      memcpy(this, buffer, 3+sizeof(sockaddr));
-      callid = string(buffer + offset, length - offset);
+		int offset = 0;
+		command = buffer[offset ++];
+		payload = buffer[offset ++];
+		code = buffer[offset ++];
+		memcpy(&addr, buffer + offset, sizeof(sockaddr_in));
+		offset += sizeof(sockaddr_in);
+		callid = string(buffer + offset, length - offset);
     }
 	void print() {
 		switch(command) {
@@ -57,7 +61,7 @@ struct ControlPacket {
 							  break;
 			default: cout<<"Unknow ";
 		}
-		cout<<to_string(payload)<<" "<<callid<<endl;
+		cout<<to_string(payload)<<inet_ntoa(addr.sin_addr)<<":"<<to_string(htons(addr.sin_port))<<" "<<callid<<endl;
 	}
 };
 #endif

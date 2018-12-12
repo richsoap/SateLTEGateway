@@ -14,12 +14,14 @@
 #include <errno.h>
 #include "rtp.hpp"
 #include "controlpacket.hpp"
+#include "Amr/coder.h"
 
 #define BUFFER_SIZE 10240
 
 #define TYPE_ABORT 0x00
 #define TYPE_NOCHANGE 0x01
-#define TYPE_CHANGE 0x02
+#define TYPE_GSMAMR 0x02
+#define TYPE_AMRGSM 0x03
 using namespace std;
 
 static int listenPort;
@@ -29,24 +31,26 @@ static string listenIP;
 struct SrcInfo {
 	uint8_t payload;
 	uint8_t codetype;
+	void* coder;
 };
 
 struct TransConf {
     uint8_t type;
     uint8_t tarPT;
-    uint8_t srcCode;
-    uint8_t tarCode;
     sockaddr_in tarAddr;
+	void* coder;
 };
 
 struct addrComp { 
     bool operator () (const sockaddr_in& a1, const sockaddr_in& a2) const {
-        return memcmp(&a1, &a2, sizeof(sockaddr_in)) < 0;
+		int temp = memcmp(&a1.sin_addr, &a2.sin_addr, sizeof(in_addr));
+		return temp < 0 || (temp == 0 && a1.sin_port < a2.sin_port);
     }
 };
 
 map<sockaddr_in, SrcInfo, addrComp> srcMap;
 map<sockaddr_in, sockaddr_in, addrComp> pairMap;
+map<sockaddr_in, sockaddr_in, addrComp> rtcpMap;
 map<string, sockaddr_in> callidMap;
 /*
  * Addr helper
@@ -62,6 +66,12 @@ static sockaddr_in str2addr(string IP, int port) {
 	return result;
 }
 
+static string addr2str(sockaddr_in addr) {
+	string result = inet_ntoa(addr.sin_addr);
+	result = result + ":" + to_string(ntohs(addr.sin_port));
+	return result;
+}
+
 static int getRTCPTarAddr(sockaddr_in srcAddr, sockaddr_in& tarAddr) {
     srcAddr.sin_port = htons(ntohs(srcAddr.sin_port) - 1);
     if(pairMap.count(srcAddr) == 0)
@@ -71,6 +81,7 @@ static int getRTCPTarAddr(sockaddr_in srcAddr, sockaddr_in& tarAddr) {
 }
 
 static TransConf getConf(const sockaddr_in& addr) {
+	cout<<"Receive From: "<<addr2str(addr)<<endl;
     TransConf conf;
     map<sockaddr_in, sockaddr_in>::iterator it = pairMap.find(addr);
     if(it == pairMap.end()) {
@@ -81,18 +92,20 @@ static TransConf getConf(const sockaddr_in& addr) {
     SrcInfo tarInfo = srcMap[it->second];
     if(srcInfo.codetype == tarInfo.codetype)
         conf.type = TYPE_NOCHANGE;
-    else 
-        conf.type = TYPE_CHANGE;
+	else if(srcInfo.codetype == CONTROL_GSM)
+		conf.type = TYPE_GSMAMR;
+	else
+		conf.type = TYPE_AMRGSM;
     conf.tarPT = tarInfo.payload;
-    conf.srcCode = srcInfo.codetype;
-    conf.tarCode = tarInfo.codetype;
     conf.tarAddr = it->second;
+	conf.coder = srcInfo.coder;
     return conf;
 }
 
 static void addSrc(const ControlPacket& packet) {
-    SrcInfo info = {packet.payload, packet.code};
+    SrcInfo info = {packet.payload, packet.code, NULL};
     srcMap[packet.addr] = info;
+	cout<<addr2str(packet.addr)<<endl;
     map<string, sockaddr_in>::iterator it = callidMap.find(packet.callid);
     if(it == callidMap.end()) {
         callidMap[packet.callid] = packet.addr;
@@ -100,6 +113,23 @@ static void addSrc(const ControlPacket& packet) {
     else {
         pairMap[it->second] = packet.addr;
         pairMap[packet.addr] = it->second;
+		map<sockaddr_in, SrcInfo>::iterator srcIt, tarIt;
+		srcIt = srcMap.find(packet.addr);
+		tarIt = srcMap.find(it->second);
+		if(srcIt->second.codetype == CONTROL_AMR && tarIt->second.codetype == CONTROL_GSM) {
+			srcIt->second.coder = new AmrToGsmCoder();
+			tarIt->second.coder = new GsmToAmrCoder();
+		}
+		else if(srcIt->second.codetype == CONTROL_GSM && tarIt->second.codetype == CONTROL_AMR) {
+			srcIt->second.coder = new GsmToAmrCoder();
+			tarIt->second.coder = new AmrToGsmCoder();
+		}
+		sockaddr_in srcAddr = packet.addr;
+		sockaddr_in tarAddr = it->second;
+		srcAddr.sin_port = htons(ntohs(srcAddr.sin_port) + 1);
+		tarAddr.sin_port = htons(ntohs(tarAddr.sin_port) + 1);
+		rtcpMap[srcAddr] = tarAddr;
+		rtcpMap[tarAddr] = srcAddr;
     }
 }
 
@@ -168,6 +198,7 @@ static void* RTPThread(void* input) {
     }
     uint8_t receiveBuffer[BUFFER_SIZE];
     uint8_t outputBuffer[BUFFER_SIZE];
+	uint8_t codeBuffer[BUFFER_SIZE];
     sockaddr_in rtpAddr;
     sockaddr_in tempAddr;
     socklen_t addrSize = sizeof(sockaddr);
@@ -184,38 +215,36 @@ static void* RTPThread(void* input) {
         if(len <= 0)
             continue;
         TransConf conf = getConf(tempAddr);
-        if(conf.type == TYPE_ABORT)
-            continue;
-        else if(conf.type == TYPE_CHANGE) {
-            switch(conf.srcCode) {
-                case CONTROL_GSM:
-					pharse_GSM(receiveBuffer, len, &packet);
-                    break;
-                case CONTROL_AMR:
-					pharse_AMR(receiveBuffer, len, &packet);
-                    break;
-                default:
-                    break;
-            }
-            switch(conf.tarCode) {
-                case CONTROL_GSM:
-					// encode GSM
-					packet_GSM(&packet);
-                    break;
-                case CONTROL_AMR:
-					// encode AMR
-					packet_AMR(&packet);
-                    break;
-                default:
-                    break;
-            }
-        }
-		else {
-			pharse_raw(receiveBuffer, len, &packet);
+		switch(conf.type) {
+			case TYPE_ABORT:
+				cout<<"Abort packet"<<endl;
+				continue;
+			case TYPE_NOCHANGE:
+				pharse_raw(receiveBuffer, len, &packet);
+				break;
+			case TYPE_AMRGSM:
+				pharse_AMR(receiveBuffer, len, &packet);
+				packet.extLen = 0;
+				((AmrToGsmCoder*)conf.coder)->AmrToGsm(packet.buffer, &codeBuffer[0]);
+				packet.buffer = &codeBuffer[0];
+				packet.len = 33; 
+				break;
+			case TYPE_GSMAMR:
+				pharse_GSM(receiveBuffer, len, &packet);
+				packet.extLen = 1;
+				packet.len = ((GsmToAmrCoder*)conf.coder)->GsmToAmr(packet.buffer, &codeBuffer[0]);
+				packet.buffer = &codeBuffer[0];
+				packet.extHead[0] = (((codeBuffer[0] >> 3) & 0x0F) << 4) & 0xF0;
+				break;
+			default:
+				continue;
 		}
+		if(packet.head.pt & 0x80 == 0x80)
+			usleep(40000);
         packet.setPT(conf.tarPT);
         len = rtp2buffer(outputBuffer, &packet);
-        sendto(socket_fd, outputBuffer, len, 0, (sockaddr*)&conf.tarAddr, sizeof(sockaddr));
+        len = sendto(socket_fd, outputBuffer, len, 0, (sockaddr*)&conf.tarAddr, sizeof(sockaddr));
+		cout<<"Sent length: "<<len<<endl;
     }
     return NULL;
 }
@@ -242,9 +271,12 @@ static void* RTCPThread(void* input) {
      while(true) {
         pthread_testcancel();
         len = recvfrom(socket_fd, receiveBuffer, BUFFER_SIZE, 0, (sockaddr*)&tempAddr, &addrSize);
-        if(getRTCPTarAddr(tempAddr, tarAddr) == 0) {
+        /*if(getRTCPTarAddr(tempAddr, tarAddr) == 0) {
             sendto(socket_fd, receiveBuffer, len, 0, (sockaddr*)&tarAddr, sizeof(sockaddr));
-        }
+        }*/
+		if(rtcpMap.count(tempAddr) != 0) {
+			sendto(socket_fd, receiveBuffer, len, 0, (sockaddr*)&rtcpMap[tempAddr], sizeof(sockaddr));
+		}
      }
 }
 
