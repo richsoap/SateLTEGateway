@@ -15,6 +15,7 @@
 #include "rtp.hpp"
 #include "controlpacket.hpp"
 #include "Amr/coder.h"
+#include "stopwatch.h"
 
 #define BUFFER_SIZE 10240
 
@@ -209,12 +210,15 @@ static void* RTPThread(void* input) {
         cout<<"Error RTP bind"<<endl<<"Exit"<<endl;
         return NULL;
     }
+     Stopwatch watch(7, 50, "./log/stopwatch");
     while(true) {
         pthread_testcancel();
         len = recvfrom(socket_fd, receiveBuffer, BUFFER_SIZE, 0, (sockaddr*)&tempAddr, &addrSize);
         if(len <= 0)
             continue;
+        watch.start(0);
         TransConf conf = getConf(tempAddr);
+        watch.record(0);
 		switch(conf.type) {
 			case TYPE_ABORT:
 				cout<<"Abort packet"<<endl;
@@ -223,26 +227,34 @@ static void* RTPThread(void* input) {
 				pharse_raw(receiveBuffer, len, &packet);
 				break;
 			case TYPE_AMRGSM:
+                watch.start(1);
 				pharse_AMR(receiveBuffer, len, &packet);
 				packet.extLen = 0;
+                watch.record(1);
+                watch.start(2);
 				((AmrToGsmCoder*)conf.coder)->AmrToGsm(packet.buffer, &codeBuffer[0]);
 				packet.buffer = &codeBuffer[0];
 				packet.len = 33; 
+                watch.record(2);
 				break;
 			case TYPE_GSMAMR:
+                watch.start(3);
 				pharse_GSM(receiveBuffer, len, &packet);
 				packet.extLen = 1;
+                watch.record(3);
+                watch.start(4);
 				packet.len = ((GsmToAmrCoder*)conf.coder)->GsmToAmr(packet.buffer, &codeBuffer[0]);
 				packet.buffer = &codeBuffer[0];
 				packet.extHead[0] = (((codeBuffer[0] >> 3) & 0x0F) << 4) & 0xF0;
+                watch.record(4);
 				break;
 			default:
 				continue;
 		}
-		if(packet.head.pt & 0x80 == 0x80)
-			usleep(40000);
+        watch.start(5);
         packet.setPT(conf.tarPT);
         len = rtp2buffer(outputBuffer, &packet);
+        watch.record(5);
         len = sendto(socket_fd, outputBuffer, len, 0, (sockaddr*)&conf.tarAddr, sizeof(sockaddr));
 		cout<<"Sent length: "<<len<<endl;
     }
