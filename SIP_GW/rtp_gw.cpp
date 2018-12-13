@@ -15,6 +15,7 @@
 #include "rtp.hpp"
 #include "controlpacket.hpp"
 #include "Amr/coder.h"
+
 #include "stopwatch.h"
 
 #define BUFFER_SIZE 10240
@@ -82,7 +83,7 @@ static int getRTCPTarAddr(sockaddr_in srcAddr, sockaddr_in& tarAddr) {
 }
 
 static TransConf getConf(const sockaddr_in& addr) {
-	cout<<"Receive From: "<<addr2str(addr)<<endl;
+	//cout<<"Receive From: "<<addr2str(addr)<<endl;
     TransConf conf;
     map<sockaddr_in, sockaddr_in>::iterator it = pairMap.find(addr);
     if(it == pairMap.end()) {
@@ -106,7 +107,7 @@ static TransConf getConf(const sockaddr_in& addr) {
 static void addSrc(const ControlPacket& packet) {
     SrcInfo info = {packet.payload, packet.code, NULL};
     srcMap[packet.addr] = info;
-	cout<<addr2str(packet.addr)<<endl;
+	//cout<<addr2str(packet.addr)<<endl;
     map<string, sockaddr_in>::iterator it = callidMap.find(packet.callid);
     if(it == callidMap.end()) {
         callidMap[packet.callid] = packet.addr;
@@ -204,6 +205,7 @@ static void* RTPThread(void* input) {
     sockaddr_in tempAddr;
     socklen_t addrSize = sizeof(sockaddr);
     RTPPacket packet;
+	int firstFlag = 0;
 	int len;
     rtpAddr = str2addr(listenIP, listenPort);
      if(bind(socket_fd, (sockaddr*)&rtpAddr, sizeof(sockaddr_in)) < 0) {
@@ -216,7 +218,7 @@ static void* RTPThread(void* input) {
         len = recvfrom(socket_fd, receiveBuffer, BUFFER_SIZE, 0, (sockaddr*)&tempAddr, &addrSize);
         if(len <= 0)
             continue;
-        watch.start(0);
+        watch.reset(0);
         TransConf conf = getConf(tempAddr);
         watch.record(0);
 		switch(conf.type) {
@@ -227,22 +229,22 @@ static void* RTPThread(void* input) {
 				pharse_raw(receiveBuffer, len, &packet);
 				break;
 			case TYPE_AMRGSM:
-                watch.start(1);
+                watch.reset(1);
 				pharse_AMR(receiveBuffer, len, &packet);
 				packet.extLen = 0;
                 watch.record(1);
-                watch.start(2);
+                watch.reset(2);
 				((AmrToGsmCoder*)conf.coder)->AmrToGsm(packet.buffer, &codeBuffer[0]);
 				packet.buffer = &codeBuffer[0];
 				packet.len = 33; 
                 watch.record(2);
 				break;
 			case TYPE_GSMAMR:
-                watch.start(3);
+                watch.reset(3);
 				pharse_GSM(receiveBuffer, len, &packet);
 				packet.extLen = 1;
                 watch.record(3);
-                watch.start(4);
+                watch.reset(4);
 				packet.len = ((GsmToAmrCoder*)conf.coder)->GsmToAmr(packet.buffer, &codeBuffer[0]);
 				packet.buffer = &codeBuffer[0];
 				packet.extHead[0] = (((codeBuffer[0] >> 3) & 0x0F) << 4) & 0xF0;
@@ -251,12 +253,16 @@ static void* RTPThread(void* input) {
 			default:
 				continue;
 		}
-        watch.start(5);
+        watch.reset(5);
         packet.setPT(conf.tarPT);
         len = rtp2buffer(outputBuffer, &packet);
         watch.record(5);
+		if(firstFlag == 0) {
+			usleep(40000);
+			firstFlag = 1;
+		}
         len = sendto(socket_fd, outputBuffer, len, 0, (sockaddr*)&conf.tarAddr, sizeof(sockaddr));
-		cout<<"Sent length: "<<len<<endl;
+		//cout<<"Sent length: "<<len<<endl;
     }
     return NULL;
 }

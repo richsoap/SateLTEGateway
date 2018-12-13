@@ -3,6 +3,8 @@
 #include "amr.h"
 #include "gsm.h"
 #include "fir.h"
+#include <fstream>
+#include <stdio.h>
 
 class AmrToGsmCoder {
 public:
@@ -32,6 +34,11 @@ public:
 GsmToAmrCoder(){
 	middle8 = new short[FrameLength8];
 	middle16 = new short[FrameLength16];
+
+	outputFile.open("middle.pcm");
+	if(!outputFile){
+		printf("Open File error\n");
+	}
 }
 ~GsmToAmrCoder(){
 	delete [] middle8;
@@ -40,6 +47,8 @@ GsmToAmrCoder(){
 int GsmToAmr(unsigned char* input, unsigned char* output){
 	gsmCoder.DeCode(input, middle8);
 	changer.ChangeBpsTo16(middle8, middle16);
+	outputFile.write((unsigned char*)middle16, FrameLength16*sizeof(short));
+	printf("output\n");
 	return amrCoder.EnCode(middle16, output);
 }
 private:
@@ -48,6 +57,8 @@ GsmDeCoder gsmCoder;
 ChangeBps changer;
 short *middle8;
 short *middle16;
+
+std::ofstream outputFile;
 };
 
 #endif

@@ -1,5 +1,5 @@
 cxx = g++
-file = /usr/local/lib/libosipparser2.a ./lib/libAMR.a ./lib/libgsm.a
+file = /usr/local/lib/libosipparser2.a ./lib/libAMR.a ./lib/libgsm.a ./lib/libstopwatch.a
 tail = -I./include -std=c++11 -lpthread -DGSM
 
 
