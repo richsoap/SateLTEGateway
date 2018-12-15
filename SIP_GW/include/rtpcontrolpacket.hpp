@@ -1,5 +1,5 @@
-#ifndef CONTROLPACKET
-#define CONTROLPACKET
+#ifndef RTPCONTROLPACKET_H
+#define RTPCONTROLPACKET_H
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
