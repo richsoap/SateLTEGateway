@@ -92,6 +92,8 @@ static void* SIPControlThread(void* input) {
            case SRSUE_ADD_PHYADDR:
                memcpy(&addr, &packet.data[0], sizeof(addr));
                phyaddrMap[packet.imsi] = addr;
+			   cout<<"Add addr:";
+			   printAddr(addr);
                break;
            case SRSUE_ADD_VIRADDR:
                memcpy(&addr, &packet.data[0], sizeof(addr));
