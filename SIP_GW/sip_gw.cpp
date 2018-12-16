@@ -14,9 +14,10 @@
 #include <errno.h>
 #include "rtpcontrolpacket.hpp"
 #include "srsuecontrolpacket.hpp"
-#include "imsi.h"
+#include "imsi.hpp"
 #include "siphelpers.hpp"
 #include "sdphelpers.hpp"
+#include "commonhelpers.hpp"
 
 #define BUFFER_SIZE 10240
 #define ADDRSIZE sizeof(sockaddr_in)
@@ -37,44 +38,25 @@ static string RTPIP;
 static map<IMSI, in_addr> phyaddrMap;
 static map<IMSI, in_addr> viraddrMap;
 
-
-static void printAddr(const sockaddr_in& addr) {
-	char buffer_test[20];
-	inet_ntop(AF_INET, &addr.sin_addr, buffer_test, 20);
-	cout<<buffer_test<<":"<<ntohs(addr.sin_port)<<endl;
-}
-
-static bool addrCmp(const sockaddr_in& a1, const sockaddr_in& a2) {
-	return memcmp(&a1.sin_addr, &a2.sin_addr, sizeof(a1.sin_addr)) == 0 && a1.sin_port == a2.sin_port;
-}
-
 /*
  * Addr helper
  *
  *
  * */
 
-static sockaddr_in str2addr(string IP, int port) {
-	sockaddr_in result;
-	result.sin_family = AF_INET;
-	result.sin_port = htons(port);
-    inet_pton(AF_INET, IP.c_str(), &result.sin_addr);
-	return result;
-}
-
-static IMSI getIMSI(const osip_message_t& packet) {
+static IMSI getIMSI(const osip_message_t* sip) {
     IMSI result;
     if(MSG_IS_INVITE(sip) || MSG_IS_ACK(sip) || MSG_IS_REGISTER(sip) || MSG_IS_BYE(sip) || MSG_IS_OPTIONS(sip) ||
             MSG_IS_INFO(sip) || MSG_IS_CANCEL(sip) || MSG_IS_REFER(sip) || MSG_IS_NOTIFY(sip) ||
-            MSG_IS_SUBCRIBE(sip) || MSG_IS_PRACK(sip) || MSG_IS_UPDATE(sip) || MSG_IS_PUBLISH(msg)) {
-        if(packet.from->url != NULL)
-            memcpy(&result, packet.from->url->username, sizeof(result));
+            MSG_IS_SUBSCRIBE(sip) || MSG_IS_PRACK(sip) || MSG_IS_UPDATE(sip) || MSG_IS_PUBLISH(sip)) {
+        if(sip->from->url != NULL)
+            memcpy(&result, sip->from->url->username, sizeof(result));
         else
             memset(&result, 0, sizeof(result));
     }
     else {
-        if(packet.to->ul != NULL)
-            memcpy(&result, packet.to->url->username, sizeof(result));
+        if(sip->to->url != NULL)
+            memcpy(&result, sip->to->url->username, sizeof(result));
         else
             memset(&result, 0, sizeof(result));
     }
@@ -104,8 +86,8 @@ static void* SIPControlThread(void* input) {
    }
    while(true) {
        pthread_testcancel();
-       ssize_t len = recv(socket_fd, receiveBUffer, BUFFER_SIZE, 0);
-       srsueConntrolPacketParse(packet, receiveBuffer);
+       ssize_t len = recv(socket_fd, receiveBuffer, BUFFER_SIZE, 0);
+       srsueControlPacketParse(packet, receiveBuffer);
        switch(packet.event) {
            case SRSUE_ADD_PHYADDR:
                memcpy(&addr, &packet.data[0], sizeof(addr));
@@ -138,13 +120,13 @@ static void* SIPThread(void* input) {
     uint8_t tempBuffer[BUFFER_SIZE];
 	int err;
 	int count;
-    ControlPacket controlPacket;
+    RTPControlPacket controlPacket;
 	osip_message_t* sip;
 	char* out_buffer;
 	char* temp_point;
 
 	listenAddr = str2addr(listenIP, listenPort);
-	serverAddr = str2addr(serverIP, serverPort);
+	serverAddr = str2addr(listenIP, listenPort);
 	clientAddr = str2addr(clientIP, clientPort);
 	rtpControlAddr = str2addr(RTPIP, RTPControlPort);
 	string tempIP;
@@ -248,23 +230,21 @@ static void* SIPThread(void* input) {
 
 int main(int argc, char** argv) {
     if(argc != 10) {
-        cout<<"Wrong argv: ListenIP ListenPort ServerIP ServerPort ClientIP ClientPort RTPIP RTPControlPort RTPlistenPort"<<endl;
+        cout<<"Wrong argv: ListenIP ListenPort ClientIP ClientPort RTPIP RTPControlPort RTPlistenPort"<<endl;
         exit(-1);
     }
     listenIP = argv[1];
     listenPort = atoi(argv[2]);
-    serverIP = argv[3];
-    serverPort = atoi(argv[4]);
-	clientIP = argv[5];
-	clientPort = atoi(argv[6]);
-	RTPIP = argv[7];
-	RTPControlPort = atoi(argv[8]);
-	RTPListenPort = atoi(argv[9]);
+	clientIP = argv[3];
+	clientPort = atoi(argv[4]);
+	RTPIP = argv[5];
+	RTPControlPort = atoi(argv[6]);
+	RTPListenPort = atoi(argv[7]);
     string buffer;
     pthread_t SIPTid;
     pthread_t SIPControlTid;
     pthread_create(&SIPTid, NULL, &SIPThread, NULL);
-    pthread_create(&SIPControlTid, NULL, &SIPControlTid, NULL);
+    pthread_create(&SIPControlTid, NULL, &SIPControlThread, NULL);
     while(cin>>buffer) {
         if(buffer.compare("quit") == 0) {
             break;

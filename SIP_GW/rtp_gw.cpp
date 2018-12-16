@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include "rtp.hpp"
-#include "controlpacket.hpp"
+#include "rtpcontrolpacket.hpp"
 #include "Amr/coder.h"
 #include "srsuecontrolpacket.hpp"
 
@@ -53,9 +53,9 @@ struct addrSlots{
             i = 3;
         else if(i < 0)
             i = 0;
-        return *&addr[i];
+        return addrs[i];
     }
-}
+};
 
 struct addrComp { 
     bool operator () (const sockaddr_in& a1, const sockaddr_in& a2) const {
@@ -110,39 +110,23 @@ static TransConf getConf(const sockaddr_in& addr) {
     return conf;
 }
 
-static void sendBackConnect(sockaddr_in addr) {
-    uint16_t thisPort = htons(listenPort);
-    srsueControlPacket packet;
-    packet.event = SRSUE_ADD_ADDPORT;
-    memcpy(&packet.data[0], addr.sin_port, 2);
-    memcpy(&packet.data[2], &thisPort, 2);
-    addr.sin_port = htons(5080);
-    srsueControlPacketToBuffer(packet, &packetBuffer[0]);
-    sendto()
-    thisPort =  htons()
-    //TODO  info srsue
-}
-
-
-static void addSrc(const ControlPacket& packet) {
+static void addSrc(const RTPControlPacket& packet) {
     SrcInfo info = {packet.payload, packet.code, packet.slot, NULL};
     srcMap[packet.addr] = info;
-    map<string, sockaddr_in>::iterator it = callidMap.find(packet.callid);
+    map<string, addrSlots>::iterator it = callidMap.find(packet.callid);
     callidMap[packet.callid][packet.slot] = packet.addr;
     if(packet.slot & 0x01 == 0x01) {
         sockaddr_in srcAddr = packet.addr;
 		sockaddr_in tarAddr = callidMap[packet.callid][packet.slot ^ 0x01];
-		srcIt = srcMap.find(srcAddr);
-		tarIt = srcMap.find(tarAddr);
+		map<sockaddr_in, SrcInfo>::iterator srcIt = srcMap.find(srcAddr);
+		map<sockaddr_in, SrcInfo>::iterator tarIt = srcMap.find(tarAddr);
 		if(srcIt->second.codetype == CONTROL_AMR && tarIt->second.codetype == CONTROL_GSM) {
 			srcIt->second.coder = new AmrToGsmCoder();
 			tarIt->second.coder = new GsmToAmrCoder();
-            sendBackConnect(srcAddr);
 		}
 		else if(srcIt->second.codetype == CONTROL_GSM && tarIt->second.codetype == CONTROL_AMR) {
 			srcIt->second.coder = new GsmToAmrCoder();
 			tarIt->second.coder = new AmrToGsmCoder();
-            sendBackConnect(tarAddr);
 		}
         rtpMap[srcAddr] = tarAddr;
         rtpMap[tarAddr] = srcAddr;
@@ -153,8 +137,27 @@ static void addSrc(const ControlPacket& packet) {
     }
 }
 
+static void infoSrsue(int socket_fd, sockaddr_in addr, int bindport) {
+	map<sockaddr_in, sockaddr_in>::iterator it = rtpMap.find(addr);
+	if(it != rtpMap.end()) {
+		sockaddr_in tarAddr = addr;
+		tarAddr.sin_port = htons(5080);
+		srsueControlPacket packet;
+		packet.event = SRSUE_ADD_ADDPORT;
+		unsigned short int port = htons(bindport);
+		memcpy(&packet.data[0], &port,sizeof(port));
+		memcpy(&packet.data[2], &addr.sin_port, sizeof(port));
+		int len = srsueControlPacketToBuffer(packet, &packetBuffer[0]);
+		sendto(socket_fd, packetBuffer, len, 0, (sockaddr*)&tarAddr, sizeof(sockaddr));
+		tarAddr.sin_addr = it->second.sin_addr;
+		memcpy(&packet.data[2], &it->second.sin_port, sizeof(port));
+		len = srsueControlPacketToBuffer(packet, &packetBuffer[0]);
+		sendto(socket_fd, packetBuffer, len, 0, (sockaddr*)&tarAddr, sizeof(sockaddr));
+	}
+}
+
 static void removeCall(const string& callid) {
-    map<string, sockaddr_in>::iterator it = callidMap.find(callid);
+    /*map<string, sockaddr_in>::iterator it = callidMap.find(callid);
     if(it == callidMap.end()) {
         return;
     }
@@ -164,7 +167,7 @@ static void removeCall(const string& callid) {
         return;
     srcMap.erase(srcMap.find(addrit->second));
     rtpMap.erase(rtpMap.find(addrit->second));
-    rtpMap.erase(addrit);
+    rtpMap.erase(addrit);*/
 }
 
 /*
@@ -182,7 +185,7 @@ static void* RTPControlThread(void* input) {
     }
     sockaddr_in listenAddr = str2addr(listenIP, controlPort);
 	socklen_t addrSize = sizeof(sockaddr_in);
-	ControlPacket packet;
+	RTPControlPacket packet;
     uint8_t receiveBuffer[BUFFER_SIZE];
 	int err;
 	int count;
@@ -198,7 +201,11 @@ static void* RTPControlThread(void* input) {
             switch(packet.command) {
                 case CONTROL_ADD:
                     addSrc(packet);
-                    // TODO we should send srsueControlPacket here
+					if(packet.slot & 0x01 == 0x01) {
+						infoSrsue(socket_fd, packet.addr, listenPort);
+						packet.addr.sin_port = htons(ntohs(packet.addr.sin_port) + 1);
+						infoSrsue(socket_fd, packet.addr, listenPort + 1);
+					}
                     break;
                 case CONTROL_REMOVE:
                     removeCall(packet.callid);
@@ -231,15 +238,15 @@ static void* RTPThread(void* input) {
         cout<<"Error RTP bind"<<endl<<"Exit"<<endl;
         return NULL;
     }
-     Stopwatch watch(7, 50, "./log/stopwatch");
+    // Stopwatch watch(7, 50, "./log/stopwatch");
     while(true) {
         pthread_testcancel();
         len = recvfrom(socket_fd, receiveBuffer, BUFFER_SIZE, 0, (sockaddr*)&tempAddr, &addrSize);
         if(len <= 0)
             continue;
-        watch.reset(0);
+        //watch.reset(0);
         TransConf conf = getConf(tempAddr);
-        watch.record(0);
+        //watch.record(0);
 		switch(conf.type) {
 			case TYPE_ABORT:
 				cout<<"Abort packet"<<endl;
@@ -248,34 +255,34 @@ static void* RTPThread(void* input) {
 				pharse_raw(receiveBuffer, len, &packet);
 				break;
 			case TYPE_AMRGSM:
-                watch.reset(1);
+                //watch.reset(1);
 				pharse_AMR(receiveBuffer, len, &packet);
 				packet.extLen = 0;
-                watch.record(1);
-                watch.reset(2);
+                //watch.record(1);
+                //watch.reset(2);
 				((AmrToGsmCoder*)conf.coder)->AmrToGsm(packet.buffer, &codeBuffer[0]);
 				packet.buffer = &codeBuffer[0];
 				packet.len = 33; 
-                watch.record(2);
+                //watch.record(2);
 				break;
 			case TYPE_GSMAMR:
-                watch.reset(3);
+                //watch.reset(3);
 				pharse_GSM(receiveBuffer, len, &packet);
 				packet.extLen = 1;
-                watch.record(3);
-                watch.reset(4);
+                //watch.record(3);
+                //watch.reset(4);
 				packet.len = ((GsmToAmrCoder*)conf.coder)->GsmToAmr(packet.buffer, &codeBuffer[0]);
 				packet.buffer = &codeBuffer[0];
 				packet.extHead[0] = (((codeBuffer[0] >> 3) & 0x0F) << 4) & 0xF0;
-                watch.record(4);
+                //watch.record(4);
 				break;
 			default:
 				continue;
 		}
-        watch.reset(5);
+        //watch.reset(5);
         packet.setPT(conf.tarPT);
         len = rtp2buffer(outputBuffer, &packet);
-        watch.record(5);
+        //watch.record(5);
 		if(firstFlag == 0) {
 			usleep(40000);
 			firstFlag = 1;

@@ -24,35 +24,35 @@ static string ALLOWS[] = {"INVITE", "REGISTER", "SUBCRIBE", "ACK", "CANCEL", "PR
 static osip_list_t sipGenerateAllows() {
     osip_list_t result;
     osip_list_init(&result);
-    for(innt i = 0;i < 14;i ++) {
+    for(int i = 0;i < 14;i ++) {
         osip_allow_t* all;
         osip_allow_init(&all);
-        setCharValue(all->value, ALLOWS[i].c_str());
-        osip_list_add(&result, invite, -1);
+        setCharValue(&all->value, ALLOWS[i].c_str());
+        osip_list_add(&result, all, -1);
     }
     return result;
 }
 
-static void sipSetVia(osip_message_t& sip, string& ip, int listenPort) {
+static void sipSetVia(osip_message_t* sip, string& ip, int listenPort) {
     osip_via_t *via;
-    osip_message_get_via(sip, osip_list_size(&sip->vias)-1, &sip_via);
+    osip_message_get_via(sip, osip_list_size(&sip->vias)-1, &via);
     setCharValue(&via->host, ip.c_str());
     setCharValue(&via->port, to_string(listenPort).c_str());
-    osip_generic_param_add(&sip_via->via_params, osip_strdup("rport"), NULL);
+    osip_generic_param_add(&via->via_params, osip_strdup("rport"), NULL);
 }
 
-static void sipSetDomains(osip_message_t& sip, const char* tar) {
+static void sipSetDomains(osip_message_t* sip, const char* tar) {
     if(sip->req_uri != NULL) {
-        setCharValue(&sip->req_uri->host, IMS_DOMAIN);
+        setCharValue(&sip->req_uri->host, tar);
         deleteCharValue(&sip->req_uri->port);
     }
-	setCharValue(&sip->from->url->host, IMS_DOMAIN);
-	setCharValue(&sip->to->url->host, IMS_DOMAIN);
+	setCharValue(&sip->from->url->host, tar);
+	setCharValue(&sip->to->url->host, tar);
 	deleteCharValue(&sip->from->url->port);
 	deleteCharValue(&sip->to->url->port);
 }
 
-static void sipRemoveIMSI(osip_message_t& sip) {
+static void sipRemoveIMSI(osip_message_t* sip) {
     if(strlen(sip->from->url->username) > 15)
         strcpy(sip->from->url->username, sip->from->url->username + 4);
     if(strlen(sip->to->url->username) > 15)
@@ -60,7 +60,7 @@ static void sipRemoveIMSI(osip_message_t& sip) {
 
 }
 
-static void sipAddHeaders(osip_message_t& sip) {
+static void sipAddHeaders(osip_message_t* sip) {
    	while(osip_list_size(&sip->headers) > 1) {
     	osip_list_remove(&sip->headers, 0);
 	}
@@ -79,8 +79,9 @@ static void sipAddHeaders(osip_message_t& sip) {
 	osip_list_add(&sip->headers, head, -1);
 }
 
-static void sipSetContact(osip_message_t& sip, string& ip, int port) {
-    osip_contact_t* cantact;
+static void sipSetContact(osip_message_t* sip, string& ip, int port) {
+    osip_contact_t* contact;
+	osip_header_t* head;
    	if(osip_list_size(&sip->contacts) > 0) {
 		cout<<"Changing contacts"<<endl;
 		contact = (osip_contact_t*)osip_list_get(&sip->contacts, 0);
@@ -105,7 +106,7 @@ static void sipSetContact(osip_message_t& sip, string& ip, int port) {
 	}
 }
 
-static void sipRemoveRoute(osip_message_t& sip) {
+static void sipRemoveRoute(osip_message_t* sip) {
     if(MSG_IS_REGISTER(sip)) {
         while(osip_list_size(&sip->routes) > 0) {
             osip_list_remove(&sip->routes, 0);
@@ -113,11 +114,11 @@ static void sipRemoveRoute(osip_message_t& sip) {
     }
 }
 
-static bool sipHasSDP(osip_message_t& sip) {
+static bool sipHasSDP(osip_message_t* sip) {
     return sip->content_type != NULL && strcmp("sdp", sip->content_type->subtype) == 0;
 }
 
-static string sipGetSDP(osip_message_t& sip) {
+static string sipGetSDP(osip_message_t* sip) {
     if(!sipHasSDP(sip))
         return "";
     osip_body_t* body = (osip_body_t*) osip_list_get(&sip->bodies, 0);
@@ -125,7 +126,7 @@ static string sipGetSDP(osip_message_t& sip) {
 
 }
 
-static void sipSetSDP(osip_message_t& sip, string& sdp) {
+static void sipSetSDP(osip_message_t* sip, string& sdp) {
     osip_body_t* body = (osip_body_t*) osip_list_get(&sip->bodies, 0);
 	osip_free(body->body);
 	body->body = (char*)osip_malloc(sdp.length() + 1);

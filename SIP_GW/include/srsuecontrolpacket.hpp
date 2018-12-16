@@ -1,6 +1,6 @@
 #ifndef SRSUECONTROLPACKET_HPP
 #define SRSUECONTROLPACKET_HPP
-#include "imsi.h"
+#include "imsi.hpp"
 #include <stdint.h>
 #define SRSUE_ADD_PHYADDR 0x01
 #define SRSUE_ADD_ADDPORT 0x02

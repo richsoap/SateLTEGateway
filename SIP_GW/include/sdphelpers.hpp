@@ -1,7 +1,8 @@
 #ifndef SDPHELPERS_H
 #define SDPHELPERS_H
 #include "rtpcontrolpacket.hpp"
-#include "regexsdphelpers.hpp"
+#include "regexhelpers.hpp"
+#include "commonhelpers.hpp"
 #include <string>
 using std::string;
 
@@ -16,7 +17,7 @@ static string activePatten = "t=[0-9]+ [0-9]+";
 static string sessIDPatten = "o=.+ [0-9]+ [0-9]+ IN IP4";
 
 
-static int sdpGetMedia(string& sdp, RTPControlPacket& control) {
+static int sdpGetMedia(string& packet, RTPControlPacket& control) {
     int len;
     string IP = getText(ipPatten, packet);
     string Port = getText(numberPatten, getText(sdpPortPatten, packet));

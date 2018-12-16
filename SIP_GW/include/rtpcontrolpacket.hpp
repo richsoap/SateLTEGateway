@@ -13,7 +13,7 @@
 #define CONTROL_AMR 0x01
 #define CONTROL_GSM 0x02
 using namespace std;
-struct ControlPacket {
+struct RTPControlPacket {
   	uint8_t command;
   	uint8_t payload;
   	uint8_t code;
