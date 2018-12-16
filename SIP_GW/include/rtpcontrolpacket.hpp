@@ -17,12 +17,14 @@ struct ControlPacket {
   	uint8_t command;
   	uint8_t payload;
   	uint8_t code;
+    uint8_t slot;
   	sockaddr_in addr;
   	string callid;
-    void init(uint8_t _command, uint8_t _pt, uint8_t _code, const sockaddr& _addr, const string& _callid) {
+    void init(uint8_t _command, uint8_t _pt, uint8_t _code,uint8_t _slot ,const sockaddr& _addr, const string& _callid) {
       command = _command;
       payload = _pt;
       code = _code;
+      slot = _slot;
       memcpy(&addr, &_addr, sizeof(sockaddr));
       callid = string(_callid);
     }
@@ -31,6 +33,7 @@ struct ControlPacket {
       buffer[result ++] = command;
       buffer[result ++] = payload;
       buffer[result ++] = code;
+      buffer[result ++] = slot;
       memcpy(buffer + result, &addr, sizeof(sockaddr_in));
       result += sizeof(sockaddr_in);
       memcpy(buffer + result, callid.c_str(), callid.length());
@@ -42,6 +45,7 @@ struct ControlPacket {
 		command = buffer[offset ++];
 		payload = buffer[offset ++];
 		code = buffer[offset ++];
+        slot = buffer[offset ++];
 		memcpy(&addr, buffer + offset, sizeof(sockaddr_in));
 		offset += sizeof(sockaddr_in);
 		callid = string(buffer + offset, length - offset);

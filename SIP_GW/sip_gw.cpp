@@ -185,14 +185,18 @@ static void* SIPThread(void* input) {
                 if(sdp.length() > 0) {
                     if(sdpGetMedia(sdp, controlPacket) != 0)
                         continue;
-                    controlPacket.callid = sip->call_idd->number; // TODO how to tell the difference between two channels?
+                    controlPacket.callid = sip->call_id->number;
                     controlPacket.payload = 3;
-                    controlPacket.payload = CONTROL_GSM;
+                    controlPacket.code = CONTROL_GSM;
                     
                     sdp = sdpReplaceMedia(sdp, sdpToIMSString);
 				    sdp = sdpReplaceConnection(sdp, "c=IN IP4 127.0.0.1\r\n");
                     sdp = sdpReplaceSDP(sdp, sdpIPString, sdpPortString); // TODO get srsue IP
                     sipSetSDP(sip, sdp);
+                    if(MSG_IS_INVITE(sip))
+                        controlPacket.slot = 0;
+                    else
+                        controlPacket.slot = 3;
             		controlPacket.print();
 			    	len = controlPacket.toBuffer((char*)tempBuffer);
                     len = sendto(socket_fd, tempBuffer, len, 0, (sockaddr*)&rtpControlAddr, sizeof(sockaddr));
@@ -201,11 +205,25 @@ static void* SIPThread(void* input) {
             }
             else {
                 sipSetVia(sip, listenIP, listenPort);
-                if(addrCmp(tempAddr, serverAddr)) {
-					sdp = replaceMedia(sdp, sdpToClientString);
-					controlPacket.payload = 99;
-					controlPacket.code = CONTROL_AMR;
-				}
+                string sdp = sipGetSDP(sip);
+                if(sdp.length() > 0) {
+                    if(sdpGetMedia(sdp, controlPacket) != 0)
+                        continue;
+                    controlPacket.callid = sip->call_id->number;
+                    controlPacket.payload = 99;
+                    controlPacket.code = CONTROL_AMR;
+
+                    sdp = sdpReplaceMedia(sdp, sdpToClientString);
+                    sdp = sdpReplaceConnection(sdp, "c=IN IP4 127.0.0.1\r\n");
+                    sdp = sdpReplaceSDP(sdp, sdpIPString, sdpPortString);
+                    sipSetSDP(sip, sdp);
+                    if(MSG_IS_INVITE(sip))
+                        controlPacket.slot = 2;
+                    else
+                        controlPacket.slot = 1;
+                    len = controlPacket.toBuffer((char*)tempBuffer);
+                    len = sendto(socket_fd, tempBuffer, len, 0, (sockaddr*)&rtpControlAddr, sizeof(sockaddr));
+                }
             }
             err = osip_message_to_str(sip, &out_buffer, (size_t*)&len);
             if(err != 0) {

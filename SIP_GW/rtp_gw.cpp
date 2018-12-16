@@ -15,6 +15,7 @@
 #include "rtp.hpp"
 #include "controlpacket.hpp"
 #include "Amr/coder.h"
+#include "srsuecontrolpacket.hpp"
 
 #include "stopwatch.h"
 
@@ -29,10 +30,12 @@ using namespace std;
 static int listenPort;
 static int controlPort;
 static string listenIP;
+static uint8_t packetBuffer[64];
 
 struct SrcInfo {
 	uint8_t payload;
 	uint8_t codetype;
+    uint8_t slot;
 	void* coder;
 };
 
@@ -43,6 +46,17 @@ struct TransConf {
 	void* coder;
 };
 
+struct addrSlots{
+    sockaddr_in addrs[4];
+    sockaddr_in& operator [](int i) {
+        if(i > 3)
+            i = 3;
+        else if(i < 0)
+            i = 0;
+        return *&addr[i];
+    }
+}
+
 struct addrComp { 
     bool operator () (const sockaddr_in& a1, const sockaddr_in& a2) const {
 		int temp = memcmp(&a1.sin_addr, &a2.sin_addr, sizeof(in_addr));
@@ -51,9 +65,9 @@ struct addrComp {
 };
 
 map<sockaddr_in, SrcInfo, addrComp> srcMap;
-map<sockaddr_in, sockaddr_in, addrComp> pairMap;
+map<sockaddr_in, sockaddr_in, addrComp> rtpMap;
 map<sockaddr_in, sockaddr_in, addrComp> rtcpMap;
-map<string, sockaddr_in> callidMap;
+map<string, addrSlots> callidMap;
 /*
  * Addr helper
  *
@@ -74,19 +88,11 @@ static string addr2str(sockaddr_in addr) {
 	return result;
 }
 
-static int getRTCPTarAddr(sockaddr_in srcAddr, sockaddr_in& tarAddr) {
-    srcAddr.sin_port = htons(ntohs(srcAddr.sin_port) - 1);
-    if(pairMap.count(srcAddr) == 0)
-        return -1;
-    tarAddr = pairMap[srcAddr];
-    tarAddr.sin_port = htons(ntohs(tarAddr.sin_port) + 1);
-}
-
 static TransConf getConf(const sockaddr_in& addr) {
 	//cout<<"Receive From: "<<addr2str(addr)<<endl;
     TransConf conf;
-    map<sockaddr_in, sockaddr_in>::iterator it = pairMap.find(addr);
-    if(it == pairMap.end()) {
+    map<sockaddr_in, sockaddr_in>::iterator it = rtpMap.find(addr);
+    if(it == rtpMap.end()) {
         conf.type = TYPE_ABORT;
         return conf;
     }
@@ -104,30 +110,42 @@ static TransConf getConf(const sockaddr_in& addr) {
     return conf;
 }
 
+static void sendBackConnect(sockaddr_in addr) {
+    uint16_t thisPort = htons(listenPort);
+    srsueControlPacket packet;
+    packet.event = SRSUE_ADD_ADDPORT;
+    memcpy(&packet.data[0], addr.sin_port, 2);
+    memcpy(&packet.data[2], &thisPort, 2);
+    addr.sin_port = htons(5080);
+    srsueControlPacketToBuffer(packet, &packetBuffer[0]);
+    sendto()
+    thisPort =  htons()
+    //TODO  info srsue
+}
+
+
 static void addSrc(const ControlPacket& packet) {
-    SrcInfo info = {packet.payload, packet.code, NULL};
+    SrcInfo info = {packet.payload, packet.code, packet.slot, NULL};
     srcMap[packet.addr] = info;
-	//cout<<addr2str(packet.addr)<<endl;
     map<string, sockaddr_in>::iterator it = callidMap.find(packet.callid);
-    if(it == callidMap.end()) {
-        callidMap[packet.callid] = packet.addr;
-    }
-    else {
-        pairMap[it->second] = packet.addr;
-        pairMap[packet.addr] = it->second;
-		map<sockaddr_in, SrcInfo>::iterator srcIt, tarIt;
-		srcIt = srcMap.find(packet.addr);
-		tarIt = srcMap.find(it->second);
+    callidMap[packet.callid][packet.slot] = packet.addr;
+    if(packet.slot & 0x01 == 0x01) {
+        sockaddr_in srcAddr = packet.addr;
+		sockaddr_in tarAddr = callidMap[packet.callid][packet.slot ^ 0x01];
+		srcIt = srcMap.find(srcAddr);
+		tarIt = srcMap.find(tarAddr);
 		if(srcIt->second.codetype == CONTROL_AMR && tarIt->second.codetype == CONTROL_GSM) {
 			srcIt->second.coder = new AmrToGsmCoder();
 			tarIt->second.coder = new GsmToAmrCoder();
+            sendBackConnect(srcAddr);
 		}
 		else if(srcIt->second.codetype == CONTROL_GSM && tarIt->second.codetype == CONTROL_AMR) {
 			srcIt->second.coder = new GsmToAmrCoder();
 			tarIt->second.coder = new AmrToGsmCoder();
+            sendBackConnect(tarAddr);
 		}
-		sockaddr_in srcAddr = packet.addr;
-		sockaddr_in tarAddr = it->second;
+        rtpMap[srcAddr] = tarAddr;
+        rtpMap[tarAddr] = srcAddr;
 		srcAddr.sin_port = htons(ntohs(srcAddr.sin_port) + 1);
 		tarAddr.sin_port = htons(ntohs(tarAddr.sin_port) + 1);
 		rtcpMap[srcAddr] = tarAddr;
@@ -141,17 +159,17 @@ static void removeCall(const string& callid) {
         return;
     }
     srcMap.erase(srcMap.find(it->second));
-    map<sockaddr_in, sockaddr_in>::iterator addrit = pairMap.find(it->second);
-    if(addrit == pairMap.end())
+    map<sockaddr_in, sockaddr_in>::iterator addrit = rtpMap.find(it->second);
+    if(addrit == rtpMap.end())
         return;
     srcMap.erase(srcMap.find(addrit->second));
-    pairMap.erase(pairMap.find(addrit->second));
-    pairMap.erase(addrit);
+    rtpMap.erase(rtpMap.find(addrit->second));
+    rtpMap.erase(addrit);
 }
 
 /*
  *
- * SIP Thread
+ * Threads
  *
  * */
 
@@ -180,6 +198,7 @@ static void* RTPControlThread(void* input) {
             switch(packet.command) {
                 case CONTROL_ADD:
                     addSrc(packet);
+                    // TODO we should send srsueControlPacket here
                     break;
                 case CONTROL_REMOVE:
                     removeCall(packet.callid);
