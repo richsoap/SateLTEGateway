@@ -5,12 +5,16 @@
 #include <regex>
 #include <map>
 #include <iostream>
+#include <fstream>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <regex>
 #include <string.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
 #include <errno.h>
 #include "rtpcontrolpacket.hpp"
 #include "srsuecontrolpacket.hpp"
@@ -18,6 +22,8 @@
 #include "siphelpers.hpp"
 #include "sdphelpers.hpp"
 #include "commonhelpers.hpp"
+#include <boost/program_options.hpp>
+#include <boost/program_options/parsers.hpp>
 
 #define BUFFER_SIZE 10240
 #define ADDRSIZE sizeof(sockaddr_in)
@@ -28,6 +34,7 @@
 
 
 using namespace std;
+namespace bpo = boost::program_options;
 
 static int listenPort;
 static int controlPort;
@@ -39,8 +46,64 @@ static string listenIP;
 static string clientIP;
 static string RTPIP;
 
+static string config_file;
+
 static map<IMSI, in_addr> phyaddrMap;
 static map<IMSI, in_addr> viraddrMap;
+
+/*
+ *
+ * Program arguments processing
+ *
+ */
+
+static void startParse(int argc, char* argv[]) {
+	bpo::options_description common("Configuration options");
+	common.add_options()
+		("sip.ip", bpo::value<string>(&listenIP)->default_value("0.0.0.0"), "Local host IP")
+		("sip.data_port", bpo::value<int>(&listenPort)->default_value(5060), "Local SIP Port")
+		("sip.control_port", bpo::value<int>(&controlPort)->default_value(5080), "Local SIP Control Port")
+		("bts.ip", bpo::value<string>(&clientIP)->default_value("0.0.0.0"), "OpenBTS IP")
+		("bts.port", bpo::value<int>(&clientPort)->default_value(5060), "OpenBTS Port")
+		("rtp.ip", bpo::value<string>(&RTPIP)->default_value("0.0.0.0"), "RTP Gateway IP")
+		("rtp.data_port", bpo::value<int>(&RTPListenPort)->default_value(10020), "RTP Data Trans Port")
+		("rtp.control_port", bpo::value<int>(&RTPControlPort)->default_value(5062), "RTP Control Port")
+		("srsue.sip_port", bpo::value<int>(&serverPort)->default_value(5060), "srsUE SIP Port");
+// config file
+	bpo::options_description position("Config file options");
+	position.add_options()
+		("config_file", bpo::value<string>(&config_file)->default_value("sip.conf"), "SIP Gateway config file location");
+	bpo::positional_options_description p;
+	p.add("config-file", -1);
+
+	bpo::options_description cmdOptions;
+	cmdOptions.add(common).add(position);
+
+	bpo::variables_map varMap;
+	bpo::store(bpo::command_line_parser(argc, argv).options(cmdOptions).positional(p).run(), varMap);
+	bpo::notify(varMap);
+
+	cout<<"Reading config file "<< config_file<<" ..."<<endl;
+	ifstream confReader(config_file.c_str(), ios::in);
+	if(confReader.fail()) {
+		cout<<"Failed to read";
+		exit(-1);
+	}
+	bpo::store(bpo::parse_config_file(confReader, common), varMap);
+	bpo::notify(varMap);
+    cout<<"sip.ip="<<listenIP<<endl;
+    cout<<"sip.data_port="<<listenPort<<endl;
+    cout<<"sip.control_port="<<controlPort<<endl;
+    cout<<"bts.ip="<<clientIP<<endl;
+    cout<<"bts.port="<<clientPort<<endl;
+    cout<<"rtp.ip="<<RTPIP<<endl;
+    cout<<"rtp.data_port="<<RTPListenPort<<endl;
+    cout<<"rtp.control_port="<<RTPControlPort<<endl;
+    cout<<"srsue.port="<<serverPort<<endl;
+
+}
+
+
 
 /*
  * Addr helper
@@ -148,7 +211,7 @@ static void* SIPThread(void* input) {
 	char* temp_point;
 
 	listenAddr = str2addr(listenIP, listenPort);
-	serverAddr = str2addr(listenIP, listenPort);
+	serverAddr = str2addr(listenIP, serverPort);
 	clientAddr = str2addr(clientIP, clientPort);
 	rtpControlAddr = str2addr(RTPIP, RTPControlPort);
 	string tempIP;
@@ -255,17 +318,15 @@ static void* SIPThread(void* input) {
 }
 
 int main(int argc, char** argv) {
-    if(argc != 8) {
-        cout<<"Wrong argv: ListenIP ListenPort ClientIP ClientPort RTPIP RTPControlPort RTPlistenPort"<<endl;
-        exit(-1);
-    }
-    listenIP = argv[1];
+    /*listenIP = argv[1];
     listenPort = atoi(argv[2]);
 	clientIP = argv[3];
 	clientPort = atoi(argv[4]);
 	RTPIP = argv[5];
 	RTPControlPort = atoi(argv[6]);
 	RTPListenPort = atoi(argv[7]);
+	serverPort = listenPort;*/
+	startParse(argc, argv);
     string buffer;
     pthread_t SIPTid;
     pthread_t SIPControlTid;

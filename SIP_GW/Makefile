@@ -1,6 +1,6 @@
 cxx = g++
 file = ./lib/libosipparser2.a ./lib/libAMR.a ./lib/libgsm.a ./lib/libstopwatch.a
-tail = -I./include -std=c++11 -lpthread -DGSM
+tail = -I./include -std=c++11 -lpthread -DGSM -lboost_system -lboost_program_options
 
 
 all: 

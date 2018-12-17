@@ -16,7 +16,8 @@
 #include "rtpcontrolpacket.hpp"
 #include "Amr/coder.h"
 #include "srsuecontrolpacket.hpp"
-
+#include <boost/program_options.hpp>
+#include <boost/program_options/parsers.hpp>
 #include "stopwatch.h"
 
 #define BUFFER_SIZE 10240
@@ -26,10 +27,13 @@
 #define TYPE_GSMAMR 0x02
 #define TYPE_AMRGSM 0x03
 using namespace std;
+namespace bpo = boost::program_options;
 
 static int listenPort;
 static int controlPort;
 static string listenIP;
+static int srsuePort;
+static string configFile;
 static uint8_t packetBuffer[64];
 
 struct SrcInfo {
@@ -74,6 +78,37 @@ map<string, addrSlots> callidMap;
  *
  * */
 
+static void startParse(int argc, char* argv[]) {
+	bpo::options_description common("Configuration options");
+	common.add_options()
+		("rtp.ip", bpo::value<string>(&listenIP)->default_value("0.0.0.0", "Local host IP"))
+		("rtp.control_port", bpo::value<int>(&controlPort)->default_value(5062), "Local control Port")
+		("rtp.data_port", bpo::value<int>(&listenPort)->default_value(10020), "RTP Trans Port, RTCP=RTP+1")
+		("srsue.control_port", bpo::value<int>(&srsuePort)->default_value(5080), "srsUE Control Port");
+	bpo::options_description position("Config file location");
+	position.add_options()
+		("config_file", bpo::value<string>(&configFile)->default_value("rtp.conf"), "RTP Gateway Config File Location");
+	bpo::positional_options_description p;
+	p.add("config_file", -1);
+	bpo::options_description cmdOptions;
+	cmdOptions.add(common).add(position);
+
+	bpo::variables_map varMap;
+	bpo::store(bpo::command_line_parser(argc, argv).options(cmdOptions).positional(p).run(), varMap);
+	bpo::notify(varMap);
+	cout<<"Reading config file "<< configFile<<" ..."<<endl;
+	ifstream confReader(configFile.c_str(), ios::in);
+	if(confReader.fail()) {
+		cout<<"Failed to read"<<endl;
+		exit(-1);
+	}
+	bpo::store(bpo::parse_config_file(confReader, common), varMap);
+	bpo::notify(varMap);
+	cout<<"rtp.ip="<<listenIP<<endl;
+	cout<<"rtp.data_port="<<listenPort<<endl;
+	cout<<"rtp.control_port="<<controlPort<<endl;
+	cout<<"srsue.control_port="<<srsuePort<<endl;
+}
 static sockaddr_in str2addr(string IP, int port) {
 	sockaddr_in result;
 	result.sin_family = AF_INET;
@@ -141,7 +176,7 @@ static void infoSrsue(int socket_fd, sockaddr_in addr, int bindport) {
 	map<sockaddr_in, sockaddr_in>::iterator it = rtpMap.find(addr);
 	if(it != rtpMap.end()) {
 		sockaddr_in tarAddr = addr;
-		tarAddr.sin_port = htons(5080);
+		tarAddr.sin_port = htons(srsuePort);
 		srsueControlPacket packet;
 		packet.event = SRSUE_ADD_ADDPORT;
 		unsigned short int port = htons(bindport);
@@ -325,13 +360,7 @@ static void* RTCPThread(void* input) {
 }
 
 int main(int argc, char** argv) {
-    if(argc != 4) {
-        cout<<"Wrong argv: ListenIP ListenPort controlPort "<<endl;
-        exit(-1);
-    }
-    listenIP = argv[1];
-    listenPort = atoi(argv[2]);
-	controlPort = atoi(argv[3]);
+	startParse(argc, argv);
 	string buffer;
     pthread_t RTPid;
 	pthread_t RTCPid;
