@@ -23,6 +23,10 @@
 #define ADDRSIZE sizeof(sockaddr_in)
 #define IMS_DOMAIN "ims.mnc001.mcc001.3gppnetwork.org"
 
+#define DIR_IMS2BTS 0x01
+#define DIR_BTS2IMS 0x02
+
+
 using namespace std;
 
 static int listenPort;
@@ -44,21 +48,37 @@ static map<IMSI, in_addr> viraddrMap;
  *
  * */
 
-static IMSI getIMSI(const osip_message_t* sip) {
+static IMSI getIMSI(const osip_message_t* sip, int dir) {
     IMSI result;
     if(MSG_IS_INVITE(sip) || MSG_IS_ACK(sip) || MSG_IS_REGISTER(sip) || MSG_IS_BYE(sip) || MSG_IS_OPTIONS(sip) ||
             MSG_IS_INFO(sip) || MSG_IS_CANCEL(sip) || MSG_IS_REFER(sip) || MSG_IS_NOTIFY(sip) ||
             MSG_IS_SUBSCRIBE(sip) || MSG_IS_PRACK(sip) || MSG_IS_UPDATE(sip) || MSG_IS_PUBLISH(sip)) {
-        if(sip->from->url != NULL)
-            memcpy(&result, sip->from->url->username, sizeof(result));
-        else
-            memset(&result, 0, sizeof(result));
+		if(dir == DIR_BTS2IMS) {
+			if(sip->from->url != NULL)
+				memcpy(&result, sip->from->url->username, sizeof(result));
+			else
+			    memset(&result, 0, sizeof(result));
+		}
+		else{
+			if(sip->to->url != NULL)
+				memcpy(&result, sip->to->url->username, sizeof(result));
+			else
+				memset(&result, 0, sizeof(result));
+		}
     }
     else {
-        if(sip->to->url != NULL)
-            memcpy(&result, sip->to->url->username, sizeof(result));
-        else
-            memset(&result, 0, sizeof(result));
+		if(dir == DIR_BTS2IMS) {
+			if(sip->to->url != NULL)
+				memcpy(&result, sip->to->url->username, sizeof(result));
+			else
+			    memset(&result, 0, sizeof(result));
+		}
+		else {
+			if(sip->to->url != NULL)
+				memcpy(&result, sip->to->url->username, sizeof(result));
+			else
+				memset(&result, 0, sizeof(result));
+		}
     }
     return result;
 }
@@ -93,7 +113,7 @@ static void* SIPControlThread(void* input) {
                memcpy(&addr, &packet.data[0], sizeof(addr));
                phyaddrMap[packet.imsi] = addr;
 			   cout<<"Add addr:";
-			   printAddr(addr);
+			   printAddrIn(addr);
                break;
            case SRSUE_ADD_VIRADDR:
                memcpy(&addr, &packet.data[0], sizeof(addr));
@@ -157,14 +177,18 @@ static void* SIPThread(void* input) {
 				continue;
 			}
             if(addrCmp(tempAddr, clientAddr)) {
-                sipSetVia(sip, listenIP, listenPort); // TODO get srsue IP
+				IMSI imsi = getIMSI(sip, DIR_BTS2IMS);
+				if(viraddrMap.count(imsi) == 0)
+					continue;
+				string virIP = string(inet_ntoa(viraddrMap[imsi]));
+                sipSetVia(sip,virIP , listenPort); 
                 sipSetDomains(sip, IMS_DOMAIN);
                 sipRemoveIMSI(sip);
                 sipAddHeaders(sip);
                 if(osip_list_size(&sip->allows) == 0)
 					sip->allows = sipGenerateAllows();
-                sipSetContact(sip, listenIP, listenPort); //TODO get srsue IP
-                sipRemoveRoute(sip);
+                sipSetContact(sip, virIP, listenPort);
+				sipRemoveRoute(sip);
                 string sdp = sipGetSDP(sip);
                 if(sdp.length() > 0) {
                     if(sdpGetMedia(sdp, controlPacket) != 0)
@@ -175,7 +199,7 @@ static void* SIPThread(void* input) {
                     
                     sdp = sdpReplaceMedia(sdp, sdpToIMSString);
 				    sdp = sdpReplaceConnection(sdp, "c=IN IP4 127.0.0.1\r\n");
-                    sdp = sdpReplaceSDP(sdp, sdpIPString, sdpPortString); // TODO get srsue IP
+                    sdp = sdpReplaceSDP(sdp, virIP, sdpPortString); 
                     sipSetSDP(sip, sdp);
                     if(MSG_IS_INVITE(sip))
                         controlPacket.slot = 0;
@@ -214,7 +238,7 @@ static void* SIPThread(void* input) {
                 continue;
             }
             if(addrCmp(tempAddr, clientAddr)) {
-                IMSI imsi = getIMSI(sip);
+                IMSI imsi = getIMSI(sip, DIR_BTS2IMS);
                 if(phyaddrMap.count(imsi)) {
                     serverAddr.sin_addr = phyaddrMap[imsi];
                     count = (int)sendto(socket_fd, out_buffer, len, 0, (sockaddr*)&serverAddr, sizeof(sockaddr));
@@ -231,7 +255,7 @@ static void* SIPThread(void* input) {
 }
 
 int main(int argc, char** argv) {
-    if(argc != 10) {
+    if(argc != 8) {
         cout<<"Wrong argv: ListenIP ListenPort ClientIP ClientPort RTPIP RTPControlPort RTPlistenPort"<<endl;
         exit(-1);
     }
