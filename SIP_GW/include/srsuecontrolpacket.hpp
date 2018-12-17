@@ -2,9 +2,10 @@
 #define SRSUECONTROLPACKET_HPP
 #include "imsi.hpp"
 #include <stdint.h>
-#define SRSUE_ADD_PHYADDR 0x01
-#define SRSUE_ADD_ADDPORT 0x02
-#define SRSUE_ADD_VIRADDR 0x03
+#define SRSUE_ADD_VIRADDR 0x01
+#define SRSUE_ADD_RTPPORT 0x02
+#define SRSUE_ADD_RTCPPORT 0x03
+#define SRSUE_BYE_PORT    0x04
 
 struct srsueControlPacket {
     IMSI imsi;

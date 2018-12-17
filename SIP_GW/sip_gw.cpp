@@ -159,6 +159,8 @@ static void* SIPControlThread(void* input) {
     return NULL;
    }
    sockaddr_in controlAddr;
+   sockaddr_in tempAddr;
+   socklen_t addrSize;
    srsueControlPacket packet;
    in_addr addr;
    uint8_t receiveBuffer[BUFFER_SIZE];
@@ -167,20 +169,18 @@ static void* SIPControlThread(void* input) {
        cout<<"Error SIP Control Bind"<<endl;
        return NULL;
    }
+   addrSize = sizeof(sockaddr_in);
    while(true) {
        pthread_testcancel();
-       ssize_t len = recv(socket_fd, receiveBuffer, BUFFER_SIZE, 0);
+       ssize_t len = recvfrom(socket_fd, receiveBuffer, BUFFER_SIZE, 0, (sockaddr*)&tempAddr, &addrSize);
        srsueControlPacketParse(packet, receiveBuffer);
        switch(packet.event) {
-           case SRSUE_ADD_PHYADDR:
-               memcpy(&addr, &packet.data[0], sizeof(addr));
-               phyaddrMap[packet.imsi] = addr;
-			   cout<<"Add addr:";
-			   printAddrIn(addr);
-               break;
            case SRSUE_ADD_VIRADDR:
                memcpy(&addr, &packet.data[0], sizeof(addr));
                viraddrMap[packet.imsi] = addr;
+			   phyaddrMap[packet.imsi] = tempAddr.sin_addr;
+			   cout<<"Add addr: ";
+			   printAddrIn(addr);
                break;
            default:
                continue;

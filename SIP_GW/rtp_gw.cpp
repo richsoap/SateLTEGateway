@@ -172,13 +172,13 @@ static void addSrc(const RTPControlPacket& packet) {
     }
 }
 
-static void infoSrsue(int socket_fd, sockaddr_in addr, int bindport) {
+static void infoSrsue(int socket_fd, sockaddr_in addr, int bindport, int event) {
 	map<sockaddr_in, sockaddr_in>::iterator it = rtpMap.find(addr);
 	if(it != rtpMap.end()) {
 		sockaddr_in tarAddr = addr;
 		tarAddr.sin_port = htons(srsuePort);
 		srsueControlPacket packet;
-		packet.event = SRSUE_ADD_ADDPORT;
+		packet.event = event;
 		unsigned short int port = htons(bindport);
 		memcpy(&packet.data[0], &port,sizeof(port));
 		memcpy(&packet.data[2], &addr.sin_port, sizeof(port));
@@ -237,9 +237,9 @@ static void* RTPControlThread(void* input) {
                 case CONTROL_ADD:
                     addSrc(packet);
 					if(packet.slot & 0x01 == 0x01) {
-						infoSrsue(socket_fd, packet.addr, listenPort);
+						infoSrsue(socket_fd, packet.addr, listenPort, SRSUE_ADD_RTPPORT);
 						packet.addr.sin_port = htons(ntohs(packet.addr.sin_port) + 1);
-						infoSrsue(socket_fd, packet.addr, listenPort + 1);
+						infoSrsue(socket_fd, packet.addr, listenPort + 1, SRSUE_ADD_RTCPPORT);
 					}
                     break;
                 case CONTROL_REMOVE:
