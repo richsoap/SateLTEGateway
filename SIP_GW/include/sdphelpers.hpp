@@ -15,6 +15,7 @@ static string callidPatten = "Callid";
 static string mediaPatten = "m=";
 static string activePatten = "t=[0-9]+ [0-9]+";
 static string sessIDPatten = "o=.+ [0-9]+ [0-9]+ IN IP4";
+static string activeString = "t=0 0";
 
 
 static int sdpGetMedia(string& packet, RTPControlPacket& control) {
@@ -55,7 +56,7 @@ static string sdpReplaceMedia(const string& src, const string& media) {
 static string sdpReplaceConnection(const string& src, const string& connection) {
 	smatch sm;
 	if(regex_search(src.cbegin(), src.cend(), sm, regex(activePatten, regex_constants::icase))) {
-		string result = string(sm.prefix()) + connection + activePatten + string(sm.suffix());
+		string result = string(sm.prefix()) + connection + activeString + string(sm.suffix());
 		return result;
 	}
 	else

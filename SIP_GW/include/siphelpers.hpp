@@ -46,10 +46,14 @@ static void sipSetDomains(osip_message_t* sip, const char* tar) {
         setCharValue(&sip->req_uri->host, tar);
         deleteCharValue(&sip->req_uri->port);
     }
-	setCharValue(&sip->from->url->host, tar);
-	setCharValue(&sip->to->url->host, tar);
-	deleteCharValue(&sip->from->url->port);
-	deleteCharValue(&sip->to->url->port);
+	if(sip->from->url->scheme[0] == 's') {
+		setCharValue(&sip->from->url->host, tar);
+		deleteCharValue(&sip->from->url->port);
+	}
+	if(sip->to->url->scheme[0] == 's') {
+		setCharValue(&sip->to->url->host, tar);
+		deleteCharValue(&sip->to->url->port);
+	}
 }
 
 static void sipRemoveIMSI(osip_message_t* sip) {
@@ -61,9 +65,9 @@ static void sipRemoveIMSI(osip_message_t* sip) {
 }
 
 static void sipAddHeaders(osip_message_t* sip) {
-   	while(osip_list_size(&sip->headers) > 1) {
+   	/*while(osip_list_size(&sip->headers) > 1) {
     	osip_list_remove(&sip->headers, 0);
-	}
+	}*/
 	osip_header_t* head;
 	osip_header_init(&head);
 	setCharValue(&head->hname, "K");
@@ -73,9 +77,9 @@ static void sipAddHeaders(osip_message_t* sip) {
 	setCharValue(&head->hname, "K");
 	setCharValue(&head->hvalue, "replaces");
 	osip_list_add(&sip->headers, head, -1);
-	osip_header_init(&head);
-	setCharValue(&head->hname, "Max-Forwards");
-	setCharValue(&head->hvalue, "70");
+	//osip_header_init(&head);
+	//setCharValue(&head->hname, "Max-Forwards");
+	//setCharValue(&head->hvalue, "70");
 	osip_list_add(&sip->headers, head, -1);
 }
 
@@ -103,6 +107,11 @@ static void sipSetContact(osip_message_t* sip, string& ip, int port) {
 		osip_list_add(&sip->headers, head, -1);
 		cout<<"change contacts done"<<endl;
 	    setCharValue(&contact->url->port, to_string(port).c_str());
+		osip_generic_param_add(&contact->gen_params, osip_strdup("+sip.instance"), osip_strdup("\"<urn:gsma:imei:86745003-515495-0>\""));// TODO this should be unique
+		osip_generic_param_add(&contact->gen_params, osip_strdup("+g.3gpp.icsi-ref"), osip_strdup("\"urn\%3Aurn-7\%3A3gpp-service.ims.icsi.mmtel\""));
+		osip_generic_param_add(&contact->gen_params, osip_strdup("+g.3gpp.smsip"), NULL);
+		osip_generic_param_add(&contact->gen_params, osip_strdup("g.3gpp.nw-init-ussi"), NULL);
+		osip_generic_param_add(&contact->gen_params, osip_strdup("+g.3gpp.accesstype"), osip_strdup("\"cellular2\""));
 	}
 }
 
@@ -134,5 +143,16 @@ static void sipSetSDP(osip_message_t* sip, string& sdp) {
 	body->length = sdp.length();
 }
 
+static void sipAddAuth(osip_message_t* sip) {
+	osip_authorization *auth;
+	osip_authorization_init(&auth);
+	setCharValue(&auth->auth_type, "Digest");
+	setCharValue(&auth->username, (string("\"")+  string(sip->from->url->username) + "@ims.mnc001.mcc001.3gppnetwork.org\"" ).c_str());
+	setCharValue(&auth->realm, "\"ims.mnc001.mcc001.3gppnetwork.org\"");
+	setCharValue(&auth->nonce, "\"\"");
+	setCharValue(&auth->uri, "\"sip:ims.mnc001.mcc001.3gppnetwork.org\"");
+	setCharValue(&auth->response, "\"\"");
+	osip_list_add(&sip->authorizations, auth, -1);
+}
 
 #endif

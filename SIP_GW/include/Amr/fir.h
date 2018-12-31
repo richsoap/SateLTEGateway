@@ -46,11 +46,11 @@ public:
 		UseFir(temp, middle);
 		memcpy(head16, temp + FrameLength16, FIRHEADLENGTH*sizeof(short));
 		for(int i = 0; i < FrameLength16; i++)
-			output[i]= middle[i+FIRHEADLENGTH];
+			output[i]= middle[i];
 	}
 private:
-	short* head8[FIRHEADLENGTH];
-	short* head16[FIRHEADLENGTH];
+	short head8[FIRHEADLENGTH];
+	short head16[FIRHEADLENGTH];
 
 
 	void UseFir(const short* input, short* output)

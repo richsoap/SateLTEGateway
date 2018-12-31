@@ -28,6 +28,7 @@
 #define BUFFER_SIZE 10240
 #define ADDRSIZE sizeof(sockaddr_in)
 #define IMS_DOMAIN "ims.mnc001.mcc001.3gppnetwork.org"
+#define OPENBTS_DOMAIN "openbts.org"
 
 #define DIR_IMS2BTS 0x01
 #define DIR_BTS2IMS 0x02
@@ -117,14 +118,22 @@ static IMSI getIMSI(const osip_message_t* sip, int dir) {
             MSG_IS_INFO(sip) || MSG_IS_CANCEL(sip) || MSG_IS_REFER(sip) || MSG_IS_NOTIFY(sip) ||
             MSG_IS_SUBSCRIBE(sip) || MSG_IS_PRACK(sip) || MSG_IS_UPDATE(sip) || MSG_IS_PUBLISH(sip)) {
 		if(dir == DIR_BTS2IMS) {
-			if(sip->from->url != NULL)
-				memcpy(&result, sip->from->url->username, sizeof(result));
+			if(sip->from->url != NULL) {
+				if(sip->from->url->username[0] != 'I')
+					memcpy(&result, sip->from->url->username, sizeof(result));
+				else
+					memcpy(&result, sip->from->url->username + 4, sizeof(result));
+			}
 			else
 			    memset(&result, 0, sizeof(result));
 		}
 		else{
-			if(sip->to->url != NULL)
-				memcpy(&result, sip->to->url->username, sizeof(result));
+			if(sip->to->url != NULL) {
+				if(sip->to->url->username[0] != 'I')
+					memcpy(&result, sip->to->url->username, sizeof(result));
+				else
+					memcpy(&result, sip->to->url->username + 4, sizeof(result));
+			}
 			else
 				memset(&result, 0, sizeof(result));
 		}
@@ -137,13 +146,19 @@ static IMSI getIMSI(const osip_message_t* sip, int dir) {
 			    memset(&result, 0, sizeof(result));
 		}
 		else {
-			if(sip->to->url != NULL)
-				memcpy(&result, sip->to->url->username, sizeof(result));
+			if(sip->from->url != NULL)
+				memcpy(&result, sip->from->url->username, sizeof(result));
 			else
 				memset(&result, 0, sizeof(result));
 		}
     }
     return result;
+}
+
+static void printIMSI(const IMSI& imsi) {
+	for(int i = 0;i < 15;i ++)
+		cout << imsi.val[i];
+	cout<<endl;
 }
 
 /*
@@ -176,11 +191,14 @@ static void* SIPControlThread(void* input) {
        srsueControlPacketParse(packet, receiveBuffer);
        switch(packet.event) {
            case SRSUE_ADD_VIRADDR:
-               memcpy(&addr, &packet.data[0], sizeof(addr));
+			   cout<<"Control: ";
+			   printIMSI(packet.imsi);
+               memcpy(&addr, packet.data, sizeof(addr));
                viraddrMap[packet.imsi] = addr;
 			   phyaddrMap[packet.imsi] = tempAddr.sin_addr;
 			   cout<<"Add addr: ";
 			   printAddrIn(addr);
+			   cout<<endl;
                break;
            default:
                continue;
@@ -241,16 +259,19 @@ static void* SIPThread(void* input) {
 			}
             if(addrCmp(tempAddr, clientAddr)) {
 				IMSI imsi = getIMSI(sip, DIR_BTS2IMS);
+				cout<<"Receive SIP from client :";
+				printIMSI(imsi);
 				if(viraddrMap.count(imsi) == 0)
 					continue;
 				string virIP = string(inet_ntoa(viraddrMap[imsi]));
-                sipSetVia(sip,virIP , listenPort); 
+                sipSetVia(sip,virIP, listenPort); 
                 sipSetDomains(sip, IMS_DOMAIN);
                 sipRemoveIMSI(sip);
-                sipAddHeaders(sip);
+                //sipAddHeaders(sip);
                 if(osip_list_size(&sip->allows) == 0)
 					sip->allows = sipGenerateAllows();
                 sipSetContact(sip, virIP, listenPort);
+				//sipAddAuth(sip);
 				sipRemoveRoute(sip);
                 string sdp = sipGetSDP(sip);
                 if(sdp.length() > 0) {
@@ -275,7 +296,9 @@ static void* SIPThread(void* input) {
 
             }
             else {
+				cout<<"Receive SIP from IMS\n";
                 sipSetVia(sip, listenIP, listenPort);
+				sipSetDomains(sip, OPENBTS_DOMAIN);
                 string sdp = sipGetSDP(sip);
                 if(sdp.length() > 0) {
                     if(sdpGetMedia(sdp, controlPacket) != 0)
@@ -318,14 +341,6 @@ static void* SIPThread(void* input) {
 }
 
 int main(int argc, char** argv) {
-    /*listenIP = argv[1];
-    listenPort = atoi(argv[2]);
-	clientIP = argv[3];
-	clientPort = atoi(argv[4]);
-	RTPIP = argv[5];
-	RTPControlPort = atoi(argv[6]);
-	RTPListenPort = atoi(argv[7]);
-	serverPort = listenPort;*/
 	startParse(argc, argv);
     string buffer;
     pthread_t SIPTid;
