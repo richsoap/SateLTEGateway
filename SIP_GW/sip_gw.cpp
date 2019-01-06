@@ -51,6 +51,7 @@ static string config_file;
 
 static map<IMSI, in_addr> phyaddrMap;
 static map<IMSI, in_addr> viraddrMap;
+static map<string, IMSI> telIMSIMap;
 
 /*
  *
@@ -119,20 +120,38 @@ static IMSI getIMSI(const osip_message_t* sip, int dir) {
             MSG_IS_SUBSCRIBE(sip) || MSG_IS_PRACK(sip) || MSG_IS_UPDATE(sip) || MSG_IS_PUBLISH(sip)) {
 		if(dir == DIR_BTS2IMS) {
 			if(sip->from->url != NULL) {
-				if(sip->from->url->username[0] != 'I')
-					memcpy(&result, sip->from->url->username, sizeof(result));
-				else
-					memcpy(&result, sip->from->url->username + 4, sizeof(result));
+				if(sip->from->url->scheme[0] != 's' && sip->from->url->scheme[0] != 'S') {
+					string tel = string(sip->from->url->username);
+					if(telIMSIMap.count(tel) != 0) 
+						result = telIMSIMap[tel];
+					else
+						memset(&result, 0, sizeof(result));
+				}
+				else {
+					if(sip->from->url->username[0] != 'I')
+						memcpy(&result, sip->from->url->username, sizeof(result));
+					else
+						memcpy(&result, sip->from->url->username + 4, sizeof(result));
+				}
 			}
 			else
 			    memset(&result, 0, sizeof(result));
 		}
 		else{
 			if(sip->to->url != NULL) {
-				if(sip->to->url->username[0] != 'I')
-					memcpy(&result, sip->to->url->username, sizeof(result));
-				else
-					memcpy(&result, sip->to->url->username + 4, sizeof(result));
+				if(sip->to->url->scheme[0] != 's' && sip->to->url->scheme[0] != 'S') {
+					string tel = string(sip->to->url->username);
+					if(telIMSIMap.count(tel) != 0)
+						result = telIMSIMap[tel];
+					else
+						memset(&result, 0, sizeof(result));
+				}
+				else {
+					if(sip->to->url->username[0] != 'I')
+						memcpy(&result, sip->to->url->username, sizeof(result));
+					else
+						memcpy(&result, sip->to->url->username + 4, sizeof(result));
+				}
 			}
 			else
 				memset(&result, 0, sizeof(result));
@@ -140,8 +159,12 @@ static IMSI getIMSI(const osip_message_t* sip, int dir) {
     }
     else {
 		if(dir == DIR_BTS2IMS) {
-			if(sip->to->url != NULL)
-				memcpy(&result, sip->to->url->username, sizeof(result));
+			if(sip->to->url != NULL) {
+				if(sip->to->url->username[0] != 'I')
+					memcpy(&result, sip->to->url->username, sizeof(result));
+				else
+					memcpy(&result, sip->to->url->username + 4, sizeof(result));
+			}
 			else
 			    memset(&result, 0, sizeof(result));
 		}
@@ -227,6 +250,7 @@ static void* SIPThread(void* input) {
 	osip_message_t* sip;
 	char* out_buffer;
 	char* temp_point;
+	telIMSIMap["18292176260"] = "001010123456789";
 
 	listenAddr = str2addr(listenIP, listenPort);
 	serverAddr = str2addr(listenIP, serverPort);
@@ -264,14 +288,16 @@ static void* SIPThread(void* input) {
 				if(viraddrMap.count(imsi) == 0)
 					continue;
 				string virIP = string(inet_ntoa(viraddrMap[imsi]));
-                sipSetVia(sip,virIP, listenPort); 
+				sipSetVia(sip,"TCP", virIP, listenPort);
+				cout<<"Set vias\n";
                 sipSetDomains(sip, IMS_DOMAIN);
+				cout<<"Set Domains\n";
                 sipRemoveIMSI(sip);
-                //sipAddHeaders(sip);
+				cout<<"Remove IMSI\n";
                 if(osip_list_size(&sip->allows) == 0)
 					sip->allows = sipGenerateAllows();
                 sipSetContact(sip, virIP, listenPort);
-				//sipAddAuth(sip);
+				cout<<"Set contact\n";
 				sipRemoveRoute(sip);
                 string sdp = sipGetSDP(sip);
                 if(sdp.length() > 0) {
@@ -293,12 +319,35 @@ static void* SIPThread(void* input) {
 			    	len = controlPacket.toBuffer((char*)tempBuffer);
                     len = sendto(socket_fd, tempBuffer, len, 0, (sockaddr*)&rtpControlAddr, sizeof(sockaddr));
                 }
-
             }
             else {
-				cout<<"Receive SIP from IMS\n";
-                sipSetVia(sip, listenIP, listenPort);
+                sipSetVia(sip,"UDP", listenIP, listenPort);
+				if(sipIsTel(sip->to->url)) {
+					string tel(sip->to->url->string);
+					if(telIMSIMap.count(tel) != 0) {
+						IMSI imsi = telIMSIMap[tel];
+						printIMSI(imsi);
+						sipSetUri(sip->to->url, &imsi);
+					}
+					else {
+						sipSetUri(sip->to->url, NULL);
+					}
+					deleteCharValue(&sip->to->url->string);
+				}
+				if(sipIsTel(sip->from->url)){
+					string tel(sip->from->url->string);
+					if(telIMSIMap.count(tel) != 0) {
+						IMSI imsi = telIMSIMap[tel];
+						sipSetUri(sip->from->url, &imsi);
+					}
+					else {
+						sipSetUri(sip->from->url, NULL);
+					}
+					deleteCharValue(&sip->from->url->string);
+				}
+				cout<<"Tel to sip\n";
 				sipSetDomains(sip, OPENBTS_DOMAIN);
+				cout<<"Set Domains\n";
                 string sdp = sipGetSDP(sip);
                 if(sdp.length() > 0) {
                     if(sdpGetMedia(sdp, controlPacket) != 0)
@@ -306,6 +355,8 @@ static void* SIPThread(void* input) {
                     controlPacket.callid = sip->call_id->number;
                     controlPacket.payload = 99;
                     controlPacket.code = CONTROL_AMR;
+					IMSI imsi = getIMSI(sip, DIR_IMS2BTS);
+					controlPacket.addr.sin_addr = phyaddrMap[imsi];
 
                     sdp = sdpReplaceMedia(sdp, sdpToClientString);
                     sdp = sdpReplaceConnection(sdp, "c=IN IP4 127.0.0.1\r\n");

@@ -19,6 +19,7 @@
 #include <boost/program_options.hpp>
 #include <boost/program_options/parsers.hpp>
 #include "stopwatch.h"
+#include "commonhelpers.hpp"
 
 #define BUFFER_SIZE 10240
 
@@ -109,13 +110,6 @@ static void startParse(int argc, char* argv[]) {
 	cout<<"rtp.control_port="<<controlPort<<endl;
 	cout<<"srsue.control_port="<<srsuePort<<endl;
 }
-static sockaddr_in str2addr(string IP, int port) {
-	sockaddr_in result;
-	result.sin_family = AF_INET;
-	result.sin_port = htons(port);
-    inet_pton(AF_INET, IP.c_str(), &result.sin_addr);
-	return result;
-}
 
 static string addr2str(sockaddr_in addr) {
 	string result = inet_ntoa(addr.sin_addr);
@@ -184,10 +178,34 @@ static void infoSrsue(int socket_fd, sockaddr_in addr, int bindport, int event) 
 		memcpy(&packet.data[2], &addr.sin_port, sizeof(port));
 		int len = srsueControlPacketToBuffer(packet, &packetBuffer[0]);
 		sendto(socket_fd, packetBuffer, len, 0, (sockaddr*)&tarAddr, sizeof(sockaddr));
+		cout<<"Send to:";
+		printAddr(tarAddr);
 		tarAddr.sin_addr = it->second.sin_addr;
 		memcpy(&packet.data[2], &it->second.sin_port, sizeof(port));
 		len = srsueControlPacketToBuffer(packet, &packetBuffer[0]);
 		sendto(socket_fd, packetBuffer, len, 0, (sockaddr*)&tarAddr, sizeof(sockaddr));
+		cout<<"Send to:";
+		printAddr(tarAddr);
+	}
+	it = rtcpMap.find(addr);
+	if(it != rtcpMap.end()) {
+		sockaddr_in tarAddr = addr;
+		tarAddr.sin_port = htons(srsuePort);
+		srsueControlPacket packet;
+		packet.event = event;
+		unsigned short int port = htons(bindport);
+		memcpy(&packet.data[0], &port,sizeof(port));
+		memcpy(&packet.data[2], &addr.sin_port, sizeof(port));
+		int len = srsueControlPacketToBuffer(packet, &packetBuffer[0]);
+		sendto(socket_fd, packetBuffer, len, 0, (sockaddr*)&tarAddr, sizeof(sockaddr));
+		cout<<"Send to:";
+		printAddr(tarAddr);
+		tarAddr.sin_addr = it->second.sin_addr;
+		memcpy(&packet.data[2], &it->second.sin_port, sizeof(port));
+		len = srsueControlPacketToBuffer(packet, &packetBuffer[0]);
+		sendto(socket_fd, packetBuffer, len, 0, (sockaddr*)&tarAddr, sizeof(sockaddr));
+		cout<<"Send to:";
+		printAddr(tarAddr);
 	}
 }
 
@@ -238,8 +256,11 @@ static void* RTPControlThread(void* input) {
                     addSrc(packet);
 					if(packet.slot & 0x01 == 0x01) {
 						infoSrsue(socket_fd, packet.addr, listenPort, SRSUE_ADD_RTPPORT);
+						cout<<"Send RTPPort\n";
 						packet.addr.sin_port = htons(ntohs(packet.addr.sin_port) + 1);
+						cout<<"Before RTCPPort\n";
 						infoSrsue(socket_fd, packet.addr, listenPort + 1, SRSUE_ADD_RTCPPORT);
+						cout<<"Send RTCPPort\n";
 					}
                     break;
                 case CONTROL_REMOVE:
@@ -279,9 +300,7 @@ static void* RTPThread(void* input) {
         len = recvfrom(socket_fd, receiveBuffer, BUFFER_SIZE, 0, (sockaddr*)&tempAddr, &addrSize);
         if(len <= 0)
             continue;
-        //watch.reset(0);
         TransConf conf = getConf(tempAddr);
-        //watch.record(0);
 		switch(conf.type) {
 			case TYPE_ABORT:
 				cout<<"Abort packet"<<endl;

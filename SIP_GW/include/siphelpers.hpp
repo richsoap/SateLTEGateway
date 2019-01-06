@@ -33,18 +33,22 @@ static osip_list_t sipGenerateAllows() {
     return result;
 }
 
-static void sipSetVia(osip_message_t* sip, string& ip, int listenPort) {
+static void sipSetVia(osip_message_t* sip, const char* protocol, string& ip, int listenPort) {
     osip_via_t *via;
     osip_message_get_via(sip, osip_list_size(&sip->vias)-1, &via);
     setCharValue(&via->host, ip.c_str());
     setCharValue(&via->port, to_string(listenPort).c_str());
+	setCharValue(&via->protocol, protocol);
     osip_generic_param_add(&via->via_params, osip_strdup("rport"), NULL);
 }
 
 static void sipSetDomains(osip_message_t* sip, const char* tar) {
     if(sip->req_uri != NULL) {
         setCharValue(&sip->req_uri->host, tar);
+		setCharValue(&sip->req_uri->username, sip->to->url->username);
+		setCharValue(&sip->req_uri->scheme, sip->to->url->scheme);
         deleteCharValue(&sip->req_uri->port);
+		deleteCharValue(&sip->req_uri->string);
     }
 	if(sip->from->url->scheme[0] == 's') {
 		setCharValue(&sip->from->url->host, tar);
@@ -57,9 +61,9 @@ static void sipSetDomains(osip_message_t* sip, const char* tar) {
 }
 
 static void sipRemoveIMSI(osip_message_t* sip) {
-    if(strlen(sip->from->url->username) > 15)
+    if(sip->from->url->username && strlen(sip->from->url->username) > 15)
         strcpy(sip->from->url->username, sip->from->url->username + 4);
-    if(strlen(sip->to->url->username) > 15)
+    if(sip->to->url->username && strlen(sip->to->url->username) > 15)
 		strcpy(sip->to->url->username, sip->to->url->username + 4);
 
 }
@@ -154,5 +158,25 @@ static void sipAddAuth(osip_message_t* sip) {
 	setCharValue(&auth->response, "\"\"");
 	osip_list_add(&sip->authorizations, auth, -1);
 }
+
+static bool sipIsTel(osip_uri_t* url) {
+	return url->scheme[0] == 't' || url->scheme[0] == 'T';
+}
+
+static void sipSetUri(osip_uri_t* url, IMSI* imsi) {
+	setCharValue(&url->scheme, "sip");
+	setCharValue(&url->username, "IMSI000000000000000");
+	if(imsi != NULL) {
+		memcpy(url->username + 4, imsi->val, sizeof(IMSI));
+	}
+	else {
+		memcpy(url->username + 4, url->string, sizeof(IMSI));
+	}
+}
+
+static bool sipIsAct(osip_message_t* sip) {
+return MSG_IS_INVITE(sip) || MSG_IS_ACK(sip) || MSG_IS_REGISTER(sip) || MSG_IS_BYE(sip) || MSG_IS_OPTIONS(sip) ||  MSG_IS_INFO(sip) || MSG_IS_CANCEL(sip) || MSG_IS_REFER(sip) || MSG_IS_NOTIFY(sip) || MSG_IS_SUBSCRIBE(sip) || MSG_IS_PRACK(sip) || MSG_IS_UPDATE(sip) || MSG_IS_PUBLISH(sip);
+}
+
 
 #endif
