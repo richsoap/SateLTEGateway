@@ -73,6 +73,7 @@ map<sockaddr_in, SrcInfo, addrComp> srcMap;
 map<sockaddr_in, sockaddr_in, addrComp> rtpMap;
 map<sockaddr_in, sockaddr_in, addrComp> rtcpMap;
 map<string, addrSlots> callidMap;
+map<sockaddr_in, int, addrComp> markerStateMap;
 /*
  * Addr helper
  *
@@ -159,6 +160,8 @@ static void addSrc(const RTPControlPacket& packet) {
 		}
         rtpMap[srcAddr] = tarAddr;
         rtpMap[tarAddr] = srcAddr;
+		markerStateMap[srcAddr] = 0;
+		markerStateMap[tarAddr] = 0;
 		srcAddr.sin_port = htons(ntohs(srcAddr.sin_port) + 1);
 		tarAddr.sin_port = htons(ntohs(tarAddr.sin_port) + 1);
 		rtcpMap[srcAddr] = tarAddr;
@@ -173,35 +176,24 @@ static void infoSrsue(int socket_fd, sockaddr_in addr, int bindport, int event) 
 		tarAddr.sin_port = htons(srsuePort);
 		srsueControlPacket packet;
 		packet.event = event;
+		// Add RTP
 		unsigned short int port = htons(bindport);
 		memcpy(&packet.data[0], &port,sizeof(port));
 		memcpy(&packet.data[2], &addr.sin_port, sizeof(port));
+		// Add RTCP
+		port = htons(bindport + 1);
+		memcpy(&packet.data[4], &port, sizeof(port));
+		port = htons(ntohs(addr.sin_port) + 1);
+		memcpy(&packet.data[6], &port, sizeof(port));
+
 		int len = srsueControlPacketToBuffer(packet, &packetBuffer[0]);
 		sendto(socket_fd, packetBuffer, len, 0, (sockaddr*)&tarAddr, sizeof(sockaddr));
 		cout<<"Send to:";
 		printAddr(tarAddr);
 		tarAddr.sin_addr = it->second.sin_addr;
 		memcpy(&packet.data[2], &it->second.sin_port, sizeof(port));
-		len = srsueControlPacketToBuffer(packet, &packetBuffer[0]);
-		sendto(socket_fd, packetBuffer, len, 0, (sockaddr*)&tarAddr, sizeof(sockaddr));
-		cout<<"Send to:";
-		printAddr(tarAddr);
-	}
-	it = rtcpMap.find(addr);
-	if(it != rtcpMap.end()) {
-		sockaddr_in tarAddr = addr;
-		tarAddr.sin_port = htons(srsuePort);
-		srsueControlPacket packet;
-		packet.event = event;
-		unsigned short int port = htons(bindport);
-		memcpy(&packet.data[0], &port,sizeof(port));
-		memcpy(&packet.data[2], &addr.sin_port, sizeof(port));
-		int len = srsueControlPacketToBuffer(packet, &packetBuffer[0]);
-		sendto(socket_fd, packetBuffer, len, 0, (sockaddr*)&tarAddr, sizeof(sockaddr));
-		cout<<"Send to:";
-		printAddr(tarAddr);
-		tarAddr.sin_addr = it->second.sin_addr;
-		memcpy(&packet.data[2], &it->second.sin_port, sizeof(port));
+		port = htons(ntohs(it->second.sin_port) + 1);
+		memcpy(&packet.data[6], &port, sizeof(port));
 		len = srsueControlPacketToBuffer(packet, &packetBuffer[0]);
 		sendto(socket_fd, packetBuffer, len, 0, (sockaddr*)&tarAddr, sizeof(sockaddr));
 		cout<<"Send to:";
@@ -209,18 +201,21 @@ static void infoSrsue(int socket_fd, sockaddr_in addr, int bindport, int event) 
 	}
 }
 
-static void removeCall(const string& callid) {
-    /*map<string, sockaddr_in>::iterator it = callidMap.find(callid);
+static void removeCall(int socket_fd, const string& callid) {
+    map<string, addrSlots>::iterator it = callidMap.find(callid);
     if(it == callidMap.end()) {
         return;
     }
-    srcMap.erase(srcMap.find(it->second));
-    map<sockaddr_in, sockaddr_in>::iterator addrit = rtpMap.find(it->second);
-    if(addrit == rtpMap.end())
-        return;
-    srcMap.erase(srcMap.find(addrit->second));
-    rtpMap.erase(rtpMap.find(addrit->second));
-    rtpMap.erase(addrit);*/
+	for(int i = 0;i < 4;i ++) {
+		if(srcMap.count(it->second[i]) != 0) {
+			infoSrsue(socket_fd, rtpMap[it->second[i]], listenPort, SRSUE_BYE_PORT);
+			srcMap.erase(it->second[i]);
+			rtpMap.erase(it->second[i]);
+			rtcpMap.erase(it->second[i]);
+			markerStateMap.erase(it->second[i]);
+		}
+		
+	}
 }
 
 /*
@@ -255,16 +250,11 @@ static void* RTPControlThread(void* input) {
                 case CONTROL_ADD:
                     addSrc(packet);
 					if(packet.slot & 0x01 == 0x01) {
-						infoSrsue(socket_fd, packet.addr, listenPort, SRSUE_ADD_RTPPORT);
-						cout<<"Send RTPPort\n";
-						packet.addr.sin_port = htons(ntohs(packet.addr.sin_port) + 1);
-						cout<<"Before RTCPPort\n";
-						infoSrsue(socket_fd, packet.addr, listenPort + 1, SRSUE_ADD_RTCPPORT);
-						cout<<"Send RTCPPort\n";
+						infoSrsue(socket_fd, packet.addr, listenPort, SRSUE_ADD_PORT);
 					}
                     break;
                 case CONTROL_REMOVE:
-                    removeCall(packet.callid);
+                    removeCall(socket_fd, packet.callid);
                     break;
                 default:
                     cout<<"Unknow Command"<<endl;
@@ -320,15 +310,19 @@ static void* RTPThread(void* input) {
                 //watch.record(2);
 				break;
 			case TYPE_GSMAMR:
-                //watch.reset(3);
 				pharse_GSM(receiveBuffer, len, &packet);
 				packet.extLen = 1;
-                //watch.record(3);
-                //watch.reset(4);
+				//packet.extLen = 0;
 				packet.len = ((GsmToAmrCoder*)conf.coder)->GsmToAmr(packet.buffer, &codeBuffer[0]);
+				if(packet.len == 1) {
+					markerStateMap[tempAddr] = 0;
+				}
+				else if(markerStateMap[tempAddr] == 0){
+					markerStateMap[tempAddr] = 1;
+					packet.setMarker(1);
+				}
 				packet.buffer = &codeBuffer[0];
 				packet.extHead[0] = (((codeBuffer[0] >> 3) & 0x0F) << 4) & 0xF0;
-                //watch.record(4);
 				break;
 			default:
 				continue;

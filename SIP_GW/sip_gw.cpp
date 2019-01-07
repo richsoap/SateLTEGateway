@@ -261,6 +261,7 @@ static void* SIPThread(void* input) {
 	string sdpPortString = "audio " + to_string(RTPListenPort);
 	string listenPortStr = to_string(listenPort);
 	string sdpToClientString = "m=audio 5062 RTP/AVP 3\r\na=rtpmap:3 GSM/8000/1\r\n";
+	//string sdpToIMSString = "m=audio 50010 RTP/AVP 99\r\na=rtpmap:99 AMR-WB/16000/1\r\na=fmtp:99 mode-change-capability=2;max-red=0\r\na=maxptime:240\r\na=ptime:20\r\n";
 	string sdpToIMSString = "m=audio 50010 RTP/AVP 99\r\na=rtpmap:99 AMR-WB/16000/1\r\na=fmtp:99 octet-align=1;mode-change-capability=2;max-red=0\r\na=maxptime:240\r\na=ptime:20\r\n";
 	string qosString = "a=sendrecv\r\na=curr:qos local sendrecv\r\na=curr:qos remote sendrecv\r\na=des:qos mandatory local sendrecv\r\na=des:qos mandatory remote sendrecv\r\n";
 
@@ -281,6 +282,13 @@ static void* SIPThread(void* input) {
 				cout<<"Error: failed while parsing!"<<endl;
 				continue;
 			}
+			if(MSG_IS_BYE(sip)) {
+				controlPacket.command = CONTROL_REMOVE;
+				controlPacket.callid = sip->call_id->number;
+				len = controlPacket.toBuffer((char*)tempBuffer);
+                len = sendto(socket_fd, tempBuffer, len, 0, (sockaddr*)&rtpControlAddr, sizeof(sockaddr));
+			}
+
             if(addrCmp(tempAddr, clientAddr)) {
 				IMSI imsi = getIMSI(sip, DIR_BTS2IMS);
 				cout<<"Receive SIP from client :";
@@ -306,7 +314,6 @@ static void* SIPThread(void* input) {
                     controlPacket.callid = sip->call_id->number;
                     controlPacket.payload = 3;
                     controlPacket.code = CONTROL_GSM;
-                    
                     sdp = sdpReplaceMedia(sdp, sdpToIMSString);
 				    sdp = sdpReplaceConnection(sdp, "c=IN IP4 127.0.0.1\r\n");
                     sdp = sdpReplaceSDP(sdp, virIP, sdpPortString); 
