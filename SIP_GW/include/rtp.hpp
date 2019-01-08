@@ -45,26 +45,18 @@ static uint32_t pharse_raw(uint8_t* buffer, uint32_t len, RTPPacket* packet) {
 }
 
 static uint32_t pharse_AMR(uint8_t* buffer, uint32_t len, RTPPacket* packet) {
+#ifndef NOALIGN
 	memcpy(packet, buffer, sizeof(RTPHead));
 	memcpy(&packet->extHead[0], buffer + sizeof(RTPHead), 1);
 	packet->extLen = 1;
 	packet->buffer = buffer + sizeof(RTPHead) - 1;
 	packet->len = len - sizeof(RTPHead) - 1;
-	/*packet->extLen = 0;
-	packet->buffer = buffer + sizeof(RTPHead);
-	packet->len = len - sizeof(RTPHead);*/
-	return packet->len;
-}
-
-static uint32_t packet_GSM(RTPPacket* packet) {
+#else
 	packet->extLen = 0;
-}
-
-static uint32_t packet_AMR(RTPPacket* packet) {
-	packet->extHead[0] = 0x80;
-	packet->extHead[1] = 0x44;
-	//packet->extLen = 0;
-	packet->extLen = 2;
+	packet->buffer = buffer + sizeof(RTPHead);
+	packet->len = len - sizeof(RTPHead);
+#endif
+	return packet->len;
 }
 
 static uint32_t rtp2buffer(uint8_t* buffer, RTPPacket* packet) {

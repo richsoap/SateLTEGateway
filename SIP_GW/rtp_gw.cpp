@@ -20,6 +20,7 @@
 #include <boost/program_options/parsers.hpp>
 #include "stopwatch.h"
 #include "commonhelpers.hpp"
+#include "amrhelpers.hpp"
 
 #define BUFFER_SIZE 10240
 
@@ -36,6 +37,9 @@ static string listenIP;
 static int srsuePort;
 static string configFile;
 static uint8_t packetBuffer[64];
+const static vector<uint8_t> AMRBlockSize = {18,24,33,37,41,47,51,59,61,7};
+const static vector<uint8_t> AMRHead = {0x04,0x0c,0x14,0x1c,0x24,0x2c,0x34,0x3c,0x44,0x4c};
+
 
 struct SrcInfo {
 	uint8_t payload;
@@ -74,6 +78,7 @@ map<sockaddr_in, sockaddr_in, addrComp> rtpMap;
 map<sockaddr_in, sockaddr_in, addrComp> rtcpMap;
 map<string, addrSlots> callidMap;
 map<sockaddr_in, int, addrComp> markerStateMap;
+map<uint8_t, uint8_t> AMRHeadMap;
 /*
  * Addr helper
  *
@@ -273,6 +278,10 @@ static void* RTPThread(void* input) {
     uint8_t receiveBuffer[BUFFER_SIZE];
     uint8_t outputBuffer[BUFFER_SIZE];
 	uint8_t codeBuffer[BUFFER_SIZE];
+#ifdef NOALIGN
+	uint8_t codeInBuffer[BUFFER_SIZE];
+	uint8_t codeOutBuffer[BUFFER_SIZE];
+#endif
     sockaddr_in rtpAddr;
     sockaddr_in tempAddr;
     socklen_t addrSize = sizeof(sockaddr);
@@ -299,30 +308,35 @@ static void* RTPThread(void* input) {
 				pharse_raw(receiveBuffer, len, &packet);
 				break;
 			case TYPE_AMRGSM:
-                //watch.reset(1);
 				pharse_AMR(receiveBuffer, len, &packet);
+#ifdef NOALIGN
+				packet.len = AMROctetAlign(codeInBuffer, packet.buffer, packet.len);
+				packet.buffer = &codeInBuffer[0];
+#endif
 				packet.extLen = 0;
-                //watch.record(1);
-                //watch.reset(2);
 				((AmrToGsmCoder*)conf.coder)->AmrToGsm(packet.buffer, &codeBuffer[0]);
 				packet.buffer = &codeBuffer[0];
 				packet.len = 33; 
-                //watch.record(2);
 				break;
 			case TYPE_GSMAMR:
 				pharse_GSM(receiveBuffer, len, &packet);
-				packet.extLen = 1;
-				//packet.extLen = 0;
 				packet.len = ((GsmToAmrCoder*)conf.coder)->GsmToAmr(packet.buffer, &codeBuffer[0]);
-				if(packet.len == 1) {
+				if(packet.len < 10) {
 					markerStateMap[tempAddr] = 0;
 				}
 				else if(markerStateMap[tempAddr] == 0){
 					markerStateMap[tempAddr] = 1;
 					packet.setMarker(1);
 				}
+#ifdef NOALIGN
+				packet.len = AMRNoOctetAlign(codeOutBuffer, codeBuffer, packet.len);
+				packet.buffer = &codeOutBuffer[0];
+				packet.extLen = 0;
+#else
 				packet.buffer = &codeBuffer[0];
+				packet.extLen = 1;
 				packet.extHead[0] = (((codeBuffer[0] >> 3) & 0x0F) << 4) & 0xF0;
+#endif
 				break;
 			default:
 				continue;
@@ -331,10 +345,6 @@ static void* RTPThread(void* input) {
         packet.setPT(conf.tarPT);
         len = rtp2buffer(outputBuffer, &packet);
         //watch.record(5);
-		if(firstFlag == 0) {
-			usleep(40000);
-			firstFlag = 1;
-		}
         len = sendto(socket_fd, outputBuffer, len, 0, (sockaddr*)&conf.tarAddr, sizeof(sockaddr));
 		//cout<<"Sent length: "<<len<<endl;
     }
@@ -378,6 +388,8 @@ int main(int argc, char** argv) {
     pthread_t RTPid;
 	pthread_t RTCPid;
 	pthread_t RTPControlid;
+	for(int i = 0;i < AMRHead.size();i ++)
+		AMRHeadMap[AMRBlockSize[i]] = AMRHead[i];
     pthread_create(&RTPid, NULL, &RTPThread, NULL);
 	pthread_create(&RTCPid, NULL, &RTCPThread, NULL);
 	pthread_create(&RTPControlid, NULL, &RTPControlThread, NULL);
