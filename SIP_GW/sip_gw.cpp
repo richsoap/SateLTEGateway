@@ -52,6 +52,7 @@ static string config_file;
 static map<IMSI, in_addr> phyaddrMap;
 static map<IMSI, in_addr> viraddrMap;
 static map<string, IMSI> telIMSIMap;
+static map<IMSI, string> sipBufferMap;
 
 /*
  *
@@ -230,7 +231,6 @@ static void* SIPControlThread(void* input) {
 }
 
 static void* SIPThread(void* input) {
-    // TODO socket_fd read timeout
     int socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
     if(socket_fd < 0) {
         cout<<"Error SIP Socket"<<endl<<"Exit"<<endl;
@@ -292,6 +292,11 @@ static void* SIPThread(void* input) {
                 len = sendto(socket_fd, tempBuffer, len, 0, (sockaddr*)&rtpControlAddr, sizeof(sockaddr));
 			}
 
+			if(MSG_IS_REGISTER(sip)) {
+			
+				
+			}
+
             if(addrCmp(tempAddr, clientAddr)) {
 				IMSI imsi = getIMSI(sip, DIR_BTS2IMS);
 				cout<<"Receive SIP from client :";
@@ -301,10 +306,10 @@ static void* SIPThread(void* input) {
 				string virIP = string(inet_ntoa(viraddrMap[imsi]));
 				sipSetVia(sip,"TCP", virIP, listenPort);
 				cout<<"Set vias\n";
-                sipSetDomains(sip, IMS_DOMAIN);
-				cout<<"Set Domains\n";
                 sipRemoveIMSI(sip);
 				cout<<"Remove IMSI\n";
+				sipSetDomains(sip, IMS_DOMAIN);
+				cout<<"Set Domains\n";
                 if(osip_list_size(&sip->allows) == 0)
 					sip->allows = sipGenerateAllows();
                 sipSetContact(sip, virIP, listenPort);
@@ -389,6 +394,9 @@ static void* SIPThread(void* input) {
                 if(phyaddrMap.count(imsi)) {
                     serverAddr.sin_addr = phyaddrMap[imsi];
                     count = (int)sendto(socket_fd, out_buffer, len, 0, (sockaddr*)&serverAddr, sizeof(sockaddr));
+					if(MSG_IS_REGISTER(sip)) {
+						sipBufferMap[imsi] = string(out_buffer, len);
+					}
                     osip_free(out_buffer);
                 }
             } 
@@ -401,13 +409,41 @@ static void* SIPThread(void* input) {
     return NULL;
 }
 
+
+static void* SIPKeepAlive(void* input) {
+	int socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
+	if(socket_fd < 0) {
+		cout<<"Error SIP Keep Alice Socket"<<endl;
+		return NULL;
+	}
+	sockaddr_in serverAddr = str2addr(listenIP, serverPort);
+	while(true) {
+		sleep(1800);
+		int send_num = 0;
+		for(auto it:sipBufferMap) {
+			if(phyaddrMap.count(it.first)) {
+				serverAddr.sin_addr = phyaddrMap[it.first];
+				int count = (int)sendto(socket_fd, it.second.c_str(), it.second.length(), 0, (sockaddr*)&serverAddr, sizeof(sockaddr));
+				if(send_num > 0)
+					send_num ++;
+			}	
+		}
+		cout<<"Keep Alive---"<<send_num<<endl;
+	}
+	return NULL;
+
+}
+
+
 int main(int argc, char** argv) {
 	startParse(argc, argv);
     string buffer;
     pthread_t SIPTid;
     pthread_t SIPControlTid;
+	pthread_t SIPKeepAliveTid;
     pthread_create(&SIPTid, NULL, &SIPThread, NULL);
     pthread_create(&SIPControlTid, NULL, &SIPControlThread, NULL);
+	pthread_create(&SIPKeepAliveTid, NULL, &SIPKeepAlive, NULL);
     while(cin>>buffer) {
         if(buffer.compare("quit") == 0) {
             break;

@@ -61,6 +61,8 @@ static void sipSetDomains(osip_message_t* sip, const char* tar) {
 }
 
 static void sipRemoveIMSI(osip_message_t* sip) {
+	if(sip->req_uri && sip->req_uri->username && strlen(sip->req_uri->username) > 15)
+		strcpy(sip->req_uri->username, sip->req_uri->username + 4);
     if(sip->from->url->username && strlen(sip->from->url->username) > 15)
         strcpy(sip->from->url->username, sip->from->url->username + 4);
     if(sip->to->url->username && strlen(sip->to->url->username) > 15)
