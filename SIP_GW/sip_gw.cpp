@@ -21,6 +21,7 @@
 #include "imsi.hpp"
 #include "siphelpers.hpp"
 #include "sdphelpers.hpp"
+#include "redishelper"
 #include "commonhelpers.hpp"
 #include <boost/program_options.hpp>
 #include <boost/program_options/parsers.hpp>
